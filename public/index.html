@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>JS Physics Demo</title>
+        <style>
+            body, html {
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="main-canvas"></canvas>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+        <script src="js/entities/Entity.js"></script>
+        <script src="js/entities/Platform.js"></script>
+        <script src="js/entities/Player.js"></script>
+
+        <script src="js/Physics.js"></script>
+        <script src="js/Collisions.js"></script>
+        <script src="js/Renderer.js"></script>
+
+        <script src="js/serverCommunicator.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
