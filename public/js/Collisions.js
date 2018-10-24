@@ -1,7 +1,8 @@
 class Collisions {
-    checkCollisions(entity, screenDimens, entitiesToCheck){
+    checkCollisions(entity, screenDimens, entitiesToCheck, time){
         // var hitmap = [[], [], [], []];
         var collisionList = [];
+        time = time/1000;
 
         // console.log(entitiesToCheck);
         if (entity.active) entitiesToCheck.forEach(checkEntity => {
@@ -42,7 +43,7 @@ class Collisions {
                     winningActions = function(){
                         entity.posY = checkEntity.posY-entity.height-1;
                         if (Math.abs(entity.movementVector[1] < 12)){
-                            entity.movementVector[1] = -9.8;
+                            entity.movementVector[1] = -9.8*50*time;
                         } else {
                             entity.movementVector[1] *= -0.7;
                         }
@@ -73,12 +74,12 @@ class Collisions {
         // alert("boo");
 
         // console.log(entity.posY+entity.height, screenDimens[1]);
-        if (entity.posY+entity.height >= screenDimens[1]){
+        if (entity.active && entity.posY+entity.height >= screenDimens[1]){
             try {
                 entity.jumping = false;
                 // console.log(entity.posY+entity.height);
                 if (entity.movementVector[1] < 50 ){
-                    entity.movementVector[1] = -9.8;
+                    entity.movementVector[1] = -9.8*50*time;
                 } else {
                     entity.posY = screenDimens[1]-entity.height;
                     entity.movementVector[1] = entity.movementVector[1]*-0.4;
@@ -90,9 +91,12 @@ class Collisions {
             }
         }
 
-        if (entity.posX < 0 || entity.posX + entity.width > screenDimens[0]){
-            entity.posX = entity.posX > 0 ? screenDimens[0]-entity.width : 1;
+        if (entity.active && entity.posX < 0 || entity.posX + entity.width > screenDimens[0]){
+            try {
+                entity.posX = entity.posX > 0 ? screenDimens[0]-entity.width : 1;
             entity.movementVector[0] *= -1;
+            } catch {
+            }
         }
 
         // return hitmap;

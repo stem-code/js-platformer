@@ -1,8 +1,7 @@
 class Player extends Entity {
     constructor(x, y, width, height){
         super(x, y, width, height, 0, true, "#3F51B5", true);
-        
-        this.frameCount = 0;
+    
         this.lastPositions = [];
 
         this.repurcussion = 0;
@@ -19,23 +18,18 @@ class Player extends Entity {
         super.draw(ctx);
         // console.log(this.frameCount);
 
-
-        if (this.frameCount % 4 == 0){
-            this.lastPositions.push([this.posX, this.posY+this.repurcussion]);
-            
-            if (this.repurcussionDirection == 1){
-                this.repurcussion -= 2;
-            } else {
-                this.repurcussion += 2;
-            }
-
-            if (this.repurcussion > 30 || this.repurcussion < 1) this.repurcussionDirection *= -1;
-
-            if (this.lastPositions.length >= 10){
-                this.lastPositions.splice(0, 1);
-            }
+        this.lastPositions.push([this.posX, this.posY+this.repurcussion]);
+        
+        if (this.repurcussionDirection == 1){
+            this.repurcussion -= 2;
+        } else {
+            this.repurcussion += 2;
         }
 
-        this.frameCount++;
+        if (this.repurcussion > 30 || this.repurcussion < 1) this.repurcussionDirection *= -1;
+
+        if (this.lastPositions.length >= 10){
+            this.lastPositions.splice(0, 1);
+        }
     }
 }

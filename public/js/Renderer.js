@@ -22,6 +22,8 @@ class Renderer {
             document.body["offsetHeight"],
             document.documentElement["offsetHeight"]
         )
+
+        this.fpsMeter = document.getElementById("fps");
         
         this.windowDimens = [windowWidth, windowHeight];
         this.canvas = document.getElementById(canvasId);
@@ -35,6 +37,9 @@ class Renderer {
         this.entities = [];
 
         this.keys = [];
+        this.cameraOffset = {x:0, y:0};
+
+        this.diffCounter = 0;
 
         var that = this;
         document.onkeydown = function(evt) {
@@ -51,15 +56,26 @@ class Renderer {
     }
 
     entityUpdate(entity, deltaTime){
-        var collisionStatus = this.collisions.checkCollisions(entity, this.windowDimens, this.entitiesToCheck)
+        var collisionStatus = this.collisions.checkCollisions(entity, this.windowDimens, this.entitiesToCheck, deltaTime);
         // this.physics.applyCollisions(entity, collisionStatus);
         entity.handleKeyPress(this.keys);
 
         if (entity.active){
-            updatePlayerPos({ x: entity.posX, y: entity.posY });
+            updatePlayerPos({ x: entity.posX, y: entity.posY-renderer.windowDimens[1] });
+        }
+
+        if (entity.active && entity.posY < 0){
+            onWin();
+        }
+
+        if (entity.active && entity.posY+entity.height > this.windowDimens[1]-lavaHeight){
+            console.log(this.windowDimens[1]-lavaHeight)
+            onLose();
         }
 
         this.physics.applyPhysics(entity, deltaTime);
+        entity.posY -= this.cameraOffset.y;
+
         entity.draw(this.ctx);
         
         // console.log(entity.posY);
@@ -79,11 +95,19 @@ class Renderer {
 
         this.entitiesToCheck = this.entities;
 
+        if (this.diffCounter % 10 == 0){
+            this.fpsMeter.innerHTML = (1000/deltaTime).toFixed(0);
+        }
+
         // console.log(deltaTime);
         screenFuncs.clear(this.ctx, this.windowDimens);
         // console.log(this.windowDimens);
         this.entities.forEach(entity => {
             this.entityUpdate(entity, deltaTime);
         });
+
+        drawLava(this.ctx, this.windowDimens[0], this.windowDimens[1]);
+
+        this.diffCounter++;
     }
 }

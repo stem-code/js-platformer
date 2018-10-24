@@ -1,5 +1,6 @@
 
 var currentSock;
+var hasLost = false;
 
 function initServer(renderer, cb){
     var socket = io();
@@ -8,19 +9,29 @@ function initServer(renderer, cb){
 
     socket.on('newUser', function(data){
         var userId = data.userId;
-        users[userId] = new Entity(data.initX, data.initY, 30, 30, 20, false, undefined, false);
+        users[userId] = new Entity(data.initX, data.initY, 50, 50, 20, false, "#F44336", false);
+        users[userId].gravityEnabled = false;
+
         renderer.createEntity(users[userId]);
+        document.getElementById("num-users").innerHTML = Object.keys(users).length;
+    });
+
+    socket.on("countdown", function(timeRemaining){
+        document.getElementById("countDown").innerHTML = timeRemaining.toFixed(0);
+    });
+
+    socket.on("startGame", function(){
+        document.getElementById("countDown").style = "display: none;";
+    });
+
+    socket.on("gameInfo", function(inf){
+        lavaHeight = inf.lavaHeight;
     });
 
     socket.on('updateUserPos', function(data){
-        console.log(data.userId);
         var userId = data.userId;
         users[userId].posX = data.x;
-        users[userId].posY = data.y;
-    });
-
-    socket.on('removeUser', function(data){
-
+        users[userId].posY = data.y+renderer.windowDimens[1];
     });
 
     socket.on('getMap', function(mapInfo){
@@ -31,13 +42,41 @@ function initServer(renderer, cb){
                 console.log(map);
                 console.log(map.length);
                 socket.emit("setMap", map);
+                document.getElementById("num-users").innerHTML = Object.keys(users).length;
             });
         } else {
             cb(false, mapInfo.mapData);
+            document.getElementById("num-users").innerHTML = Object.keys(users).length;
         }
     });
+
+    socket.on('userLeft', function(data){
+        console.log(data.userId + " left the game");
+        users[data.userId].posY = -200000;
+        delete users[data.userId];
+    });
+
+    socket.on("endGame", function(){
+        lavaHeight = 0;
+    })
 }
 
 var updatePlayerPos = function(newPos){
     currentSock.emit('updatePos', newPos);
+}
+
+var onWin = function(){
+    if (!hasLost){
+        currentSock.emit("win");
+        document.getElementById("winStatus").innerHTML = "You Won!";
+        hasLost = true;
+    }
+    setTimeout(function(){ document.getElementById("winStatus").innerHTML = "" }, 2000);
+}
+
+var onLose = function(){
+    currentSock.emit("lost");
+    document.getElementById("winStatus").innerHTML = "You Lost!"
+
+    setTimeout(function(){ document.getElementById("winStatus").innerHTML = "" }, 2000);
 }

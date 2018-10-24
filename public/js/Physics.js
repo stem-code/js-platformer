@@ -21,7 +21,7 @@ class Physics {
             // var finalYVelocity = (initialYVelocity*time)+(0.5*(this.gravity*10000)*time*time);
             var finalYVelocity = initialYVelocity;
 
-            finalYVelocity+=this.gravity;
+            finalYVelocity+=this.gravity*50*time;
             entity.movementVector[1] = finalYVelocity;
         }
 
