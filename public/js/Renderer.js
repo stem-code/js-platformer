@@ -68,7 +68,7 @@ class Renderer {
             onWin();
         }
 
-        if (entity.active && entity.posY+entity.height > this.windowDimens[1]-lavaHeight){
+        if (entity.active && entity.posY+(entity.height/2) > this.windowDimens[1]-lavaHeight){
             console.log(this.windowDimens[1]-lavaHeight)
             onLose();
         }

@@ -21,7 +21,7 @@ function initServer(renderer, cb){
     });
 
     socket.on("startGame", function(){
-        document.getElementById("countDown").style = "display: none;";
+        document.getElementById("countDown").innerHTML = "";
     });
 
     socket.on("gameInfo", function(inf){
@@ -58,6 +58,7 @@ function initServer(renderer, cb){
 
     socket.on("endGame", function(){
         lavaHeight = 0;
+        setTimeout(function() { hasLost = false; }, 500); 
     })
 }
 
@@ -75,8 +76,12 @@ var onWin = function(){
 }
 
 var onLose = function(){
-    currentSock.emit("lost");
-    document.getElementById("winStatus").innerHTML = "You Lost!"
-
-    setTimeout(function(){ document.getElementById("winStatus").innerHTML = "" }, 2000);
+    if (!hasLost){
+        currentSock.emit("lost");
+        document.getElementById("winStatus").innerHTML = "You Lost!"
+    
+        setTimeout(function(){ document.getElementById("winStatus").innerHTML = "" }, 2000);
+        hasLost = true;
+    }
+    
 }

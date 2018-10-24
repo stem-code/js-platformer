@@ -46,7 +46,7 @@ io.on("connection", function(socket){
         socket.emit("getMap", {map:false} );
     }
 
-    socket.on("loss", function(){
+    socket.on("lost", function(){
         io.sockets.emit("endGame");
         currentGame = {
             startsIn: 10,
