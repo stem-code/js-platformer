@@ -4,8 +4,6 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-// respond with "hello world" when a GET request is made to the homepage
-
 app.set('port', process.env.PORT || 8080);
 app.use("/", express.static(path.join(__dirname, 'public')));
 
@@ -14,6 +12,7 @@ var playerList = {};
 var map = [];
 
 var idCount = 0;
+var lavaRate = 0;
 
 var currentGame = {
     startsIn: 10,
@@ -23,6 +22,7 @@ var currentGame = {
     startTime: 0,
     started: false
 }
+
 io.on("connection", function(socket){
     var myId = idCount;
     idCount++;
@@ -30,7 +30,6 @@ io.on("connection", function(socket){
     console.log("Someone connected");
 
     if (map.length > 0 ){//&& playerList.length != 0){
-        console.log("A map exists");
         socket.emit("getMap", {map:true, mapData:map});
 
         for (var id in playerList){
@@ -81,7 +80,7 @@ io.on("connection", function(socket){
         playerList[myId].y = newPos.y;
 
         if (currentGame.started){
-            currentGame.lavaHeight = ((new Date().getTime()-currentGame.startTime)/100)-50;
+            currentGame.lavaHeight = ((new Date().getTime()-currentGame.startTime)/100);
             socket.emit("gameInfo", currentGame);
         } else if (currentGame.countdownStarted) {
             if (currentGame.countdownStartTime+currentGame.startsIn <= new Date().getTime() / 1000){

@@ -8,14 +8,17 @@ class Player extends Entity {
         this.repurcussionDirection = 1;
     }
 
-    draw(ctx){
+    draw(ctx, _, windowDimens){
+        var centerX = (windowDimens[0]+this.width)/2;
+        var centerY = (windowDimens[1]+this.height)/2;
+
         for (var pos in this.lastPositions){
             ctx.fillStyle = "rgba(63, 81, 181, " +(0.5/(this.lastPositions.length-pos)).toFixed(2) + ")";
             // ctx.fillStyle = "red";
-            ctx.fillRect(this.lastPositions[pos][0], this.lastPositions[pos][1], this.width, this.height);
+            ctx.fillRect(this.lastPositions[pos][0]-this.posX+centerX, this.lastPositions[pos][1]-this.posY+centerY, this.width, this.height);
         }
 
-        super.draw(ctx);
+        super.draw(ctx, this, windowDimens);
         // console.log(this.frameCount);
 
         this.lastPositions.push([this.posX, this.posY+this.repurcussion]);

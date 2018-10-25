@@ -40,6 +40,7 @@ class Renderer {
         this.cameraOffset = {x:0, y:0};
 
         this.diffCounter = 0;
+        this.activePlayer;
 
         var that = this;
         document.onkeydown = function(evt) {
@@ -62,6 +63,9 @@ class Renderer {
 
         if (entity.active){
             updatePlayerPos({ x: entity.posX, y: entity.posY-renderer.windowDimens[1] });
+            this.activePlayer = entity;
+        } else if (entity.flag){
+            this.entities.splice(this.entities.indexOf(entity), 1);
         }
 
         if (entity.active && entity.posY < 0){
@@ -76,8 +80,7 @@ class Renderer {
         this.physics.applyPhysics(entity, deltaTime);
         entity.posY -= this.cameraOffset.y;
 
-        entity.draw(this.ctx);
-        
+        entity.draw(this.ctx, this.activePlayer, this.windowDimens);
         // console.log(entity.posY);
         // Collisions.checkCollision(entity.boundingBox);
     }
