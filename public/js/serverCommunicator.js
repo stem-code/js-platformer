@@ -57,6 +57,7 @@ function initServer(renderer, cb){
     });
 
     socket.on("endGame", function(){
+        renderer.activePlayer.posY = 100;
         lavaHeight = 0;
         setTimeout(function() { hasLost = false; }, 500); 
     })

@@ -1,5 +1,5 @@
 class Entity {
-    constructor(x, y, width, height, mass, active, color, gravityEnabled){
+    constructor(x, y, width, height, mass, color, gravityEnabled){
         this.posX = x;
         this.posY = y;
         this.width = width;
@@ -10,16 +10,14 @@ class Entity {
         this.gravityEnabled = gravityEnabled || true;
 
         this.forces = [0, 0];
-        this.active = active || false;
+        this.active = false;
+    }
 
-        this.jumping = false;
+    draw(ctx, player, screenDimens){
+        console.log(player);
+        player = player || {posX: 0, posY: 0};
 
-        if (active){
-            var that = this;
-            this.pressMap = {
-                87: function() { if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // w
-                32: function()  {if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // space
-
+<<<<<<< HEAD
                 65: function() { that.movementVector[0] = -200 }, // a
                 37: function() { that.movementVector[0] = -200 },
                 83: function() { that.movementVector[1] = -800 }, // s
@@ -58,5 +56,16 @@ class Entity {
             }
             
         }
+=======
+        var centerX = (screenDimens[0]+player.width)/2;
+        var centerY = (screenDimens[1]+player.height)/2;
+
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.posX-player.posX+centerX, this.posY-player.posY+centerY, this.width, this.height);
+    }
+
+    onCollision() { // parameters could be various collision information
+
+>>>>>>> 025f85713a1594655f97e03244957fb5f3e8289d
     }
 }

@@ -12,7 +12,11 @@ var playerList = {};
 var map = [];
 
 var idCount = 0;
+<<<<<<< HEAD
 var lavaRate = 0;
+=======
+var lavaRate = 3;
+>>>>>>> 025f85713a1594655f97e03244957fb5f3e8289d
 
 var currentGame = {
     startsIn: 10,
@@ -71,6 +75,9 @@ io.on("connection", function(socket){
             startTime: 0,
             started: false
         }
+        for (var i = 0;i < playerList.length;i++) {
+            // Set player positions to bottom of the map.
+        }
         map = [];
         socket.emit("getMap", {map:false} );
         
@@ -80,7 +87,11 @@ io.on("connection", function(socket){
         playerList[myId].y = newPos.y;
 
         if (currentGame.started){
+<<<<<<< HEAD
             currentGame.lavaHeight = ((new Date().getTime()-currentGame.startTime)/100);
+=======
+            currentGame.lavaHeight = (((new Date().getTime()-currentGame.startTime)/100) * lavaRate);
+>>>>>>> 025f85713a1594655f97e03244957fb5f3e8289d
             socket.emit("gameInfo", currentGame);
         } else if (currentGame.countdownStarted) {
             if (currentGame.countdownStartTime+currentGame.startsIn <= new Date().getTime() / 1000){
