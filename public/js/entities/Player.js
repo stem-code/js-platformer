@@ -24,19 +24,6 @@ class Player extends Entity {
     }
 
     draw(ctx, _, windowDimens){
-<<<<<<< HEAD
-        var centerX = (windowDimens[0]+this.width)/2;
-        var centerY = (windowDimens[1]+this.height)/2;
-
-        for (var pos in this.lastPositions){
-            ctx.fillStyle = "rgba(63, 81, 181, " +(0.5/(this.lastPositions.length-pos)).toFixed(2) + ")";
-            // ctx.fillStyle = "red";
-            ctx.fillRect(this.lastPositions[pos][0]-this.posX+centerX, this.lastPositions[pos][1]-this.posY+centerY, this.width, this.height);
-        }
-
-        super.draw(ctx, this, windowDimens);
-        // console.log(this.frameCount);
-=======
         var centerX = (windowDimens[0] + this.width) / 2;
         var centerY = (windowDimens[1] + this.height) / 2;
 
@@ -46,7 +33,6 @@ class Player extends Entity {
         }
 
         super.draw(ctx, this, windowDimens);
->>>>>>> 025f85713a1594655f97e03244957fb5f3e8289d
 
         this.lastPositions.push([this.posX, this.posY+this.repurcussion]);
         

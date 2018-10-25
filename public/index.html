@@ -31,7 +31,7 @@
             }
 
             #message-box {
-                width: 400px;
+                width: 500px;
                 border-radius: 3px;
                 box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
                 background-color: rgb(238,238,238);
@@ -85,16 +85,20 @@
                 position: absolute;
                 font-size: 6em;
                 color: white;
-                top: 50%;
+                top: 10%;
                 left: 50%;
                 transform: translate(-50%, -50%);
                 font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+                z-index: 10000;
             }
 
             #winStatus {
-                top: 20%;
+                top: 5%;
+                font-size: 3em;
             }
+
         </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     </head>
     <body>
         <div id="info-bar">
@@ -108,10 +112,10 @@
 
         <div id="message-box">
             <h1>Physics Project! (JS Version)</h1>
-            <h3>Javascript Physics/Coding: Dorian</h3>
-            <h3>Java Physics/Coding: Deven</h3>
+            <h3>by: Deven and Dorian</h3>
             <h3>How to Play: Just try to climb up as fast as you can.</h3>
-            <input type="text" id="player-name" placeholder="Player Name (optional)"/>
+            <h3>Arrow Keys to move, space to jump.</h3>
+            <input type="text" id="player-name" placeholder="Player Name (optional)"/> <br/>
             <button onclick="start()">Start Game</button>
         </div>
 
@@ -120,6 +124,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 
         <script src="js/entities/Lava.js"></script>
+        <script src="js/entities/Walls.js"></script>
+
         <script src="js/entities/Entity.js"></script>
         <script src="js/entities/Platform.js"></script>
         <script src="js/entities/Player.js"></script>

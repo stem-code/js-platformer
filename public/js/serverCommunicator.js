@@ -22,6 +22,7 @@ function initServer(renderer, cb){
 
     socket.on("startGame", function(){
         document.getElementById("countDown").innerHTML = "";
+        lavaColor = "#FF9800";
     });
 
     socket.on("gameInfo", function(inf){
@@ -35,7 +36,6 @@ function initServer(renderer, cb){
     });
 
     socket.on('getMap', function(mapInfo){
-        console.log(JSON.stringify(mapInfo));
         if (!mapInfo.map){
             cb(true, null, function(map){
                 console.log("Sending over map...")
@@ -52,12 +52,16 @@ function initServer(renderer, cb){
 
     socket.on('userLeft', function(data){
         console.log(data.userId + " left the game");
-        users[data.userId].posY = -200000;
+        users[data.userId].posY = -20000000;
         delete users[data.userId];
     });
 
     socket.on("endGame", function(){
-        renderer.activePlayer.posY = 100;
+        lavaColor = "#4CAF50";
+        renderer.activePlayer.posY = 650;
+        renderer.activePlayer.posX = 1000;
+        renderer.movementVector = [0, 0];
+
         lavaHeight = 0;
         setTimeout(function() { hasLost = false; }, 500); 
     })

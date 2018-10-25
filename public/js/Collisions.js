@@ -56,7 +56,7 @@ class Collisions {
 
                 winningActions();
                 
-                if (entity.active) console.log(["top", "right", "bottom", "left"][winningSide-1], winningDelta);
+                // if (entity.active) console.log(["top", "right", "bottom", "left"][winningSide-1], winningDelta);
             }
         });
 
