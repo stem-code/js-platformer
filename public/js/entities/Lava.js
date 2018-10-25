@@ -1,6 +1,6 @@
 var lavaHeight = 0;
 
-function drawLava(ctx, screenWidth, screenHeight, player){
+function drawLava(ctx, screenWidth, screenHeight, player) {
     ctx.fillStyle = "#FF9800";
     var centerX = (screenWidth+player.width)/2;
     var centerY = (screenHeight+player.height)/2;
