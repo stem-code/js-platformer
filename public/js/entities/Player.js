@@ -9,16 +9,16 @@ class Player extends Entity {
         this.active = true;
         var that = this;
 
-        this.pressMap = {
+        this.pressMap = { // Player controls
             87: function() { if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // w
             32: function()  {if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // space
             83: function() { that.movementVector[1] += 10 }, // s
             83: function() { that.movementVector[1] += 10 }, // down arrow
 
-            65: function() { that.movementVector[0] = -200 }, // a
-            37: function() { that.movementVector[0] = -200 }, // left arrow
-            68: function() { that.movementVector[0] = 200 },  // d 
-            39: function() { that.movementVector[0] = 200 }, // right arrow
+            65: function() { that.movementVector[0] = Math.max(that.movementVector[0] - 20, -200) }, // a
+            37: function() { that.movementVector[0] = Math.max(that.movementVector[0] - 20, -200) }, // left arrow
+            68: function() { that.movementVector[0] = Math.min(that.movementVector[0] + 20, 200) },  // d 
+            39: function() { that.movementVector[0] = Math.min(that.movementVector[0] + 20, 200) }, // right arrow
             70: function() { shoot() }, // f
         }
     }
