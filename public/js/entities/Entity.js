@@ -14,7 +14,6 @@ class Entity {
     }
 
     draw(ctx, player, screenDimens){
-        console.log(player);
         player = player || {posX: 0, posY: 0};
 
         var centerX = (screenDimens[0]+player.width)/2;

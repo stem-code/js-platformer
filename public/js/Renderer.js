@@ -62,9 +62,13 @@ class Renderer {
         if (entity.active){
             updatePlayerPos({ x: entity.posX, y: entity.posY-renderer.windowDimens[1] });
             this.activePlayer = entity;
+
             if (this.activePlayer != null) {
                 this.activePlayer.handleKeyPress(this.keys);
             }
+        } else if (entity.flag){
+            this.entities.splice(this.entities.indexOf(entity), 1);
+            console.log("Entity was flagged, deleting it.")
         }
 
         if (entity.active && entity.posY < -3000000){
@@ -107,6 +111,8 @@ class Renderer {
         this.entities.forEach(entity => {
             this.entityUpdate(entity, deltaTime);
         });
+
+        drawWalls(this.ctx, this.windowDimens[0], this.windowDimens[1], this.activePlayer);
 
         drawLava(this.ctx, this.windowDimens[0], this.windowDimens[1], this.activePlayer);
 

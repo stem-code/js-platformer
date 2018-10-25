@@ -76,8 +76,8 @@ io.on("connection", function(socket){
         }
         map = [];
         socket.emit("getMap", {map:false} );
+        
     });
-
     socket.on('updatePos', function(newPos){
         playerList[myId].x = newPos.x;
         playerList[myId].y = newPos.y;
@@ -107,7 +107,7 @@ io.on("connection", function(socket){
     socket.on("setMap", function(passMap){
         console.log("Player has generated map, this is now our current map.")
         map = passMap;
-        console.log(map);
+        // console.log(map);
 
         currentGame.countdownStarted = true;
         currentGame.countdownStartTime = new Date().getTime() / 1000;
