@@ -40,6 +40,7 @@ class Renderer {
         this.cameraOffset = {x:0, y:0};
 
         this.diffCounter = 0;
+        this.activePlayer;
 
         var that = this;
         document.onkeydown = function(evt) {
@@ -62,9 +63,10 @@ class Renderer {
 
         if (entity.active){
             updatePlayerPos({ x: entity.posX, y: entity.posY-renderer.windowDimens[1] });
+            this.activePlayer = entity;
         }
 
-        if (entity.active && entity.posY < 0){
+        if (entity.active && entity.posY < -3000000){
             onWin();
         }
 
@@ -76,8 +78,7 @@ class Renderer {
         this.physics.applyPhysics(entity, deltaTime);
         entity.posY -= this.cameraOffset.y;
 
-        entity.draw(this.ctx);
-        
+        entity.draw(this.ctx, this.activePlayer, this.windowDimens);
         // console.log(entity.posY);
         // Collisions.checkCollision(entity.boundingBox);
     }
@@ -106,7 +107,7 @@ class Renderer {
             this.entityUpdate(entity, deltaTime);
         });
 
-        drawLava(this.ctx, this.windowDimens[0], this.windowDimens[1]);
+        drawLava(this.ctx, this.windowDimens[0], this.windowDimens[1], this.activePlayer);
 
         this.diffCounter++;
     }
