@@ -15,10 +15,10 @@ class Player extends Entity {
             83: function() { that.movementVector[1] += 4 }, // s
             83: function() { that.movementVector[1] += 4 }, // down arrow
 
-            65: function() { that.movementVector[0] -= 2 }, // a
-            37: function() { that.movementVector[0] -= 2 }, // left arrow
-            68: function() { that.movementVector[0] += 2 },  // d 
-            39: function() { that.movementVector[0] += 2 }, // right arrow
+            65: function() { that.movementVector[0] = -200 }, // a
+            37: function() { that.movementVector[0] = -200 }, // left arrow
+            68: function() { that.movementVector[0] = 200 },  // d 
+            39: function() { that.movementVector[0] = 200 }, // right arrow
             70: function() { shoot() }, // f
         }
     }
