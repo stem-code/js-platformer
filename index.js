@@ -71,6 +71,9 @@ io.on("connection", function(socket){
             startTime: 0,
             started: false
         }
+        for (var i = 0;i < playerList.length;i++) {
+            // Set player positions to bottom of the map.
+        }
         map = [];
         socket.emit("getMap", {map:false} );
     });
