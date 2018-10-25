@@ -1,27 +1,17 @@
 class Entity {
-    constructor(x, y, width, height, mass, color, gravityEnabled){
-        this.posX = x;
-        this.posY = y;
-        this.width = width;
-        this.height = height;
-
-        this.mass = mass;
+    constructor(aabb, color, gravityEnabled){
+        this.aabb = aabb
         this.color = color || "#3F51B5";
         this.gravityEnabled = gravityEnabled || true;
-
-        this.forces = [0, 0];
-        this.active = false;
+        this.movementVector = [0, 0];
     }
 
-    draw(ctx, player, screenDimens){
-        console.log(player);
-        player = player || {posX: 0, posY: 0};
+    update(deltaTime){
+        //this.posY -= this.cameraOffset.y;
+    }
 
-        var centerX = (screenDimens[0]+player.width)/2;
-        var centerY = (screenDimens[1]+player.height)/2;
-
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.posX-player.posX+centerX, this.posY-player.posY+centerY, this.width, this.height);
+    draw(renderer){
+        renderer.drawAABB(this.aabb, this.color);
     }
 
     onCollision() { // parameters could be various collision information

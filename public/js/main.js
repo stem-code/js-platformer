@@ -5,13 +5,20 @@ window.requestAnimationFrame = window.requestAnimationFrame
     || function(f){return setTimeout(f, 1000/60);}; // simulate calling code 60 
 
 var renderer = new Renderer("main-canvas");
+var physics = new Physics();
+var collisions = new Collisions();
+var entities = [];
 
 function start(){
     document.getElementById("message-box").style = "display: none;"
-    testEntity = new Player(1000, 100, 50, 50, 50, true, "#F44336");
-    testEntity.movementVector = [-200, 0];
-    renderer.createEntity(testEntity);
-    var level = 1;
+
+    this.fpsMeter = document.getElementById("fps");
+    this.diffCounter = 0;
+
+    var player = new ActivePlayer(new AABB(1000, 100, 50, 50), "#F44336");
+    player.movementVector = [-200, 0];
+    entities.push(player);
+
     var platformList = [];
     
     initServer(renderer, function(generateMap, map, cb){
@@ -30,7 +37,7 @@ function start(){
                 var difference = (Math.floor(Math.random()*2)-1)*(Math.random()*400)+75;
                 var currPlat = new Platform(Math.min(Math.max(lastPlatformPosition + difference, 0), renderer.windowDimens[1]), renderer.windowDimens[1]-90-(x*100), 300, 100);
                 platformList.push(currPlat);
-                renderer.createEntity(currPlat);
+                entities.push(currPlat);
                 lastPlatformPosition = Math.min(Math.max(lastPlatformPosition + difference, 0), renderer.windowDimens[1]);
                 // setTimeout(createEntities, 1000);
                 generatedMap.push(Math.min(Math.max(lastPlatformPosition + difference, 0), renderer.windowDimens[1]));
@@ -43,14 +50,48 @@ function start(){
                 console.log("Got " + map[x], renderer.windowDimens[1]-90-(x*100));
                 var currPlat = new Platform(map[x], renderer.windowDimens[1]-90-(x*100), 300, 100);
                 platformList.push(currPlat);
-                renderer.createEntity(currPlat);
+                entities.push(currPlat);
                 // setTimeout(createEntities, 1000);
             }
         }
     });
     
-    function update(currTime) {
-        renderer.update(currTime);
+    function update(currentTime) {
+        if (!this.startTime) this.startTime = currentTime;
+        if (!this.lastTime) this.lastTime = currentTime;
+        var deltaTime = currentTime - this.lastTime;
+        this.lastTime = currentTime;
+        this.startTime += currentTime;
+
+        if (this.diffCounter % 10 == 0){
+            this.fpsMeter.innerHTML = (1000/deltaTime).toFixed(0);
+        }
+
+        renderer.updateCamera(player);
+
+        entities.forEach(entity => {
+            entity.update(deltaTime);
+            entity.draw(renderer);
+        });
+        updatePlayerPos({ x: player.aabb.x, y: player.aabb.y-renderer.windowDimens[1] });
+        this.entitiesToCheck = entities;
+        var collisionStatus = collisions.checkCollisions(player, renderer.windowDimens, entitiesToCheck, deltaTime);
+        //console.log("x: " + player.aabb.x + " y: " + player.aabb.y);
+        if (player != null) {
+            player.handleKeyPress(renderer.keys);
+        }
+        if (player.posY < -3000000){
+            onWin();
+        } else if (player.aabb.y+(player.aabb.height/2) > renderer.windowDimens[1]-lavaHeight){
+            onLose();
+        }
+        physics.applyPhysics(player, deltaTime);
+        renderer.drawAABB(new AABB(0, 0, 1000, 1000), "#8BC34A");
+
+        drawLava(renderer.ctx, renderer.windowDimens[0], renderer.windowDimens[1], player);
+
+        this.diffCounter++;
+        renderer.updateDisplay();
         window.requestAnimationFrame(update);
     }
     

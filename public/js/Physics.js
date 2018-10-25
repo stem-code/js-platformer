@@ -1,16 +1,12 @@
 class Physics {
     constructor(){
-        this.gravity = 9.8; 
+        this.gravity = 0; 
     }
 
     applyPhysics(entity, time){ //Time: time since last frame (ms)
         if (!entity.movementVector){ entity.movementVector = [0, -1] };
         if (!entity.nextMovement) { entity.nextMovement = entity.movementVector };
         if (!time) { time = 0; }
-        // console.log(entity.movementVector);
-
-        // console.log(time);
-        // console.log(this.gravity);
 
         // entity.movementVector = entity.gravityEnabled ? entity.nextMovement : entity.movementVector;
 
@@ -25,9 +21,7 @@ class Physics {
             entity.movementVector[1] = finalYVelocity;
         }
 
-        entity.posX = entity.posX + entity.movementVector[0]*time;
-        entity.posY = entity.posY + entity.movementVector[1]*time;
-
-        // console.log(entity.posY);
+        entity.aabb.x += entity.movementVector[0]*time;
+        entity.aabb.y += entity.movementVector[1]*time;
     }
 }

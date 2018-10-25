@@ -22,8 +22,6 @@ class Renderer {
             document.body["offsetHeight"],
             document.documentElement["offsetHeight"]
         )
-
-        this.fpsMeter = document.getElementById("fps");
         
         this.windowDimens = [windowWidth, windowHeight];
         this.canvas = document.getElementById(canvasId);
@@ -31,16 +29,9 @@ class Renderer {
         this.canvas.height = windowHeight;
 
         this.ctx = this.canvas.getContext("2d");
-        this.physics = new Physics();
-        this.collisions = new Collisions();
-
-        this.entities = [];
 
         this.keys = [];
         this.cameraOffset = {x:0, y:0};
-
-        this.diffCounter = 0;
-        this.activePlayer;
 
         var that = this;
         document.onkeydown = function(evt) {
@@ -56,60 +47,17 @@ class Renderer {
         };
     }
 
-    entityUpdate(entity, deltaTime){
-        var collisionStatus = this.collisions.checkCollisions(entity, this.windowDimens, this.entitiesToCheck, deltaTime);
-        // this.physics.applyCollisions(entity, collisionStatus);
-        if (entity.active){
-            updatePlayerPos({ x: entity.posX, y: entity.posY-renderer.windowDimens[1] });
-            this.activePlayer = entity;
-            if (this.activePlayer != null) {
-                this.activePlayer.handleKeyPress(this.keys);
-            }
-        }
-
-        if (entity.active && entity.posY < -3000000){
-            onWin();
-        }
-
-        if (entity.active && entity.posY+(entity.height/2) > this.windowDimens[1]-lavaHeight){
-            console.log(this.windowDimens[1]-lavaHeight)
-            onLose();
-        }
-
-        this.physics.applyPhysics(entity, deltaTime);
-        entity.posY -= this.cameraOffset.y;
-
-        entity.draw(this.ctx, this.activePlayer, this.windowDimens);
-        // console.log(entity.posY);
-        // Collisions.checkCollision(entity.boundingBox);
-    }
-    
-    createEntity(entity){
-        this.entities.push(entity);
+    drawAABB(aabb, color) {
+        this.ctx.fillStyle = color;
+        this.ctx.fillRect(aabb.x + this.cameraOffset[0], aabb.y + this.cameraOffset[1], aabb.width, aabb.height);
     }
 
-    update(currentTime){
-        if (!this.startTime) this.startTime = currentTime;
-        if (!this.lastTime) this.lastTime = currentTime;
-        var deltaTime = currentTime - this.lastTime;
-        this.lastTime = currentTime;
-        this.startTime += currentTime;
+    updateCamera(entity) {
+        this.cameraOffset[0] = (this.windowDimens[0] + entity.aabb.width) / 2;
+        this.cameraOffset[1] = (this.windowDimens[1] + entity.aabb.height) / 2;
+    }
 
-        this.entitiesToCheck = this.entities;
-
-        if (this.diffCounter % 10 == 0){
-            this.fpsMeter.innerHTML = (1000/deltaTime).toFixed(0);
-        }
-
-        // console.log(deltaTime);
+    updateDisplay() {
         screenFuncs.clear(this.ctx, this.windowDimens);
-        // console.log(this.windowDimens);
-        this.entities.forEach(entity => {
-            this.entityUpdate(entity, deltaTime);
-        });
-
-        drawLava(this.ctx, this.windowDimens[0], this.windowDimens[1], this.activePlayer);
-
-        this.diffCounter++;
     }
 }
