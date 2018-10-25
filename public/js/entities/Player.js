@@ -12,13 +12,13 @@ class Player extends Entity {
         this.pressMap = {
             87: function() { if (!that.jumping) that.movementVector[1] -= 35; that.jumping = true; }, // w
             32: function()  {if (!that.jumping) that.movementVector[1] -= 35; that.jumping = true; }, // space
-            83: function() { that.movementVector[1] += 80 }, // s
-            83: function() { that.movementVector[1] += 80 }, // down arrow
+            83: function() { that.movementVector[1] += 4 }, // s
+            83: function() { that.movementVector[1] += 4 }, // down arrow
 
-            65: function() { that.movementVector[0] -= 20 }, // a
-            37: function() { that.movementVector[0] -= 20 }, // left arrow
-            68: function() { that.movementVector[0] += 20 },  // d 
-            39: function() { that.movementVector[0] += 20 }, // right arrow
+            65: function() { that.movementVector[0] -= 2 }, // a
+            37: function() { that.movementVector[0] -= 2 }, // left arrow
+            68: function() { that.movementVector[0] += 2 },  // d 
+            39: function() { that.movementVector[0] += 2 }, // right arrow
             70: function() { shoot() }, // f
         }
     }
