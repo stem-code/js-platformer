@@ -73,8 +73,8 @@ io.on("connection", function(socket){
         }
         map = [];
         socket.emit("getMap", {map:false} );
+        
     });
-
     socket.on('updatePos', function(newPos){
         playerList[myId].x = newPos.x;
         playerList[myId].y = newPos.y;
