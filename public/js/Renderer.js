@@ -45,6 +45,7 @@ class Renderer {
         var that = this;
         document.onkeydown = function(evt) {
             evt = evt || window.event;
+            console.log("key pressed");
             if (that.keys.indexOf(evt.keyCode) == -1) that.keys.push(evt.keyCode);
         };
         
