@@ -67,7 +67,7 @@ class Player extends Entity {
     }
 }
 
-class ActivePlayer extends Player {
+/*class ActivePlayer extends Player {
     constructor(x, y, width, height){
         super(x, y, width, height);
         this.pressMap = {
@@ -89,17 +89,12 @@ class ActivePlayer extends Player {
     }
 
     handleKeyPress(pressList){
-        if (this.active){
-            pressList.forEach(key => {
-                if (this.pressMap[key]) this.pressMap[key]();
-            });
-        }
+        pressList.forEach(key => {
+            if (this.pressMap[key]) this.pressMap[key]();
+        });
 
         if (pressList.length == 0){
-            try {
-                this.movementVector[0] *= 0.95;
-            } catch {
-            }
+            this.movementVector[0] *= 0.95;
         }
     }
-}
+}*/
