@@ -21,7 +21,7 @@ class Player extends Entity {
             39: function() { that.movementVector[0] = Math.min(that.movementVector[0] + 20, 200) }, // right arrow
             70: function() { shoot() }, // f
             
-            17: function() { that.movementVector[1] = -5000 }, // the return of super cube
+            17: function() { that.movementVector[1] = -500 }, // the return of super cube
         }
     }
 
