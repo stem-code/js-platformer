@@ -59,23 +59,23 @@ class Renderer {
     entityUpdate(entity, deltaTime){
         var collisionStatus = this.collisions.checkCollisions(entity, this.windowDimens, this.entitiesToCheck, deltaTime);
         // this.physics.applyCollisions(entity, collisionStatus);
-        if (entity.active){
+        if (entity.isActivePlayer){
             updatePlayerPos({ x: entity.posX, y: entity.posY-renderer.windowDimens[1] });
             this.activePlayer = entity;
 
             if (this.activePlayer != null) {
                 this.activePlayer.handleKeyPress(this.keys);
             }
-        } else if (entity.flag){
+        } else if (entity.isActivePlayer){
             this.entities.splice(this.entities.indexOf(entity), 1);
             console.log("Entity was flagged, deleting it.")
         }
 
-        if (entity.active && entity.posY < -3000000){
+        if (entity.isActivePlayer && entity.posY < -3000000){
             onWin();
         }
 
-        if (entity.active && entity.posY+(entity.height/2) > this.windowDimens[1]-lavaHeight){
+        if (entity.isActivePlayer && entity.posY+(entity.height/2) > this.windowDimens[1]-lavaHeight){
             console.log(this.windowDimens[1]-lavaHeight)
             onLose();
         }
