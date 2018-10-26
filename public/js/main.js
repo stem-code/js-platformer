@@ -17,7 +17,7 @@ function start(){
     initServer(renderer, function(generateMap, map, cb){
         platformList.forEach(plat => {
             plat.flag = true;
-            plat.posY = -1000000000000;
+            plat.posY = -10000;
         });
 
         platformList = [];
