@@ -80,7 +80,7 @@ class Renderer {
             onLose();
         }
 
-        this.physics.applyPhysics(entity, deltaTime);
+        //this.physics.applyPhysics(entity, deltaTime);
         entity.posY -= this.cameraOffset.y;
 
         entity.draw(this.ctx, this.activePlayer, this.windowDimens);
