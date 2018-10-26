@@ -44,7 +44,7 @@ class Player extends Entity {
 
         if (this.repurcussion > 30 || this.repurcussion < 1) { this.repurcussionDirection *= -1; }
         if (this.lastPositions.length >= 10){ this.lastPositions.splice(0, 1); }
-        console.log("x: " + this.posX + " y: " + this.poxY);
+        //console.log("x: " + this.posX + " y: " + this.poxY);
     }
 
     onCollision() {
