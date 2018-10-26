@@ -63,19 +63,19 @@ class Renderer {
             updatePlayerPos({ x: entity.posX, y: entity.posY-renderer.windowDimens[1] });
             this.activePlayer = entity;
 
-            if (this.activePlayer != null) {
+            if (this.active != null) {
                 this.activePlayer.handleKeyPress(this.keys);
             }
-        } else if (entity.isActivePlayer){
+        } else if (entity.active){
             this.entities.splice(this.entities.indexOf(entity), 1);
             console.log("Entity was flagged, deleting it.")
         }
 
-        if (entity.isActivePlayer && entity.posY < -3000000){
+        if (entity.active && entity.posY < -3000000){
             onWin();
         }
 
-        if (entity.isActivePlayer && entity.posY+(entity.height/2) > this.windowDimens[1]-lavaHeight){
+        if (entity.active && entity.posY+(entity.height/2) > this.windowDimens[1]-lavaHeight){
             console.log(this.windowDimens[1]-lavaHeight)
             onLose();
         }
