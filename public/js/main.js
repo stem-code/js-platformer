@@ -8,7 +8,7 @@ var renderer = new Renderer("main-canvas");
 
 function start(){
     document.getElementById("message-box").style = "display: none;"
-    testEntity = new Player(1000, 650, 50, 50, 50, true, "#F44336");
+    testEntity = new Player(1000, 650, 50, 50);
     testEntity.movementVector = [-200, 0];
     renderer.createEntity(testEntity);
     var level = 1;
@@ -17,7 +17,7 @@ function start(){
     initServer(renderer, function(generateMap, map, cb){
         platformList.forEach(plat => {
             plat.flag = true;
-            plat.posY = -1000000000000000000;
+            plat.posY = 0;
         });
 
         platformList = [];
