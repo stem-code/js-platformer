@@ -52,17 +52,12 @@ class Player extends Entity {
     }
 
     handleKeyPress(pressList){
-        if (this.active){
-            pressList.forEach(key => {
-                if (this.pressMap[key]) this.pressMap[key]();
-            });
-        }
+        pressList.forEach(key => {
+            if (this.pressMap[key]) this.pressMap[key]();
+        });
 
         if (pressList.length == 0){
-            try {
-                this.movementVector[0] *= 0.95;
-            } catch {
-            }
+            this.movementVector[0] *= 0.95;
         }
     }
 }
