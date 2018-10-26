@@ -6,7 +6,7 @@ class Player extends Entity {
         this.repurcussion = 0;
         this.repurcussionDirection = 1;
         this.jumping = false;
-        this.activePlayer = true;
+        this.active = true;
         var that = this;
 
         this.pressMap = { // Player controls
