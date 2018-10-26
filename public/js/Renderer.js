@@ -65,7 +65,7 @@ class Renderer {
             updatePlayerPos({ x: entity.posX, y: entity.posY-renderer.windowDimens[1] });
             this.activePlayer = entity;
 
-            if (this.active != null) {
+            if (this.activePlayer != null) {
                 this.activePlayer.handleKeyPress(this.keys);
             }
         } else if (entity.active){
