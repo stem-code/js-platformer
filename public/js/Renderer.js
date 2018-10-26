@@ -59,7 +59,7 @@ class Renderer {
     entityUpdate(entity, deltaTime){
         var collisionStatus = this.collisions.checkCollisions(entity, this.windowDimens, this.entitiesToCheck, deltaTime);
         // this.physics.applyCollisions(entity, collisionStatus);
-        if (entity.isActivePlayer){
+        if (entity.active){
             updatePlayerPos({ x: entity.posX, y: entity.posY-renderer.windowDimens[1] });
             this.activePlayer = entity;
 
