@@ -13,7 +13,7 @@ function start(){
     renderer.createEntity(testEntity);
     var level = 1;
     var platformList = [];
-    var numPlatforms = 40;
+    var numPlatforms = 50;
     
     initServer(renderer, function(generateMap, map, cb){
         platformList.forEach(plat => {
