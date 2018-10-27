@@ -73,7 +73,7 @@ class Renderer {
             console.log("Entity was flagged, deleting it.")
         }
 
-        if (entity.active && entity.posY < -3000000){
+        if (entity.active && entity.posY < -5000){
             onWin();
         }
 
