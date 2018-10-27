@@ -12,7 +12,7 @@ var playerList = {};
 var map = [];
 
 var idCount = 0;
-var lavaRate = 3;
+var lavaRate = 6;
 
 var currentGame = {
     startsIn: 10,
