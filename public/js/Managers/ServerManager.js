@@ -6,6 +6,7 @@ class ServerManager {
         this.UI = UI;
 
         this.socket = io(); // set up our communication socket
+        this.socket.emit('sendUserName', playerManager.activePlayer.userName);
 
         var that = this; // Event flow control workaround
         this.socketEvents = {
@@ -28,6 +29,10 @@ class ServerManager {
                 that.playerManager.grantUserId(playerId, userId); // playerManager uses its own ID system, so we have to make sure its associated with the server ID
         
                 that.UI.setNumUsers(that.playerManager.getPlayerCount());
+            },
+            'updateUserName': function(data){
+                var userId = data.userId;
+                that.playerManager.updateUserName(userId, data.userName);
             },
             'updateUserPos': function(data){
                 var userId = data.userId;

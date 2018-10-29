@@ -1,7 +1,7 @@
 class Player extends Entity {
     constructor(x, y, width, height, name){
         super(x, y, width, height, 0, "#3F51B5", true);
-        this.name = name;
+        this.userName = name;
     
         this.lastPositions = [];
         this.repurcussion = 0;
@@ -13,7 +13,7 @@ class Player extends Entity {
 
         this.pressMap = { // Player controls
             87: function() { if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // w
-            32: function()  { console.log(that.jumping); if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // space
+            32: function()  { if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // space
             83: function() { that.movementVector[1] += 10 }, // s
             83: function() { that.movementVector[1] += 10 }, // down arrow
 
@@ -51,7 +51,7 @@ class Player extends Entity {
         
         super.draw(ctx, activePlayer);
         ctx.font = "20px Impact";
-        ctx.fillText(this.name, this.posX - activePlayer.posX + centerX, this.posY - activePlayer.posY - this.width * 0.3 + centerY);
+        ctx.fillText(this.userName, this.posX - activePlayer.posX + centerX, this.posY - activePlayer.posY - this.width * 0.3 + centerY);
         //console.log("x: " + this.posX + " y: " + this.poxY);
     }
 

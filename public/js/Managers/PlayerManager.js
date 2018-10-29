@@ -24,6 +24,10 @@ class PlayerManager {
         this.players[this.userIdTranslations[userId]].posY = newY;
     }
 
+    updateUserName(userId, userName){
+        this.players[this.userIdTranslations[userId]].userName = userName;
+    }
+
     removePlayer(userId){
         var playerId = this.userIdTranslations[userId];
         this.players.splice(playerId, 1);
