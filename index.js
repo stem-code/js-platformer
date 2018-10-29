@@ -36,8 +36,8 @@ io.on("connection", function(socket){
             player = playerList[id];
 
             if (id != myId){
-                socket.emit("newUser", {userId:id, initX:player.x, initY: player.y}); 
-                player.socket.emit("newUser", {userId:myId, initX:playerList[myId].x, initY:playerList[myId].y}); // Tell each user about this guy who just joined
+                socket.emit("newUser", {userId:id, initX:player.x, initY: player.y, userName:player.name}); 
+                player.socket.emit("newUser", {userId:myId, initX:playerList[myId].x, initY:playerList[myId].y, userName:playerList[myId].name}); // Tell each user about this guy who just joined
             }
         }
     } else {

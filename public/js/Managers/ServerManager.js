@@ -23,7 +23,7 @@ class ServerManager {
             },
             'newUser': function(data){ // New user joins the server
                 var userId = data.userId;
-                var player = new Player(data.initX, data.initY, 50, 50, "TestName");
+                var player = new Player(data.initX, data.initY, 50, 50, data.userName);
                 var playerId = that.playerManager.addPlayer(player);
                 that.playerManager.grantUserId(playerId, userId); // playerManager uses its own ID system, so we have to make sure its associated with the server ID
         
