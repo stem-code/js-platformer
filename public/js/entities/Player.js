@@ -49,6 +49,8 @@ class Player extends Entity {
         }
 
         super.draw(ctx, activePlayer);
+        ctx.font = "20px Impact";
+        ctx.fillText(document.getElementById("player-name").value, centerX, -this.width * 0.3 + centerY);
         //console.log("x: " + this.posX + " y: " + this.poxY);
     }
 

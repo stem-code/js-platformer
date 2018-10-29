@@ -40,8 +40,8 @@ class PlayerManager {
     }
 
     resetMainPlayer(){
-        this.activePlayer.posX = 500;
-        this.activePlayer.posY = 250;
+        this.activePlayer.posX = Screen.windowWidth / 2;
+        this.activePlayer.posY = lavaHeight - 100;
     }
 
     update(deltaTime){

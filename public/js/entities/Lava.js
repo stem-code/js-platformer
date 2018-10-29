@@ -1,4 +1,4 @@
-var lavaHeight = 0;
+var lavaHeight = 100;
 var lavaColor = "#4CAF50";
 
 function drawLava(ctx, screenWidth, screenHeight, player) {
