@@ -11,10 +11,12 @@ class ServerManager {
         this.socketEvents = {
             'getMap': function(mapInfo){ // A request for the map (either the server is sending over a map, or it wants us to generate one)
                 if (!mapInfo.map){ // server does not have map, but needs one
+                    platformManager.clearPlatforms();
                     var map = platformManager.autoGenerate(); // make Platformer manager generate the platforms
                     that.socket.emit("setMap", map); // send the newly-created map to the server
                     that.UI.setNumUsers(that.playerManager.getPlayerCount()); // update the user count
                 } else {
+                    platformManager.clearPlatforms();
                     platformManager.mapGenerate(mapInfo.mapData); // Make the PlatformManager generate the platforms on-screen based on server data
                     that.UI.setNumUsers(that.playerManager.getPlayerCount());
                 }
@@ -29,7 +31,7 @@ class ServerManager {
             },
             'updateUserPos': function(data){
                 var userId = data.userId;
-                that.playerManager.updatePlayerPos(userId, data.x, data.y);
+                that.playerManager.updatePlayerPos(userId, data.x, Screen.windowHeight-data.y);
             },
             'userLeft': function(data){ // When user leaves server
                 that.playerManager.removePlayer(data.userId);
@@ -48,6 +50,7 @@ class ServerManager {
             'endGame': function(){ // the game has ended
                 that.playerManager.resetMainPlayer();
                 that.platformManager.clearPlatforms();
+                that.playerManager.activePlayer.movementVector = [0, 0];
                 
                 lavaColor = "#4CAF50";
                 lavaHeight = 0;
@@ -60,7 +63,9 @@ class ServerManager {
     }
 
     update(){
-        this.socket.emit('updatePos', this.playerManager.getMainPlayerPos());
+        var mainPos = this.playerManager.getMainPlayerPos();
+        mainPos[0] = mainPos[0] + Screen.windowHeight;
+        this.socket.emit('updatePos', mainPos);
         if (this.gameManager.win){
             this.socket.emit("win");
             this.platformManager.clearPlatforms();
