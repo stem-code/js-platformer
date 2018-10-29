@@ -12,7 +12,7 @@ class Player extends Entity {
 
         this.pressMap = { // Player controls
             87: function() { if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // w
-            32: function()  {if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // space
+            32: function()  { console.log(that.jumping); if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // space
             83: function() { that.movementVector[1] += 10 }, // s
             83: function() { that.movementVector[1] += 10 }, // down arrow
 
