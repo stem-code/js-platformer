@@ -1,6 +1,7 @@
 class Player extends Entity {
-    constructor(x, y, width, height){
+    constructor(x, y, width, height, name){
         super(x, y, width, height, 0, "#3F51B5", true);
+        this.name = name;
     
         this.lastPositions = [];
         this.repurcussion = 0;
@@ -50,7 +51,7 @@ class Player extends Entity {
 
         super.draw(ctx, activePlayer);
         ctx.font = "20px Impact";
-        ctx.fillText(document.getElementById("player-name").value, centerX, -this.width * 0.3 + centerY);
+        ctx.fillText(this.name, centerX, -this.width * 0.3 + centerY);
         //console.log("x: " + this.posX + " y: " + this.poxY);
     }
 
