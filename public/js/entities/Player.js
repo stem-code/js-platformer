@@ -48,10 +48,10 @@ class Player extends Entity {
             if (this.repurcussion > 30 || this.repurcussion < 1) { this.repurcussionDirection *= -1; }
             if (this.lastPositions.length >= 10){ this.lastPositions.splice(0, 1); }
         }
-
+        
         super.draw(ctx, activePlayer);
         ctx.font = "20px Impact";
-        ctx.fillText(this.name, centerX, -this.width * 0.3 + centerY);
+        ctx.fillText(this.name, this.posX - activePlayer.posX + centerX, this.posY - activePlayer.posY - this.width * 0.3 + centerY);
         //console.log("x: " + this.posX + " y: " + this.poxY);
     }
 
