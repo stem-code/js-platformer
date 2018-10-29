@@ -1,60 +1,20 @@
-var screenFuncs = {
-    clear: function(ctx, windowDimens){
-        ctx.fillStyle = "#222222";
-        ctx.fillRect(0, 0, windowDimens[0], windowDimens[1]);
-    }
-}
-
 class Renderer {
-    constructor(canvasId){
-        var windowWidth = Math.max(
-            document.documentElement["clientWidth"],
-            document.body["scrollWidth"],
-            document.documentElement["scrollWidth"],
-            document.body["offsetWidth"],
-            document.documentElement["offsetWidth"]
-        );
-
-        var windowHeight = Math.max(
-            document.documentElement["clientHeight"],
-            document.body["scrollHeight"],
-            document.documentElement["scrollHeight"],
-            document.body["offsetHeight"],
-            document.documentElement["offsetHeight"]
-        )
-
-        this.fpsMeter = document.getElementById("fps");
-        
-        this.windowDimens = [windowWidth, windowHeight];
+    constructor(canvasId, platformManager, playerManager){        
         this.canvas = document.getElementById(canvasId);
-        this.canvas.width = windowWidth;
-        this.canvas.height = windowHeight;
+        this.canvas.width = Screen.windowWidth;
+        this.canvas.height = Screen.windowHeight;
+
+        this.platformManager = platformManager;
+        this.playerManager = playerManager;
 
         this.ctx = this.canvas.getContext("2d");
-        this.physics = new Physics();
-        this.collisions = new Collisions();
 
         this.entities = [];
-
-        this.keys = [];
-        this.cameraOffset = {x:0, y:0};
 
         this.diffCounter = 0;
         this.activePlayer;
 
         var that = this;
-        document.onkeydown = function(evt) {
-            evt = evt || window.event;
-            console.log("key pressed");
-            if (that.keys.indexOf(evt.keyCode) == -1) that.keys.push(evt.keyCode);
-        };
-        
-        document.onkeyup = function(evt) {
-            evt = evt || window.event;
-            if (that.keys.indexOf(evt.keyCode) > -1){
-                that.keys.splice(that.keys.indexOf(evt.keyCode), 1);
-            }
-        };
     }
 
     entityUpdate(entity, deltaTime){
@@ -94,29 +54,31 @@ class Renderer {
         this.entities.push(entity);
     }
 
-    update(currentTime){
-        if (!this.startTime) this.startTime = currentTime;
-        if (!this.lastTime) this.lastTime = currentTime;
-        var deltaTime = currentTime - this.lastTime;
-        this.lastTime = currentTime;
-        this.startTime += currentTime;
+    clear(){
+        this.ctx.fillStyle = "#222222";
+        this.ctx.fillRect(0, 0, Screen.windowWidth, Screen.windowHeight);
+    }
 
-        this.entitiesToCheck = this.entities;
+    update(deltaTime){
+        // this.entitiesToCheck = this.entities;
 
         if (this.diffCounter % 10 == 0){
-            this.fpsMeter.innerHTML = (1000/deltaTime).toFixed(0);
+            
         }
 
         // console.log(deltaTime);
-        screenFuncs.clear(this.ctx, this.windowDimens);
+        this.clear();
         // console.log(this.windowDimens);
-        this.entities.forEach(entity => {
-            this.entityUpdate(entity, deltaTime);
-        });
+        // this.entities.forEach(entity => {
+        //     this.entityUpdate(entity, deltaTime);
+        // });
 
-        drawWalls(this.ctx, this.windowDimens[0], this.windowDimens[1], this.activePlayer);
+        this.playerManager.draw(this.ctx);
+        this.platformManager.draw(this.ctx, this.playerManager.activePlayer);
 
-        drawLava(this.ctx, this.windowDimens[0], this.windowDimens[1], this.activePlayer);
+        drawWalls(this.ctx, Screen.windowWidth, Screen.windowHeight, this.playerManager.activePlayer);
+
+        drawLava(this.ctx, Screen.windowWidth, Screen.windowHeight, this.playerManager.activePlayer);
 
         this.diffCounter++;
     }
