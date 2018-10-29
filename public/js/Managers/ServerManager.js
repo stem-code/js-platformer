@@ -23,9 +23,9 @@ class ServerManager {
                 var userId = data.userId;
                 var player = new Player(data.initX, data.initY, 50, 50);
                 var playerId = that.playerManager.addPlayer(player);
-                this.playerManager.grantUserId(playerId, userId); // playerManager uses its own ID system, so we have to make sure its associated with the server ID
+                that.playerManager.grantUserId(playerId, userId); // playerManager uses its own ID system, so we have to make sure its associated with the server ID
         
-                this.UI.setUsers(this.playerManager.playerCount());
+                that.UI.setUsers(this.playerManager.playerCount());
             },
             'updateUserPos': function(data){
                 var userId = data.userId;
