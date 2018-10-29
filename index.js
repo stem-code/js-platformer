@@ -26,7 +26,7 @@ var currentGame = {
 io.on("connection", function(socket){
     var myId = idCount;
     idCount++;
-    playerList[myId] = {socket: socket, x: 0, y: 0};
+    playerList[myId] = {socket: socket, x: 0, y: 0, userName: "Connecting..."};
     console.log("Someone connected");
 
     if (map.length > 0 ){//&& playerList.length != 0){
@@ -36,14 +36,26 @@ io.on("connection", function(socket){
             player = playerList[id];
 
             if (id != myId){
-                socket.emit("newUser", {userId:id, initX:player.x, initY: player.y}); 
-                player.socket.emit("newUser", {userId:myId, initX:playerList[myId].x, initY:playerList[myId].y}); // Tell each user about this guy who just joined
+                socket.emit("newUser", {userId:id, initX:player.x, initY: player.y, userName:player.userName}); 
+                player.socket.emit("newUser", {userId:myId, initX:playerList[myId].x, initY:playerList[myId].y, userName:playerList[myId].userName}); // Tell each user about this guy who just joined
             }
         }
     } else {
         console.log("We don't have a map. Asking the player to generate one...");
         socket.emit("getMap", {map:false} );
     }
+
+    socket.on("sendUserName", function(userName) {
+            playerList[myId].userName = userName;
+    
+            for (var id in playerList){
+                var player = playerList[id];
+                if (id != myId){
+                    console.log("We are sending userName: " + userName + " of user " + myId + " to user " + id);
+                    player.socket.emit('updateUserName', {userId: myId, x:player.x, y:player.y, userName:userName});
+                }
+            }
+    });
 
     socket.on("lost", function(){
         io.sockets.emit("endGame");

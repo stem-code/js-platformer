@@ -1,6 +1,7 @@
 class Player extends Entity {
-    constructor(x, y, width, height){
+    constructor(x, y, width, height, name){
         super(x, y, width, height, 0, "#3F51B5", true);
+        this.userName = name;
     
         this.lastPositions = [];
         this.repurcussion = 0;
@@ -55,8 +56,10 @@ class Player extends Entity {
             if (this.repurcussion > 30 || this.repurcussion < 1) { this.repurcussionDirection *= -1; }
             if (this.lastPositions.length >= 10){ this.lastPositions.splice(0, 1); }
         }
-
+        
         super.draw(ctx, activePlayer);
+        ctx.font = "20px Impact";
+        ctx.fillText(this.userName, this.posX - activePlayer.posX + centerX, this.posY - activePlayer.posY - this.width * 0.3 + centerY);
         //console.log("x: " + this.posX + " y: " + this.poxY);
     }
 
