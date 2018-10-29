@@ -17,7 +17,8 @@ class UIManager { // Handles all UI (game menus, you lose/win text, etc.)
         this.winstatusElement.innerHTML = winStatus;
 
         clearTimeout(this.winstatusTimeout); // clear the timeout function if this was previously called (otherwise it will erase earlier)
-        this.winstatusTimeout = setTimeout(function(){ this.winstatusElement.innerHTML = "" }, fadeDelay*1000);
+        var that = this;
+        this.winstatusTimeout = setTimeout(function(){ that.winstatusElement.innerHTML = "" }, fadeDelay*1000);
     }
 
     setCountDown(countDownValue){

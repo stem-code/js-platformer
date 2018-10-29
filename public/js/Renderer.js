@@ -8,11 +8,6 @@ class Renderer {
         this.playerManager = playerManager;
 
         this.ctx = this.canvas.getContext("2d");
-
-        this.entities = [];
-
-        this.diffCounter = 0;
-        this.activePlayer;
     }
 
     clear(){

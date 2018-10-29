@@ -61,13 +61,13 @@ var Collisions = function() { // Basically a static class (this has not yet been
         });
 
         if (entity.active && entity.posY+entity.height >= screenDimens[1]){
+            entity.jumping = false;
             try {
-                entity.jumping = false;
                 // console.log(entity.posY+entity.height);
                 if (entity.movementVector[1] < 50 ){
                     entity.movementVector[1] = -9.8*50*time;
                 } else {
-                    entity.posY = screenDimens[1]-entity.height;
+                    entity.posY = screenDimens[1]-entity.height-1;
                     entity.movementVector[1] = entity.movementVector[1]*-0.4;
                 }
             } catch {
