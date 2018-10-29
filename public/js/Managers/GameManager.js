@@ -17,6 +17,11 @@ class GameManager {
             "win":"You Won!"
         }
     }
+
+    reset(){
+        this.win = false;
+        this.lose = false;
+    }
     
     update(){
         var player = this.playerManager.activePlayer;

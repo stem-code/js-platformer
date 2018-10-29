@@ -63,12 +63,10 @@ class ServerManager {
         this.socket.emit('updatePos', this.playerManager.getMainPlayerPos());
         if (this.gameManager.win){
             this.socket.emit("win");
-            this.gameManager.win = false;
-            this.gameManager.lost = false;
+            this.gameManager.reset();
         } else if (this.gameManager.lose){
             this.socket.emit("lost");
-            this.gameManager.win = false;
-            this.gameManager.lost = false;
-        }  
+            this.gameManager.reset();
+        }
     }
 }
