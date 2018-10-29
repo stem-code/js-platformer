@@ -66,6 +66,5 @@ class PlayerManager {
             player.draw(ctx, this.activePlayer);
         });
     }
-
     // If game becomes too laggy, update and draw might have to be combined (we are now looping twice)
 }

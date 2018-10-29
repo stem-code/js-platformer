@@ -67,7 +67,7 @@ var Collisions = function() { // Basically a static class (this has not yet been
                 if (entity.movementVector[1] < 50 ){
                     entity.movementVector[1] = -9.8*50*time;
                 } else {
-                    entity.posY = screenDimens[1]-entity.height-1;
+                    entity.posY = screenDimens[1]-entity.height;
                     entity.movementVector[1] = entity.movementVector[1]*-0.4;
                 }
             } catch {
