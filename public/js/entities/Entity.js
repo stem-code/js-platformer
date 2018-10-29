@@ -13,11 +13,11 @@ class Entity {
         this.active = false;
     }
 
-    draw(ctx, player, screenDimens){
+    draw(ctx, player){
         player = player || {posX: 0, posY: 0};
 
-        var centerX = (screenDimens[0]+player.width)/2;
-        var centerY = (screenDimens[1]+player.height)/2;
+        var centerX = (Screen.windowWidth+player.width)/2;
+        var centerY = (Screen.windowHeight+player.height)/2;
 
         ctx.fillStyle = this.color;
         ctx.fillRect(this.posX-player.posX+centerX, this.posY-player.posY+centerY, this.width, this.height);

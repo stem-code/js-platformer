@@ -1,59 +1,42 @@
-window.requestAnimationFrame = window.requestAnimationFrame
-    || window.mozRequestAnimationFrame
-    || window.webkitRequestAnimationFrame
-    || window.msRequestAnimationFrame
-    || function(f){return setTimeout(f, 1000/60);}; // simulate calling code 60 
+// JS-Platformer Main
 
-var renderer = new Renderer("main-canvas");
+window.requestAnimationFrame = window.requestAnimationFrame // Browser Compatibility (different browsers have different functions for rendering)
+    || window.mozRequestAnimationFrame // Firefox (Mozilla-Based)
+    || window.webkitRequestAnimationFrame // Safari, Opera, older versions of Chrome
+    || window.msRequestAnimationFrame // Edge, IE
+    || function(f){return setTimeout(f, 1000/60);}; // Dinosaur Browsers that are surpassed by rocks
 
-function start(){
+
+function start() { // when the player presses the start button
     document.getElementById("message-box").style = "display: none;"
-    testEntity = new Player(500, 250, 50, 50);
-    testEntity.movementVector = [-200, 0];
-    renderer.createEntity(testEntity);
-    var level = 1;
-    var platformList = [];
-    var numPlatforms = 55;
-    
-    initServer(renderer, function(generateMap, map, cb){
-        platformList.forEach(plat => {
-            plat.flag = true;
-            plat.posY = -10000;
-        });
 
-        platformList = [];
+    var platformManager = new PlatformManager();
+    var playerManager = new PlayerManager();
+    var UI = new UIManager();
+    var gameManager = new GameManager(playerManager, platformManager, UI);
 
-        if (generateMap){
-            var generatedMap = [];
+    player = new Player(500, 250, 50, 50);
+    var playerId = playerManager.addPlayer(player);
+    playerManager.setMainPlayer(playerId); // this is the only playable player (other players are controlled through multiplayer)
+
+    var serverManager = new ServerManager(platformManager, playerManager, UI, gameManager); // Handle all socket server communications (creation of remote platforms, players, etc.)
+    var renderer = new Renderer("main-canvas", platformManager, playerManager);
     
-            var lastPlatformPosition = Math.floor(Math.random()*(renderer.windowDimens[0]-400));
-            for (var x=0; x<numPlatforms; x++){
-                var difference = (Math.floor(Math.random()*2)-1)*(Math.random()*400)+75;
-                var currPlat = new Platform(Math.min(Math.max(lastPlatformPosition + difference, 0), renderer.windowDimens[1]), renderer.windowDimens[1]-90-(x*100), 300, 100);
-                platformList.push(currPlat);
-                renderer.createEntity(currPlat);
-                lastPlatformPosition = Math.min(Math.max(lastPlatformPosition + difference, 0), renderer.windowDimens[1]);
-                // setTimeout(createEntities, 1000);
-                generatedMap.push(Math.min(Math.max(lastPlatformPosition + difference, 0), renderer.windowDimens[1]));
-            }
-    
-            cb(generatedMap);
-        } else {
-            console.log("Generating map from server data...");
-            for (var x=0; x<numPlatforms; x++){
-                console.log("Got " + map[x], renderer.windowDimens[1]-90-(x*100));
-                var currPlat = new Platform(map[x], renderer.windowDimens[1]-90-(x*100), 300, 100);
-                platformList.push(currPlat);
-                renderer.createEntity(currPlat);
-                // setTimeout(createEntities, 1000);
-            }
-        }
-    });
-    
-    function update(currTime) {
-        renderer.update(currTime);
+    var lastTime;
+    var deltaTime;
+    var update = function(currentTime) { // renderer loop
+        if (!lastTime) lastTime = currentTime;
+        deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+
+        UI.updateFPS(deltaTime);
+        platformManager.update(deltaTime);
+        playerManager.update(deltaTime);
+        gameManager.update();
+        serverManager.update(); // ServerManager also updates (to send current status)
+
+        renderer.update(deltaTime);
         window.requestAnimationFrame(update);
     }
-    
     update();
 }

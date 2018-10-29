@@ -7,6 +7,7 @@ class Physics {
         if (!entity.movementVector){ entity.movementVector = [0, -1] };
         if (!entity.nextMovement) { entity.nextMovement = entity.movementVector };
         if (!time) { time = 0; }
+
         // console.log(entity.movementVector);
 
         // console.log(time);
@@ -25,6 +26,7 @@ class Physics {
             entity.movementVector[1] = finalYVelocity;
         }
 
+        // console.log(entity.posX);
         entity.posX = entity.posX + entity.movementVector[0]*time;
         entity.posY = entity.posY + entity.movementVector[1]*time;
 

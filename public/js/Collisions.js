@@ -1,5 +1,5 @@
-class Collisions {
-    checkCollisions(entity, screenDimens, entitiesToCheck, time){
+var Collisions = function() { // Basically a static class (this has not yet been optimized)
+    this.checkCollisions = function(entity, screenDimens, entitiesToCheck, time){
         var collisionList = [];
         time = time / 1000;
 
@@ -71,7 +71,7 @@ class Collisions {
                     entity.movementVector[1] = entity.movementVector[1]*-0.4;
                 }
             } catch {
-                console.log("EERRORR");
+                console.log("ERROR");
             }
         }
 
@@ -85,3 +85,5 @@ class Collisions {
         return collisionList;
     }
 }
+
+Collisions = new Collisions(); // static workaround (var was explicitly not put in)
