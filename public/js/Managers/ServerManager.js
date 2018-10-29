@@ -31,7 +31,7 @@ class ServerManager {
             },
             'updateUserPos': function(data){
                 var userId = data.userId;
-                that.playerManager.updatePlayerPos(userId, data.x, Screen.windowHeight-data.y);
+                that.playerManager.updatePlayerPos(userId, data.x, Screen.windowHeight+data.y);
             },
             'userLeft': function(data){ // When user leaves server
                 that.playerManager.removePlayer(data.userId);
@@ -64,7 +64,7 @@ class ServerManager {
 
     update(){
         var mainPos = this.playerManager.getMainPlayerPos();
-        mainPos[0] = mainPos[0] + Screen.windowHeight;
+        mainPos.y = mainPos.y - Screen.windowHeight;
         this.socket.emit('updatePos', mainPos);
         if (this.gameManager.win){
             this.socket.emit("win");
