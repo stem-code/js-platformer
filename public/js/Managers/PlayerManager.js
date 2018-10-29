@@ -50,9 +50,8 @@ class PlayerManager {
                 Collisions.checkCollisions(player, Screen.getWindowDimens(), this.gameManager.getAllEntities(), deltaTime);
             }
             
-            this.physics.applyPhysics(player, deltaTime);
-
             if (player.active){
+                this.physics.applyPhysics(player, deltaTime);
                 player.handleKeyPress(KeyboardManager.keys); // only the active player responds to keyboard events
             }
         });

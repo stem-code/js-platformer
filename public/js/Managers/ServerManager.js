@@ -25,11 +25,11 @@ class ServerManager {
                 var playerId = that.playerManager.addPlayer(player);
                 that.playerManager.grantUserId(playerId, userId); // playerManager uses its own ID system, so we have to make sure its associated with the server ID
         
-                that.UI.setUsers(this.playerManager.playerCount());
+                that.UI.setNumUsers(that.playerManager.getPlayerCount());
             },
             'updateUserPos': function(data){
                 var userId = data.userId;
-                that.playerManager.updatePlayerPos(userId, data.x, Screen.windowHeight-data.y);
+                that.playerManager.updatePlayerPos(userId, data.x, data.y);
             },
             'userLeft': function(data){ // When user leaves server
                 that.playerManager.removePlayer(data.userId);
@@ -63,9 +63,11 @@ class ServerManager {
         this.socket.emit('updatePos', this.playerManager.getMainPlayerPos());
         if (this.gameManager.win){
             this.socket.emit("win");
+            this.platformManager.clearPlatforms();
             this.gameManager.reset();
         } else if (this.gameManager.lose){
             this.socket.emit("lost");
+            this.platformManager.clearPlatforms();
             this.gameManager.reset();
         }
     }
