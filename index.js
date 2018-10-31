@@ -38,8 +38,8 @@ io.on("connection", function(socket){
                 player = playerList[id];
     
                 if (id != myId){
-                    socket.emit("newUser", {userId:id, initX:player.x, initY: player.y, userName:player.userName}); 
-                    player.socket.emit("newUser", {userId:myId, initX:playerList[myId].x, initY:playerList[myId].y, userName:playerList[myId].userName}); // Tell each user about this guy who just joined
+                    socket.emit("newUser", {userId:id, initX:player.x, initY: player.y, userName:player.userName, appearance:player.appearance}); 
+                    player.socket.emit("newUser", {userId:myId, initX:playerList[myId].x, initY:playerList[myId].y, userName:playerList[myId].userName, appearance:player.appearance}); // Tell each user about this guy who just joined
                 }
             }
         } else {
@@ -68,7 +68,7 @@ io.on("connection", function(socket){
         for (var id in playerList){
             var player = playerList[id];
             if (id != myId){
-                player.socket.emit('updateUserAppearance', {userId: myId, x:player.x, y:player.y, userName:userName, appearance:appearance});
+                player.socket.emit('updateUserAppearance', {userId: myId, appearance:appearance});
             }
         }
 });
