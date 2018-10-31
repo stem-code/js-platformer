@@ -9,6 +9,18 @@ class ServerManager {
         this.socket.emit('sendUserName', playerManager.activePlayer.userName);
 
         var that = this; // Event flow control workaround
+
+        // window.onblur = function () { // If we leave the tab
+        //     this.socket.emit('leave'); 
+        // }; 
+
+        // window.onfocus = function(){
+        //     this.socket.emit("rejoin");
+        //     that.playerManager.resetMainPlayer();
+        //     that.platformManager.clearPlatforms();
+        //     that.playerManager.activePlayer.movementVector = [0, 0];
+        // }
+
         this.socketEvents = {
             'getMap': function(mapInfo){ // A request for the map (either the server is sending over a map, or it wants us to generate one)
                 if (!mapInfo.map){ // server does not have map, but needs one
@@ -38,7 +50,7 @@ class ServerManager {
                 var userId = data.userId;
                 that.playerManager.updatePlayerPos(userId, data.x, Screen.windowHeight+data.y);
             },
-            'userLeft': function(data){ // When user leaves server
+            'userLeft': function(data){ // When user leaves server (or dies)
                 that.playerManager.removePlayer(data.userId);
             },
             'countdown': function(timeRemaining){ // When server counts down before game, it emits an event whenever the timer descends
@@ -49,16 +61,28 @@ class ServerManager {
                 lavaHeight = inf.lavaHeight;
             },        
             'startGame': function(){ // The game has begun
+                that.gameManager.gameStarted = true;
                 that.UI.clearUI();
                 lavaColor = "#FF9800";
             },
             'endGame': function(){ // the game has ended
+                console.log("END OF GAME")
+                setTimeout(function(){
+                    that.gameManager.spectatorView(false);
+                }, 400);
                 that.playerManager.resetMainPlayer();
                 that.platformManager.clearPlatforms();
                 that.playerManager.activePlayer.movementVector = [0, 0];
                 
                 lavaColor = "#4CAF50";
                 lavaHeight = 0;
+                document.getElementById("log").innerHTML = "";
+            },
+            "timeout": function(){ // The server has deleted us because we either left the tab or lost our connection 😢
+                location.reload (); // Reload the page
+            },
+            "playerEvent":function(data){ // When something happens to another player
+                document.getElementById("log").innerHTML = "<p class='msg-text'>💀💀💀 " + data.userName + " is now dead. 💀💀💀</p>"
             }
         }
         
@@ -70,15 +94,25 @@ class ServerManager {
     update(){
         var mainPos = this.playerManager.getMainPlayerPos();
         mainPos.y = mainPos.y - Screen.windowHeight;
-        this.socket.emit('updatePos', mainPos);
+
+        if (!this.gameManager.spectatorViewEnabled){
+            this.socket.emit('updatePos', mainPos);
+        } else {
+            this.socket.emit('updatePos', {fake:true});
+        }
+
         if (this.gameManager.win){
             this.socket.emit("win");
             this.platformManager.clearPlatforms();
             this.gameManager.reset();
         } else if (this.gameManager.lose){
-            this.socket.emit("lost");
-            this.platformManager.clearPlatforms();
+            var that = this;
+            setTimeout(function(){
+                that.socket.emit("lost");
+            }, 300);
+            // this.platformManager.clearPlatforms();
             this.gameManager.reset();
+            this.gameManager.spectatorView(true);
         }
     }
 }
