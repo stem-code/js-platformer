@@ -4,6 +4,7 @@ class PlayerManager {
         this.physics = new Physics();
         this.activePlayer;
         this.userIdTranslations = {}; // User ID on the server and locally are completely different, so we have to make sure we know which server IDs correspond to local player IDs
+        this.spectatorView = false;
     }
 
     addPlayer(player){
@@ -51,9 +52,14 @@ class PlayerManager {
                 Collisions.checkCollisions(player, Screen.getWindowDimens(), this.gameManager.getAllEntities(), deltaTime);
             }
             
-            if (player.active){
+            if (player.active && !player.spectator){
                 this.physics.applyPhysics(player, deltaTime);
                 player.handleKeyPress(KeyboardManager.keys); // only the active player responds to keyboard events
+            }
+
+            if (player.active && player.spectator && this.players.length > 0){
+                player.posX = this.players[this.players.length-1].posX;
+                player.posY = this.players[this.players.length-1].posY;
             }
         });
     }
@@ -71,4 +77,12 @@ class PlayerManager {
     }
 
     // If game becomes too laggy, update and draw might have to be combined (we are now looping twice)
+    
+    setSpectatorStatus(toggle){
+        if (toggle){ // spectator mode needs to be enabled
+            this.activePlayer.spectator = true;
+        } else {
+            this.activePlayer.spectator = false;
+        }
+    }
 }

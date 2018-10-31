@@ -10,11 +10,21 @@ class Player extends Entity {
         this.jumping = false;
         this.active = false;
         this.movementVector = [0, 0];
+        this.spectator = false;
+
         var that = this;
 
+        function jump(){
+            if (!that.jumping){
+                that.posY -= 1;
+                that.movementVector[1] = -350;
+                that.jumping = true;
+            }
+        }
+
         this.pressMap = { // Player controls
-            87: function() { if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // w
-            32: function()  { if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // space
+            87: jump, // w
+            32: jump, // space
             83: function() { that.movementVector[1] += 10 }, // s
             83: function() { that.movementVector[1] += 10 }, // down arrow
 
@@ -32,7 +42,7 @@ class Player extends Entity {
         var centerX = (Screen.windowWidth + activePlayer.width) / 2;
         var centerY = (Screen.windowHeight + activePlayer.height) / 2;
 
-        if (this.active){
+        if (this.active && !this.spectator){
             for (var pos in this.lastPositions){
                 ctx.fillStyle = "rgba(63, 81, 181, " +(0.5 / (this.lastPositions.length-pos)).toFixed(2) + ")";
                 ctx.fillRect(this.lastPositions[pos][0] - this.posX+centerX, this.lastPositions[pos][1]-this.posY+centerY, this.width, this.height);
@@ -89,6 +99,12 @@ class Player extends Entity {
         ctx.font = "20px Impact";
         ctx.fillText(this.userName, this.posX - activePlayer.posX + centerX, this.posY - activePlayer.posY - this.width * 0.3 + centerY);
         //console.log("x: " + this.posX + " y: " + this.poxY);
+        if (!this.spectator){
+            super.draw(ctx, activePlayer);
+            ctx.font = "20px Impact";
+            ctx.fillText(this.userName, this.posX - activePlayer.posX + centerX, this.posY - activePlayer.posY - this.width * 0.3 + centerY);
+            //console.log("x: " + this.posX + " y: " + this.poxY);
+        }
     }
 
     updateAppearance() {
