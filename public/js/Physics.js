@@ -1,6 +1,6 @@
 class Physics {
     constructor(){
-        this.gravity = -9.8; 
+        this.gravity = 9.8; 
     }
 
     applyPhysics(entity, time){ //Time: time since last frame (ms)
