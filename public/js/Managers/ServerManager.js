@@ -128,5 +128,5 @@ class ServerManager {
 }
 
 function onClickFuncAppearance() {
-    this.socket.emit('sendUserAppearance', globalPlayerManager.activePlayer.appearance);
+    this.globalSocket.emit('sendUserAppearance', globalPlayerManager.activePlayer.appearance);
 }
