@@ -57,6 +57,17 @@ io.on("connection", function(socket){
             }
     });
 
+    socket.on("sendUserAppearance", function(appearance) {
+        playerList[myId].appearance = appearance;
+
+        for (var id in playerList){
+            var player = playerList[id];
+            if (id != myId){
+                player.socket.emit('updateUserAppearance', {userId: myId, x:player.x, y:player.y, userName:userName, appearance:appearance});
+            }
+        }
+});
+
     socket.on("lost", function(){
         io.sockets.emit("endGame");
         currentGame = {

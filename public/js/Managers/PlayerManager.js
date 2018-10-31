@@ -15,18 +15,15 @@ class PlayerManager {
         this.userIdTranslations[userId] = playerId;
     }
 
-    getPlayerCount(){
-        return this.players.length;
-    }
+    getPlayerCount(){ return this.players.length; }
 
     updatePlayerPos(userId, newX, newY){
         this.players[this.userIdTranslations[userId]].posX = newX;
         this.players[this.userIdTranslations[userId]].posY = newY;
     }
 
-    updateUserName(userId, userName){
-        this.players[this.userIdTranslations[userId]].userName = userName;
-    }
+    updateUserName(userId, userName){ this.players[this.userIdTranslations[userId]].userName = userName; }
+    updateAppearance(userId, appearance){ this.players[this.userIdTranslations[userId]].appearance = appearance; }
 
     removePlayer(userId){
         var playerId = this.userIdTranslations[userId];
@@ -64,6 +61,12 @@ class PlayerManager {
     draw(ctx){
         this.players.forEach(player => {
             player.draw(ctx, this.activePlayer);
+        });
+    }
+
+    updateAppearance() {
+        this.players.forEach(player => {
+            player.updateAppearance();
         });
     }
 

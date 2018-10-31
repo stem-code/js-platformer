@@ -1,12 +1,18 @@
+var globalSocket;
+var globalPlayerManager;
+
 class ServerManager {
     constructor(platformManager, playerManager, UI, gameManager){
         this.platformManager = platformManager;
         this.playerManager = playerManager;
+        globalPlayerManager = this.playerManager;
         this.gameManager = gameManager;
         this.UI = UI;
 
         this.socket = io(); // set up our communication socket
+        globalSocket = this.socket;
         this.socket.emit('sendUserName', playerManager.activePlayer.userName);
+        this.socket.emit('sendUserAppearance', playerManager.activePlayer.appearance);
 
         var that = this; // Event flow control workaround
         this.socketEvents = {
@@ -33,6 +39,10 @@ class ServerManager {
             'updateUserName': function(data){
                 var userId = data.userId;
                 that.playerManager.updateUserName(userId, data.userName);
+            },
+            'updateUserAppearance': function(data){
+                var userId = data.userId;
+                that.playerManager.updateUserAppearance(userId, data.appearance);
             },
             'updateUserPos': function(data){
                 var userId = data.userId;
@@ -81,4 +91,9 @@ class ServerManager {
             this.gameManager.reset();
         }
     }
+}
+
+function onClickFuncAppearance() {
+    globalPlayerManager.activePlayer.appearance.color = document.getElementById("player-color").value;
+    this.socket.emit('sendUserAppearance', globalPlayerManager.activePlayer.appearance);
 }
