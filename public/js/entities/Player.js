@@ -108,6 +108,9 @@ class Player extends Entity {
     }
 
     updateAppearance() {
+        if (this.active) {
+            this.appearance.color = document.getElementById("player-color").value;
+        }
         this.color = this.appearance.color;
     }
 

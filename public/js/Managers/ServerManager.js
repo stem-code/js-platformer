@@ -128,6 +128,5 @@ class ServerManager {
 }
 
 function onClickFuncAppearance() {
-    globalPlayerManager.activePlayer.appearance.color = document.getElementById("player-color").value;
     this.socket.emit('sendUserAppearance', globalPlayerManager.activePlayer.appearance);
 }
