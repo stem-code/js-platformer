@@ -127,6 +127,6 @@ class ServerManager {
     }
 }
 
-function onClickFuncAppearance() {
+/*function onClickFuncAppearance() {
     this.globalSocket.emit('sendUserAppearance', globalPlayerManager.activePlayer.appearance);
-}
+}*/
