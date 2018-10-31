@@ -70,11 +70,11 @@ class PlayerManager {
         });
     }
 
-    updateAppearance() {
-        this.players.forEach(player => {
-            player.updateAppearance();
-        });
-    }
+    // updateAppearance() {
+    //     this.players.forEach(player => {
+    //         player.updateAppearance();
+    //     });
+    // }
 
     // If game becomes too laggy, update and draw might have to be combined (we are now looping twice)
     

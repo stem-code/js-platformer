@@ -1,16 +1,11 @@
-var globalSocket;
-var globalPlayerManager;
-
 class ServerManager {
     constructor(platformManager, playerManager, UI, gameManager){
         this.platformManager = platformManager;
         this.playerManager = playerManager;
-        globalPlayerManager = this.playerManager;
         this.gameManager = gameManager;
         this.UI = UI;
 
         this.socket = io(); // set up our communication socket
-        globalSocket = this.socket;
         this.socket.emit('sendUserName', playerManager.activePlayer.userName);
         this.socket.emit('sendUserAppearance', playerManager.activePlayer.appearance);
 
@@ -79,6 +74,7 @@ class ServerManager {
                 console.log("END OF GAME")
                 setTimeout(function(){
                     that.gameManager.spectatorView(false);
+                    lavaColor = "#4CAF50";
                 }, 400);
                 that.playerManager.resetMainPlayer();
                 that.platformManager.clearPlatforms();
@@ -99,6 +95,11 @@ class ServerManager {
         for (var event in this.socketEvents){
             this.socket.on(event, this.socketEvents[event]);
         }
+    }
+
+    updateColor(color){
+        this.playerManager.activePlayer.updateAppearance(color);
+        this.socket.emit('sendUserAppearance', this.playerManager.activePlayer.appearance);
     }
 
     update(){
@@ -126,7 +127,3 @@ class ServerManager {
         }
     }
 }
-
-/*function onClickFuncAppearance() {
-    this.globalSocket.emit('sendUserAppearance', globalPlayerManager.activePlayer.appearance);
-}*/

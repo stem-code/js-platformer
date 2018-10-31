@@ -126,6 +126,7 @@
             }
 
         </style>
+        <link rel="stylesheet" type="text/css" href="lib/spectrum.css"> 
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     </head>
     <body>
@@ -133,7 +134,7 @@
             <p>Connected Users: <span id="num-users">?</span></p>
             <p>FPS: <span id="fps">?</span></p>
             <p>FPS Cap: 60 || 30</p>
-            <input type="color" id="player-color"/> Player Color<br/>
+            <input type='text' id="player-color" />
         </div>
 
         <h1 id="countDown"></h1>
@@ -154,8 +155,11 @@
 
         <canvas id="main-canvas"></canvas>
 
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-        
+        <script src="lib/spectrum.js"></script>
+
         <script src="js/entities/Lava.js"></script>
         <script src="js/entities/Walls.js"></script>
         <script src="js/entities/Entity.js"></script>
