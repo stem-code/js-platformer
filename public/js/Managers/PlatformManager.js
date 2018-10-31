@@ -24,12 +24,22 @@ class PlatformManager { // Manages Platform Object (creation, deletion, etc.)
         platformWidth = platformWidth || 300;
 
         var generatedMap = []; // The generatedMap will contain the x position of each platform (since the y values are always the same)
-        var lastPlatformPosition = Math.floor(Math.random()*(Screen.windowWidth-400));
+        var lastPlatformPosition = Math.floor(Math.random()*(wallWidth/2));
 
         for (var x=0; x<numPlatforms; x++){
-            var difference = (Math.floor(Math.random()*2)-1)*(Math.random()*400)+75; // The difference between each platform's x value (to make sure they are not too far apart)
+            // var difference = Math.random()*(wallWidth)-(wallWidth/2); // The difference between each platform's x value (to make sure they are not too far apart)
             
-            var platformX = Screen.ensureScreenBounds(lastPlatformPosition + difference, platformWidth); // make sure that platform is generated inside screen bounds
+            // var platformX = Screen.ensureScreenBounds(lastPlatformPosition + difference, platformWidth); // make sure that platform is generated inside screen bounds
+
+            // lastPlatformPosition += difference;
+            // if (lastPlatformPosition <= 0 || lastPlatformPosition+300 > wallWidth){
+            //     var platformX = (-1*difference);
+            // } else {
+            //     var platformX = lastPlatformPosition;
+            // }
+
+            var platformX = Math.floor(Math.random()*(wallWidth-300))
+
             var platformY = Screen.windowHeight-90-(x*100);
 
             var platform = new Platform(platformX, platformY, 300, 100); // Add the difference in x value to the last platform's position
