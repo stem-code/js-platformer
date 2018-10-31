@@ -96,10 +96,12 @@ class Player extends Entity {
         ctx.fill();
         ctx.fillStyle = "#267913";
         ctx.fillRect(this.posX - activePlayer.posX + centerX + this.width * 0.4, this.posY - activePlayer.posY + centerY - this.height * 0.15, this.width * 0.2, this.height * 0.15);*/
-        ctx.font = "20px Impact";
-        ctx.fillText(this.userName, this.posX - activePlayer.posX + centerX, this.posY - activePlayer.posY - this.width * 0.3 + centerY);
+        
         //console.log("x: " + this.posX + " y: " + this.poxY);
         if (!this.spectator){
+            ctx.font = "20px Impact";
+            ctx.fillText(this.userName, this.posX - activePlayer.posX + centerX, this.posY - activePlayer.posY - this.width * 0.3 + centerY);
+            
             super.draw(ctx, activePlayer);
             ctx.font = "20px Impact";
             ctx.fillText(this.userName, this.posX - activePlayer.posX + centerX, this.posY - activePlayer.posY - this.width * 0.3 + centerY);

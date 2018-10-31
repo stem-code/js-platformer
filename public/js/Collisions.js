@@ -77,8 +77,8 @@ var Collisions = function() { // Basically a static class (this has not yet been
 
         if (entity.active && entity.posX < 0 || entity.posX + entity.width > wallWidth){
             try {
-                entity.posX = entity.posX > 0 ? screenDimens[0]-entity.width : 1;
-            entity.movementVector[0] *= -1;
+                entity.posX = entity.posX > 0 ? wallWidth-entity.width : 1;
+                entity.movementVector[0] *= -1;
             } catch {
             }
         }
