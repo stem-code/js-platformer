@@ -60,49 +60,14 @@ class Player extends Entity {
             if (this.lastPositions.length >= 10){ this.lastPositions.splice(0, 1); }
         }
         
-        super.draw(ctx, activePlayer);
-        /*ctx.fillStyle = "#451904";
-        ctx.fillRect(this.posX - activePlayer.posX + centerX + this.width * 0.1, this.posY - activePlayer.posY + centerY, this.width * 0.01, this.height);
-        ctx.fillRect(this.posX - activePlayer.posX + centerX + this.width * 0.3, this.posY - activePlayer.posY + centerY, this.width * 0.01, this.height);
-        ctx.fillRect(this.posX - activePlayer.posX + centerX + this.width * 0.45, this.posY - activePlayer.posY + centerY, this.width * 0.01, this.height);
-        ctx.fillRect(this.posX - activePlayer.posX + centerX + this.width * 0.6, this.posY - activePlayer.posY + centerY, this.width * 0.01, this.height);
-        ctx.fillRect(this.posX - activePlayer.posX + centerX + this.width * 0.75, this.posY - activePlayer.posY + centerY, this.width * 0.01, this.height);
-        ctx.fillRect(this.posX - activePlayer.posX + centerX + this.width * 0.9, this.posY - activePlayer.posY + centerY, this.width * 0.01, this.height);
-        ctx.fillStyle = "#F2FF00";
-        ctx.beginPath();
-        ctx.moveTo(this.posX - activePlayer.posX + centerX + this.width * 0.25, this.posY - activePlayer.posY + centerY + this.height * 0.15);
-        ctx.lineTo(this.posX - activePlayer.posX + centerX + this.width * 0.1, this.posY - activePlayer.posY + centerY + this.height * 0.45);
-        ctx.lineTo(this.posX - activePlayer.posX + centerX + this.width * 0.4, this.posY - activePlayer.posY + centerY + this.height * 0.45);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.moveTo(this.posX - activePlayer.posX + centerX + this.width * 0.75, this.posY - activePlayer.posY + centerY + this.height * 0.15);
-        ctx.lineTo(this.posX - activePlayer.posX + centerX + this.width * 0.9, this.posY - activePlayer.posY + centerY + this.height * 0.45);
-        ctx.lineTo(this.posX - activePlayer.posX + centerX + this.width * 0.6, this.posY - activePlayer.posY + centerY + this.height * 0.45);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.moveTo(this.posX - activePlayer.posX + centerX + this.width * 0.5, this.posY - activePlayer.posY + centerY + this.height * 0.45);
-        ctx.lineTo(this.posX - activePlayer.posX + centerX + this.width * 0.4, this.posY - activePlayer.posY + centerY + this.height * 0.6);
-        ctx.lineTo(this.posX - activePlayer.posX + centerX + this.width * 0.6, this.posY - activePlayer.posY + centerY + this.height * 0.6);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(this.posX - activePlayer.posX + centerX + this.width * 0.5, this.posY - activePlayer.posY + centerY + this.height * 0.8, this.height * 0.15, 0, 180, false);
-        ctx.fill();
-        ctx.fillStyle = "#FF9800";
-        ctx.beginPath();
-        ctx.arc(this.posX - activePlayer.posX + centerX + this.width * 0.25, this.posY - activePlayer.posY + centerY + this.height * 0.4, this.height * 0.075, 0, 180, false);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(this.posX - activePlayer.posX + centerX + this.width * 0.75, this.posY - activePlayer.posY + centerY + this.height * 0.4, this.height * 0.075, 0, 180, false);
-        ctx.fill();
-        ctx.fillStyle = "#267913";
-        ctx.fillRect(this.posX - activePlayer.posX + centerX + this.width * 0.4, this.posY - activePlayer.posY + centerY - this.height * 0.15, this.width * 0.2, this.height * 0.15);*/
+        super.draw(ctx, player);
         
         //console.log("x: " + this.posX + " y: " + this.poxY);
         if (!this.spectator){
             ctx.font = "20px Impact";
             ctx.fillText(this.userName, this.posX - activePlayer.posX + centerX, this.posY - activePlayer.posY - this.width * 0.3 + centerY);
             
-            super.draw(ctx, activePlayer);
+            //super.draw(ctx, activePlayer);
             ctx.font = "20px Impact";
             ctx.fillText(this.userName, this.posX - activePlayer.posX + centerX, this.posY - activePlayer.posY - this.width * 0.3 + centerY);
             //console.log("x: " + this.posX + " y: " + this.poxY);

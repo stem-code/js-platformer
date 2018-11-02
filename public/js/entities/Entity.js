@@ -1,12 +1,13 @@
 class Entity {
-    constructor(x, y, width, height, mass, color, gravityEnabled){
+    constructor(x, y, width, height, image, color, gravityEnabled){
         this.posX = x;
         this.posY = y;
         this.width = width;
         this.height = height;
 
-        this.mass = mass;
+        this.image = image;
         this.color = color || "#3F51B5";
+
         this.gravityEnabled = gravityEnabled || true;
 
         this.forces = [0, 0];
@@ -19,8 +20,13 @@ class Entity {
         var centerX = (Screen.windowWidth+player.width)/2;
         var centerY = (Screen.windowHeight+player.height)/2;
 
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.posX-player.posX+centerX, this.posY-player.posY+centerY, this.width, this.height);
+        if (this.image != null) {
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(spriteImage, this.posX-player.posX+centerX, this.posY-player.posY+centerY, this.width, this.height);
+        } else {
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.posX-player.posX+centerX, this.posY-player.posY+centerY, this.width, this.height);
+        }
     }
 
     onCollision() { // parameters could be various collision information

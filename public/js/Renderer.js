@@ -1,3 +1,6 @@
+var spriteImage = new Image();
+spriteImage.src = "/res/js-platformer-test-sprites.png";
+
 class Renderer {
     constructor(canvasId, platformManager, playerManager){        
         this.canvas = document.getElementById(canvasId);
