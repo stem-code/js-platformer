@@ -1,6 +1,6 @@
 class Player extends Entity {
     constructor(x, y, width, height, name, appearance){ 
-        super(x, y, width, height, 0, appearance.color, true);
+        super(x, y, width, height, appearance.color, true);
         this.userName = name;
         this.appearance = appearance;
 
