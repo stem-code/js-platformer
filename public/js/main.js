@@ -27,7 +27,7 @@ function start() { // when the player presses the start button
     var UI = new UIManager();
     var gameManager = new GameManager(playerManager, platformManager, UI);
 
-    player = new Player(500, 250, 50, 50, document.getElementById("player-name").value, {color: playerColor});
+    player = new Player(500, 250, 50, 50, document.getElementById("player-name").value, {color: playerColor, spriteSheetIndex: 0});
     var playerId = playerManager.addPlayer(player);
     playerManager.setMainPlayer(playerId); // this is the only playable player (other players are controlled through multiplayer)
 

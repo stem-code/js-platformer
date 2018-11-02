@@ -1,5 +1,4 @@
-var spriteImage = new Image();
-spriteImage.src = "/res/js-platformer-test-sprites.png";
+var playerSpriteSheets = [new SpriteSheet("/res/js-platformer-test-sprites.png", 16, 16)];
 
 class Renderer {
     constructor(canvasId, platformManager, playerManager){        
