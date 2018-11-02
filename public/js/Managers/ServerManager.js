@@ -71,17 +71,17 @@ class ServerManager {
                 lavaColor = "#FF9800";
             },
             'endGame': function(){ // the game has ended
-                console.log("END OF GAME")
+                lavaHeight = 0;
+                lavaColor = "#4CAF50";
+
+                console.log("END OF GAME");
                 setTimeout(function(){
                     that.gameManager.spectatorView(false);
                     lavaColor = "#4CAF50";
                 }, 400);
                 that.playerManager.resetMainPlayer();
                 that.platformManager.clearPlatforms();
-                that.playerManager.activePlayer.movementVector = [0, 0];
-                
-                lavaColor = "#4CAF50";
-                lavaHeight = 0;
+                that.playerManager.activePlayer.movementVector = [0, 0];                
                 document.getElementById("log").innerHTML = "";
             },
             "timeout": function(){ // The server has deleted us because we either left the tab or lost our connection 😢
