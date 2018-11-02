@@ -23,8 +23,8 @@ class PlayerManager {
         this.players[this.userIdTranslations[userId]].posY = newY;
     }
 
-    updateUserName(userId, userName){ this.players[this.userIdTranslations[userId]].userName = userName; }
-    updateUserAppearance(userId, appearance){ this.players[this.userIdTranslations[userId]].appearance = appearance; }
+    updateUserName(userId, userName) { this.players[this.userIdTranslations[userId]].userName = userName; }
+    updateUserAppearance(userId, appearance) { this.players[this.userIdTranslations[userId]].color = appearance.color; }
 
     removePlayer(userId){
         var playerId = this.userIdTranslations[userId];

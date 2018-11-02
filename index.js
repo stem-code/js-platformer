@@ -64,10 +64,12 @@ io.on("connection", function(socket){
 
     socket.on("sendUserAppearance", function(appearance) {
         playerList[myId].appearance = appearance;
+        console.log("User Has Updated Appearance");
 
         for (var id in playerList){
             var player = playerList[id];
             if (id != myId){
+                console.log("update user ", player.userName);
                 player.socket.emit('updateUserAppearance', {userId: myId, appearance:appearance});
             }
         }

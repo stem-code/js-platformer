@@ -36,7 +36,7 @@ function start() { // when the player presses the start button
 
     serverManager.updateColor(playerColor);
     changeColorFunc = function(color){
-        console.log("UPDATE")
+        console.log("UPDATE");
         serverManager.updateColor(color);
     }
     
