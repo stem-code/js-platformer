@@ -1,11 +1,10 @@
 class Entity {
-    constructor(x, y, width, height, mass, color, gravityEnabled){
+    constructor(x, y, width, height, color, gravityEnabled){
         this.posX = x;
         this.posY = y;
         this.width = width;
         this.height = height;
 
-        this.mass = mass;
         this.color = color || "#3F51B5";
         this.gravityEnabled = gravityEnabled || true;
 
