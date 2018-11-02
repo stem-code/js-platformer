@@ -88,15 +88,20 @@ class Player extends Entity {
     updateIndex(delta) {
         if (Math.abs(this.movementVector[1]) < 150) {
             this.index.yIndex = 0;
-            this.time += Math.floor(delta);
+            if (delta > 0) {
+                this.time += Math.floor(delta);
+            }
             console.log(delta + " " + this.time);
             if (this.time > this.timePerFrame) {
                 this.time = 0.0;
                 this.currentXIndex++;
+                if (this.currentXIndex > this.spriteSheet.numIndices.numX - 1) {
+                    this.currentXIndex = 0;
+                }
             }
             this.index.xIndex = this.currentXIndex;
         } else {
-            this.index.yIndex = 1;
+            this.index.yIndex = 2;
             if (this.movementVector[1] > 250) {
                 this.index.xIndex = 3;
             } else if (this.movementVector[1] >= 150) {
@@ -106,6 +111,9 @@ class Player extends Entity {
             } else if (this.movementVector[1] <= -150) {
                 this.index.xIndex = 0;
             }
+        }
+        if (this.movementVector[0] < 0) {
+            this.index.yIndex++;
         }
     }
 

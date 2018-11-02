@@ -4,6 +4,7 @@ class SpriteSheet {
         this.image.src = path;
         this.widthPerSprite = widthPerSprite;
         this.heightPerSprite = heightPerSprite;
+        this.numIndices = {numX:this.image.width/widthPerSprite, numY:this.image.height/heightPerSprite};
     }
 
     drawSprite(ctx, xIndex, yIndex, x, y, width, height) {
