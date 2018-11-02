@@ -12,6 +12,10 @@ class Player extends Entity {
         this.movementVector = [0, 0];
         this.spectator = false;
 
+        this.currentXIndex = 0;
+        this.time = 0.0;
+        this.timePerFrame = 500.0;
+
         var that = this;
 
         function jump(){
@@ -81,6 +85,30 @@ class Player extends Entity {
         this.color = this.appearance.color;
     }
 
+    updateIndex(delta) {
+        if (Math.abs(this.movementVector[1]) < 150) {
+            this.index.yIndex = 0;
+            this.time += Math.floor(delta);
+            console.log(delta + " " + this.time);
+            if (this.time > this.timePerFrame) {
+                this.time = 0.0;
+                this.currentXIndex++;
+            }
+            this.index.xIndex = this.currentXIndex;
+        } else {
+            this.index.yIndex = 1;
+            if (this.movementVector[1] > 250) {
+                this.index.xIndex = 3;
+            } else if (this.movementVector[1] >= 150) {
+                this.index.xIndex = 2;
+            } else if (this.movementVector[1] < -250) {
+                this.index.xIndex = 1;
+            } else if (this.movementVector[1] <= -150) {
+                this.index.xIndex = 0;
+            }
+        }
+    }
+
     onCollision() {
         this.jumping = false;
     }
@@ -95,35 +123,3 @@ class Player extends Entity {
         }
     }
 }
-
-/*class ActivePlayer extends Player {
-    constructor(x, y, width, height){
-        super(x, y, width, height);
-        this.pressMap = {
-            87: function() { if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // w
-            32: function()  {if (!that.jumping) that.movementVector[1] = -350; that.jumping = true; }, // space
-            83: function() { that.movementVector[1] += 10 }, // s
-            83: function() { that.movementVector[1] += 10 }, // down arrow
-
-            65: function() { that.movementVector[0] = -200 }, // a
-            37: function() { that.movementVector[0] = -200 }, // left arrow
-            68: function() { that.movementVector[0] = 200 },  // d 
-            39: function() { that.movementVector[0] = 200 }, // right arrow
-            70: function() { shoot() }, // f
-        }
-    }
-
-    shoot(direction) {
-        
-    }
-
-    handleKeyPress(pressList){
-        pressList.forEach(key => {
-            if (this.pressMap[key]) this.pressMap[key]();
-        });
-
-        if (pressList.length == 0){
-            this.movementVector[0] *= 0.95;
-        }
-    }
-}*/

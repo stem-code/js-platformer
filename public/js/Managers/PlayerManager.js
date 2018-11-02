@@ -57,6 +57,8 @@ class PlayerManager {
                 player.handleKeyPress(KeyboardManager.keys); // only the active player responds to keyboard events
             }
 
+            player.updateIndex(deltaTime);
+
             if (player.active && player.spectator && this.players.length > 0){
                 player.posX = this.players[this.players.length-1].posX;
                 player.posY = this.players[this.players.length-1].posY;
