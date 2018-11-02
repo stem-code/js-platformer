@@ -1,5 +1,5 @@
 class Entity {
-    constructor(x, y, width, height, color, gravityEnabled){
+    constructor(x, y, width, height, image, color, gravityEnabled){
         this.posX = x;
         this.posY = y;
         this.width = width;
