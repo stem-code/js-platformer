@@ -91,7 +91,7 @@ class Player extends Entity {
             if (delta > 0) {
                 this.time += Math.floor(delta);
             }
-            console.log(delta + " " + this.time);
+            // console.log(delta + " " + this.time);
             if (this.time > this.timePerFrame) {
                 this.time = 0.0;
                 this.currentXIndex++;
