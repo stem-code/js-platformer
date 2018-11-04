@@ -91,7 +91,6 @@ class Player extends Entity {
     updateIndex(delta) {
         if (Math.abs(this.movementVector[1]) < 150) {
             this.index.yIndex = 0;
-            console.log(this.time);
             if (delta > 0) {
                 this.time += Math.floor(delta) * Math.abs(this.movementVector[0]);
             }
