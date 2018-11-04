@@ -24,7 +24,7 @@ class PlayerManager {
     }
 
     updateUserName(userId, userName) { this.players[this.userIdTranslations[userId]].userName = userName; }
-    updateUserAppearance(userId, appearance) { this.players[this.userIdTranslations[userId]].color = appearance.color; }
+    updateUserAppearance(userId, appearance) { this.players[this.userIdTranslations[userId]].updateUserAppearance(appearance); }
 
     removePlayer(userId){
         var playerId = this.userIdTranslations[userId];

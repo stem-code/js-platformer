@@ -22,6 +22,7 @@ class Entity {
         var centerY = (Screen.windowHeight+player.height)/2;
 
         if (this.spriteSheet != null) {
+            this.spriteSheet.changeColor(this.color);
             this.spriteSheet.drawSprite(ctx, this.index.xIndex, this.index.yIndex, this.posX-player.posX+centerX, this.posY-player.posY+centerY, this.width, this.height);
         } else {
             ctx.fillStyle = this.color;

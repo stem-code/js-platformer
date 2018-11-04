@@ -1,6 +1,7 @@
 class Player extends Entity {
     constructor(x, y, width, height, name, appearance){ 
-        super(x, y, width, height, playerSpriteSheets[appearance.spriteSheetIndex], appearance.color, true);
+        super(x, y, width, height, playerSpriteSheets[appearance.playerSpriteSheetIndex], appearance.color, true);
+        console.log(this.spriteSheet);
         this.userName = name;
         this.appearance = appearance;
 
@@ -14,7 +15,7 @@ class Player extends Entity {
 
         this.currentXIndex = 0;
         this.time = 0.0;
-        this.timePerFrame = 500.0;
+        this.timePerFrame = 25000.0;
 
         var that = this;
 
@@ -46,7 +47,7 @@ class Player extends Entity {
         var centerX = (Screen.windowWidth + activePlayer.width) / 2;
         var centerY = (Screen.windowHeight + activePlayer.height) / 2;
 
-        if (this.active && !this.spectator){
+        /*if (this.active && !this.spectator){
             for (var pos in this.lastPositions){
                 ctx.fillStyle = "rgba(63, 81, 181, " +(0.5 / (this.lastPositions.length-pos)).toFixed(2) + ")";
                 ctx.fillRect(this.lastPositions[pos][0] - this.posX+centerX, this.lastPositions[pos][1]-this.posY+centerY, this.width, this.height);
@@ -62,7 +63,7 @@ class Player extends Entity {
     
             if (this.repurcussion > 30 || this.repurcussion < 1) { this.repurcussionDirection *= -1; }
             if (this.lastPositions.length >= 10){ this.lastPositions.splice(0, 1); }
-        }
+        }*/
         
         super.draw(ctx, player);
         
@@ -78,26 +79,31 @@ class Player extends Entity {
         }
     }
 
-    updateAppearance(color) {
+    updateAppearance(appearance) {
         if (this.active) {
-            this.appearance.color = color;
+            this.appearance.color = appearance.color;
+            this.appearance.playerSpriteSheetIndex = appearance.playerSpriteSheetIndex;
         }
         this.color = this.appearance.color;
+        //this.spriteSheet = playerSpriteSheets[this.appearance.playerSpriteSheetIndex];
     }
 
     updateIndex(delta) {
         if (Math.abs(this.movementVector[1]) < 150) {
             this.index.yIndex = 0;
+            console.log(this.time);
             if (delta > 0) {
-                this.time += Math.floor(delta);
+                this.time += Math.floor(delta) * Math.abs(this.movementVector[0]);
             }
-            console.log(delta + " " + this.time);
             if (this.time > this.timePerFrame) {
                 this.time = 0.0;
                 this.currentXIndex++;
                 if (this.currentXIndex > this.spriteSheet.numIndices.numX - 1) {
                     this.currentXIndex = 0;
                 }
+            }
+            if (Math.abs(this.movementVector[0]) < 50) {
+                this.currentXIndex = 0
             }
             this.index.xIndex = this.currentXIndex;
         } else {
