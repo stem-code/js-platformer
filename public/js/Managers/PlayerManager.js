@@ -58,17 +58,17 @@ class PlayerManager {
             }
 
             player.updateIndex(deltaTime);
-
-            if (player.active && player.spectator && this.players.length > 0){
-                player.aabb.x = this.players[this.players.length-1].aabb.x;
-                player.aabb.y = this.players[this.players.length-1].aabb.y;
-            }
         });
     }
 
     draw(ctx, camera){
         this.players.forEach(player => {
             player.draw(ctx, camera);
+            if (player.spectator && player.spectator && this.players.length > 0){
+                camera.entityToFollow = this.players[this.players.length-1];
+            } else if (player.active) {
+                camera.entityToFollow = player;
+            }
         });
     }
 

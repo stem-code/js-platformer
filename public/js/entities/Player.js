@@ -27,6 +27,7 @@ class Player extends Entity {
 
         this.pressMap = { // Player controls
             87: jump, // w
+            38: jump, // up arrow
             32: jump, // space
             83: function() { that.velocity[1] += 20 }, // s
             83: function() { that.velocity[1] += 20 }, // down arrow
@@ -60,10 +61,8 @@ class Player extends Entity {
             if (this.lastPositions.length >= 10){ this.lastPositions.splice(0, 1); }
         }*/
         
-        super.draw(ctx, camera);
-        
-        // TODO: REWORK SPECTATOR LOGIC
         if (!this.spectator){
+            super.draw(ctx, camera);
             ctx.font = "20px Impact";
             ctx.fillStyle = this.color;
             ctx.fillText(this.userName, this.aabb.x + camera.offsetX, this.aabb.y + camera.offsetY - this.aabb.width * 0.3);

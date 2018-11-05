@@ -1,4 +1,5 @@
-var playerSpriteSheets = [new SpriteSheet("/res/js-platformer-slime-sprites.png", 16, 16)];
+var playerSpriteSheets = [new SpriteSheet("/res/js-platformer-slime-sprites.png", 16, 16),
+                            new SpriteSheet("/res/js-platformer-test-sprites.png", 16, 16)];
 
 class Renderer {
     constructor(canvasId, platformManager, playerManager, camera){        
