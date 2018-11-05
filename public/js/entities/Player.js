@@ -28,8 +28,8 @@ class Player extends Entity {
         this.pressMap = { // Player controls
             87: jump, // w
             32: jump, // space
-            83: function() { that.velocity[1] += 10 }, // s
-            83: function() { that.velocity[1] += 10 }, // down arrow
+            83: function() { that.velocity[1] += 20 }, // s
+            83: function() { that.velocity[1] += 20 }, // down arrow
 
             65: function() { that.velocity[0] = Math.max(that.velocity[0] - 10, -1000) }, // a
             37: function() { that.velocity[0] = Math.max(that.velocity[0] - 10, -1000) }, // left arrow
@@ -61,7 +61,6 @@ class Player extends Entity {
         }*/
         
         super.draw(ctx, camera);
-        console.log(this.userName);
         
         // TODO: REWORK SPECTATOR LOGIC
         if (!this.spectator){
