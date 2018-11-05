@@ -61,13 +61,12 @@ class Player extends Entity {
         }*/
         
         super.draw(ctx, camera);
+        console.log(this.userName);
         
         // TODO: REWORK SPECTATOR LOGIC
         if (!this.spectator){
             ctx.font = "20px Impact";
-            ctx.fillText(this.userName, this.aabb.x + camera.offsetX, this.aabb.y + camera.offsetY - this.aabb.width * 0.3);
-            
-            ctx.font = "20px Impact";
+            ctx.fillStyle = this.color;
             ctx.fillText(this.userName, this.aabb.x + camera.offsetX, this.aabb.y + camera.offsetY - this.aabb.width * 0.3);
         }
     }
