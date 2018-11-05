@@ -19,14 +19,14 @@ var Collisions = function() { // Basically a static class (this has not yet been
                     
                     winningActions = function(){  
                         entity.aabb.x = checkEntity.aabb.x-entity.aabb.width;
-                        entity.movementVector[0] *= -1; 
+                        entity.velocity[0] *= -1; 
                     }
                 } else if (entity.active) {
                     winningSide = 4; // left side
                     winningDelta = (checkEntity.aabb.x+checkEntity.aabb.width)-(entity.aabb.x);
                     
                     winningActions = function(){
-                        entity.movementVector[0] *= -1;
+                        entity.velocity[0] *= -1;
                         entity.aabb.x = checkEntity.aabb.x+checkEntity.aabb.width;
                     }
                 }
@@ -36,10 +36,10 @@ var Collisions = function() { // Basically a static class (this has not yet been
                     winningDelta = (entity.aabb.y+entity.aabb.height)-checkEntity.aabb.y;
                     winningActions = function(){
                         entity.aabb.y = checkEntity.aabb.y-entity.aabb.height-1;
-                        if (Math.abs(entity.movementVector[1] < 12)){
-                            entity.movementVector[1] = -9.8*50*time;
+                        if (Math.abs(entity.velocity[1] < 12)){
+                            entity.velocity[1] = -9.8*50*time;
                         } else {
-                            entity.movementVector[1] *= -0.7;
+                            entity.velocity[1] *= -0.7;
                         }
                     }
                     // top side
@@ -50,7 +50,7 @@ var Collisions = function() { // Basically a static class (this has not yet been
                     
                     winningActions = function(){
                         entity.aabb.y = checkEntity.aabb.y+checkEntity.aabb.height+1;
-                        entity.movementVector[1] *= -0.7;
+                        entity.velocity[1] *= -0.7;
                     }
                 }
 
@@ -64,11 +64,11 @@ var Collisions = function() { // Basically a static class (this has not yet been
             entity.jumping = false;
             try {
                 // console.log(entity.aabb.y+entity.aabb.height);
-                if (entity.movementVector[1] < 50 ){
-                    entity.movementVector[1] = -9.8*50*time;
+                if (entity.velocity[1] < 50 ){
+                    entity.velocity[1] = -9.8*50*time;
                 } else {
                     entity.aabb.y = screenDimens[1]-entity.aabb.height;
-                    entity.movementVector[1] = entity.movementVector[1]*-0.4;
+                    entity.velocity[1] = entity.velocity[1]*-0.4;
                 }
             } catch {
                 console.log("ERROR");
@@ -78,7 +78,7 @@ var Collisions = function() { // Basically a static class (this has not yet been
         if (entity.active && entity.aabb.x < 0 || entity.aabb.x + entity.aabb.width > wallWidth){
             try {
                 entity.aabb.x = entity.aabb.x > 0 ? wallWidth-entity.aabb.width : 1;
-                entity.movementVector[0] *= -1;
+                entity.velocity[0] *= -1;
             } catch {
             }
         }

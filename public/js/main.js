@@ -15,7 +15,8 @@ $("#player-color").spectrum({
     color: "#f00",
     change: function(color) {
         color = color.toHexString(); // #ff0000
-        changeColorFunc(color);
+        playerAppearance.color = color;
+        changeColorFunc(playerAppearance);
     }
 });
 
@@ -38,7 +39,6 @@ function start() { // when the player presses the start button
 
     serverManager.updateAppearance(playerAppearance);
     changeColorFunc = function(playerAppearance){
-        console.log("UPDATE");
         serverManager.updateAppearance(playerAppearance);
     }
     

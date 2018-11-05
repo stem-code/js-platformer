@@ -9,7 +9,7 @@ class Entity {
 
         this.gravityEnabled = gravityEnabled || true;
 
-        this.forces = [0, 0];
+        this.velocity = [0, 0];
         this.active = false;
     }
 
@@ -28,6 +28,6 @@ class Entity {
     updateIndex(delta) {
     }
 
-    onCollision() { // parameters could be various collision information
+    onCollision(entity) {
     }
 }

@@ -1,7 +1,6 @@
 class Player extends Entity {
     constructor(aabb, name, appearance){ 
         super(aabb, "player", playerSpriteSheets[appearance.playerSpriteSheetIndex], appearance.color, true);
-        console.log(this.spriteSheet);
         this.userName = name;
         this.appearance = appearance;
 
@@ -10,7 +9,6 @@ class Player extends Entity {
         this.repurcussionDirection = 1;
         this.jumping = false;
         this.active = false;
-        this.movementVector = [0, 0];
         this.spectator = false;
 
         this.currentXIndex = 0;
@@ -22,7 +20,7 @@ class Player extends Entity {
         function jump(){
             if (!that.jumping){
                 that.aabb.y -= 1;
-                that.movementVector[1] = -350;
+                that.velocity[1] = -350;
                 that.jumping = true;
             }
         }
@@ -30,16 +28,16 @@ class Player extends Entity {
         this.pressMap = { // Player controls
             87: jump, // w
             32: jump, // space
-            83: function() { that.movementVector[1] += 10 }, // s
-            83: function() { that.movementVector[1] += 10 }, // down arrow
+            83: function() { that.velocity[1] += 10 }, // s
+            83: function() { that.velocity[1] += 10 }, // down arrow
 
-            65: function() { that.movementVector[0] = Math.max(that.movementVector[0] - 5, -1000); console.log(that.movementVector); }, // a
-            37: function() { that.movementVector[0] = Math.max(that.movementVector[0] - 5, -1000); }, // left arrow
-            68: function() { that.movementVector[0] = Math.min(that.movementVector[0] + 5, 1000) },  // d 
-            39: function() { that.movementVector[0] = Math.min(that.movementVector[0] + 5, 1000) }, // right arrow
+            65: function() { that.velocity[0] = Math.max(that.velocity[0] - 10, -1000) }, // a
+            37: function() { that.velocity[0] = Math.max(that.velocity[0] - 10, -1000) }, // left arrow
+            68: function() { that.velocity[0] = Math.min(that.velocity[0] + 10, 1000) },  // d 
+            39: function() { that.velocity[0] = Math.min(that.velocity[0] + 10, 1000) }, // right arrow
             70: function() { shoot() }, // f
             
-            17: function() { that.movementVector[1] += -50 }, // the return of super cube
+            17: function() { that.velocity[1] += -50 }, // the return of super cube
         }
     }
 
@@ -80,14 +78,14 @@ class Player extends Entity {
             this.appearance.playerSpriteSheetIndex = appearance.playerSpriteSheetIndex;
         }
         this.color = this.appearance.color;
-        //this.spriteSheet = playerSpriteSheets[this.appearance.playerSpriteSheetIndex];
+        this.spriteSheet = playerSpriteSheets[this.appearance.playerSpriteSheetIndex];
     }
 
     updateIndex(delta) {
-        if (Math.abs(this.movementVector[1]) < 150) {
+        if (Math.abs(this.velocity[1]) < 150) {
             this.index.yIndex = 0;
             if (delta > 0) {
-                this.time += Math.floor(delta) * Math.abs(this.movementVector[0]);
+                this.time += Math.floor(delta) * Math.abs(this.velocity[0]);
             }
             if (this.time > this.timePerFrame) {
                 this.time = 0.0;
@@ -96,30 +94,30 @@ class Player extends Entity {
                     this.currentXIndex = 0;
                 }
             }
-            if (Math.abs(this.movementVector[0]) < 50) {
+            if (Math.abs(this.velocity[0]) < 50) {
                 this.currentXIndex = 0
             }
             this.index.xIndex = this.currentXIndex;
         } else {
             this.index.yIndex = 2;
-            if (this.movementVector[1] > 250) {
+            if (this.velocity[1] > 250) {
                 this.index.xIndex = 3;
-            } else if (this.movementVector[1] >= 150) {
+            } else if (this.velocity[1] >= 150) {
                 this.index.xIndex = 2;
-            } else if (this.movementVector[1] < -250) {
+            } else if (this.velocity[1] < -250) {
                 this.index.xIndex = 1;
-            } else if (this.movementVector[1] <= -150) {
+            } else if (this.velocity[1] <= -150) {
                 this.index.xIndex = 0;
             }
         }
-        if (this.movementVector[0] < 0) {
+        if (this.velocity[0] < 0) {
             this.index.yIndex++;
         }
     }
 
     shoot() {
         var left = false;
-        if (this.movementVector[0] < 0) {
+        if (this.velocity[0] < 0) {
             left = true;
         }
         // create projectile
@@ -137,7 +135,7 @@ class Player extends Entity {
         });
 
         if (pressList.length == 0){
-            this.movementVector[0] *= 0.95;
+            this.velocity[0] *= 0.95;
         }
     }
 }
