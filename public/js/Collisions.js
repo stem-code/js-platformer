@@ -6,36 +6,36 @@ var Collisions = function() { // Basically a static class (this has not yet been
         if (entity.active) entitiesToCheck.forEach(checkEntity => {
             if (entity == checkEntity) { return []; } // Prevent entity from colliding with itself.
             // AABB collision check.
-            if (entity.posX < checkEntity.posX + checkEntity.width && entity.posX + entity.width > checkEntity.posX
-                && entity.posY < checkEntity.posY + checkEntity.height && entity.posY + entity.height > checkEntity.posY) {
+            if (entity.aabb.x < checkEntity.aabb.x + checkEntity.aabb.width && entity.aabb.x + entity.aabb.width > checkEntity.aabb.x
+                && entity.aabb.y < checkEntity.aabb.y + checkEntity.aabb.height && entity.aabb.y + entity.aabb.height > checkEntity.aabb.y) {
                 var winningSide;
                 var winningDelta;
                 var winningActions = function(){};
-                entity.onCollision();
+                entity.onCollision(checkEntity);
 
-                if (entity.active && (entity.posX+entity.width)-checkEntity.posX <= (checkEntity.posX+checkEntity.width)-(entity.posX)){
+                if (entity.active && (entity.aabb.x+entity.aabb.width)-checkEntity.aabb.x <= (checkEntity.aabb.x+checkEntity.aabb.width)-(entity.aabb.x)){
                     winningSide = 2; // right side
-                    winningDelta = (entity.posX+entity.width)-checkEntity.posX; 
+                    winningDelta = (entity.aabb.x+entity.aabb.width)-checkEntity.aabb.x; 
                     
                     winningActions = function(){  
-                        entity.posX = checkEntity.posX-entity.width;
+                        entity.aabb.x = checkEntity.aabb.x-entity.aabb.width;
                         entity.movementVector[0] *= -1; 
                     }
                 } else if (entity.active) {
                     winningSide = 4; // left side
-                    winningDelta = (checkEntity.posX+checkEntity.width)-(entity.posX);
+                    winningDelta = (checkEntity.aabb.x+checkEntity.aabb.width)-(entity.aabb.x);
                     
                     winningActions = function(){
                         entity.movementVector[0] *= -1;
-                        entity.posX = checkEntity.posX+checkEntity.width;
+                        entity.aabb.x = checkEntity.aabb.x+checkEntity.aabb.width;
                     }
                 }
 
-                if (entity.active && (entity.posY+entity.height)-checkEntity.posY <= (checkEntity.posY+checkEntity.height)-(entity.posY) && (entity.posY+entity.width)-checkEntity.posY <= Math.abs(winningDelta)){
+                if (entity.active && (entity.aabb.y+entity.aabb.height)-checkEntity.aabb.y <= (checkEntity.aabb.y+checkEntity.aabb.height)-(entity.aabb.y) && (entity.aabb.y+entity.aabb.width)-checkEntity.aabb.y <= Math.abs(winningDelta)){
                     winningSide = 1;
-                    winningDelta = (entity.posY+entity.height)-checkEntity.posY;
+                    winningDelta = (entity.aabb.y+entity.aabb.height)-checkEntity.aabb.y;
                     winningActions = function(){
-                        entity.posY = checkEntity.posY-entity.height-1;
+                        entity.aabb.y = checkEntity.aabb.y-entity.aabb.height-1;
                         if (Math.abs(entity.movementVector[1] < 12)){
                             entity.movementVector[1] = -9.8*50*time;
                         } else {
@@ -43,13 +43,13 @@ var Collisions = function() { // Basically a static class (this has not yet been
                         }
                     }
                     // top side
-                } else if (entity.active && (checkEntity.posY+checkEntity.height)-(entity.posY) <= Math.abs(winningDelta)){
+                } else if (entity.active && (checkEntity.aabb.y+checkEntity.aabb.height)-(entity.aabb.y) <= Math.abs(winningDelta)){
                     winningSide = 3;
-                    winningDelta = (checkEntity.posY+checkEntity.height)-(entity.posY);
+                    winningDelta = (checkEntity.aabb.y+checkEntity.aabb.height)-(entity.aabb.y);
                     entity.jumping = true;
                     
                     winningActions = function(){
-                        entity.posY = checkEntity.posY+checkEntity.height+1;
+                        entity.aabb.y = checkEntity.aabb.y+checkEntity.aabb.height+1;
                         entity.movementVector[1] *= -0.7;
                     }
                 }
@@ -60,14 +60,14 @@ var Collisions = function() { // Basically a static class (this has not yet been
             }
         });
 
-        if (entity.active && entity.posY+entity.height >= screenDimens[1]){
+        if (entity.active && entity.aabb.y+entity.aabb.height >= screenDimens[1]){
             entity.jumping = false;
             try {
-                // console.log(entity.posY+entity.height);
+                // console.log(entity.aabb.y+entity.aabb.height);
                 if (entity.movementVector[1] < 50 ){
                     entity.movementVector[1] = -9.8*50*time;
                 } else {
-                    entity.posY = screenDimens[1]-entity.height;
+                    entity.aabb.y = screenDimens[1]-entity.aabb.height;
                     entity.movementVector[1] = entity.movementVector[1]*-0.4;
                 }
             } catch {
@@ -75,9 +75,9 @@ var Collisions = function() { // Basically a static class (this has not yet been
             }
         }
 
-        if (entity.active && entity.posX < 0 || entity.posX + entity.width > wallWidth){
+        if (entity.active && entity.aabb.x < 0 || entity.aabb.x + entity.aabb.width > wallWidth){
             try {
-                entity.posX = entity.posX > 0 ? wallWidth-entity.width : 1;
+                entity.aabb.x = entity.aabb.x > 0 ? wallWidth-entity.aabb.width : 1;
                 entity.movementVector[0] *= -1;
             } catch {
             }

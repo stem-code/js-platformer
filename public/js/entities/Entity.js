@@ -1,9 +1,7 @@
 class Entity {
-    constructor(x, y, width, height, spriteSheet, color, gravityEnabled){
-        this.posX = x;
-        this.posY = y;
-        this.width = width;
-        this.height = height;
+    constructor(aabb, tag, spriteSheet, color, gravityEnabled){
+        this.aabb = aabb
+        this.tag = tag;
 
         this.spriteSheet = spriteSheet;
         this.index = {xIndex:0, yIndex:0};
@@ -15,18 +13,15 @@ class Entity {
         this.active = false;
     }
 
-    draw(ctx, player){
+    draw(ctx, camera){
         player = player || {posX: 0, posY: 0};
-
-        var centerX = (Screen.windowWidth+player.width)/2;
-        var centerY = (Screen.windowHeight+player.height)/2;
 
         if (this.spriteSheet != null) {
             this.spriteSheet.changeColor(this.color);
-            this.spriteSheet.drawSprite(ctx, this.index.xIndex, this.index.yIndex, this.posX-player.posX+centerX, this.posY-player.posY+centerY, this.width, this.height);
+            this.spriteSheet.drawSprite(ctx, this.index.xIndex, this.index.yIndex, this.aabb.x + camera.offsetX, this.aabb.y + camera.offsetY, this.aabb.width, this.aabb.height);
         } else {
             ctx.fillStyle = this.color;
-            ctx.fillRect(this.posX-player.posX+centerX, this.posY-player.posY+centerY, this.width, this.height);
+            ctx.fillRect(this.aabb.x + camera.offsetX, this.aabb.y + camera.offsetY, this.aabb.width, this.aabb.height);
         }
     }
 

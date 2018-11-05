@@ -97,8 +97,8 @@ class ServerManager {
         }
     }
 
-    updateColor(color){
-        this.playerManager.activePlayer.updateAppearance(color);
+    updateAppearance(appearance){
+        this.playerManager.activePlayer.updateAppearance(appearance);
         this.socket.emit('sendUserAppearance', this.playerManager.activePlayer.appearance);
     }
 

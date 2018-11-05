@@ -26,10 +26,10 @@ class Physics {
             entity.movementVector[1] = finalYVelocity;
         }
 
-        // console.log(entity.posX);
-        entity.posX = entity.posX + entity.movementVector[0]*time;
-        entity.posY = entity.posY + entity.movementVector[1]*time;
+        // console.log(entity.aabb.x);
+        entity.aabb.x = entity.aabb.x + entity.movementVector[0]*time;
+        entity.aabb.y = entity.aabb.y + entity.movementVector[1]*time;
 
-        // console.log(entity.posY);
+        // console.log(entity.aabb.y);
     }
 }

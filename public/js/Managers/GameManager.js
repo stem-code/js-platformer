@@ -29,15 +29,15 @@ class GameManager {
     update(){
         var player = this.playerManager.activePlayer;
 
-        if (player.posY < -5000){
+        if (player.aabb.y < -5000){
             this.win = true;
             this.lose = false;
 
             this.UI.setWinStatus(this.winStats["win"], 2);
         }
 
-        if (player.posY+(player.height/2) > Screen.windowHeight-lavaHeight && this.gameStarted && !this.spectatorViewEnabled){
-            //alert(player.posY+(player.height/2))
+        if (player.aabb.y+(player.aabb.height/2) > Screen.windowHeight-lavaHeight && this.gameStarted && !this.spectatorViewEnabled){
+            //alert(player.aabb.y+(player.height/2))
             //alert(Screen.windowHeight-lavaHeight)
             this.win = false;
             this.lose = true;

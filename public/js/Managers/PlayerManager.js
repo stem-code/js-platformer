@@ -19,8 +19,8 @@ class PlayerManager {
     getPlayerCount(){ return this.players.length; }
 
     updatePlayerPos(userId, newX, newY){
-        this.players[this.userIdTranslations[userId]].posX = newX;
-        this.players[this.userIdTranslations[userId]].posY = newY;
+        this.players[this.userIdTranslations[userId]].aabb.x = newX;
+        this.players[this.userIdTranslations[userId]].aabb.y = newY;
     }
 
     updateUserName(userId, userName) { this.players[this.userIdTranslations[userId]].userName = userName; }
@@ -38,12 +38,12 @@ class PlayerManager {
     }
 
     getMainPlayerPos(){ // called by serverManager to get player position every frame
-        return {x:this.activePlayer.posX, y:this.activePlayer.posY};
+        return {x:this.activePlayer.aabb.x, y:this.activePlayer.aabb.y};
     }
 
     resetMainPlayer(){
-        this.activePlayer.posX = Screen.windowWidth / 2;
-        this.activePlayer.posY = lavaHeight - 100;
+        this.activePlayer.aabb.x = Screen.windowWidth / 2;
+        this.activePlayer.aabb.y = lavaHeight - 100;
     }
 
     update(deltaTime){
@@ -60,15 +60,15 @@ class PlayerManager {
             player.updateIndex(deltaTime);
 
             if (player.active && player.spectator && this.players.length > 0){
-                player.posX = this.players[this.players.length-1].posX;
-                player.posY = this.players[this.players.length-1].posY;
+                player.aabb.x = this.players[this.players.length-1].aabb.x;
+                player.aabb.y = this.players[this.players.length-1].aabb.y;
             }
         });
     }
 
-    draw(ctx){
+    draw(ctx, camera){
         this.players.forEach(player => {
-            player.draw(ctx, this.activePlayer);
+            player.draw(ctx, camera);
         });
     }
 

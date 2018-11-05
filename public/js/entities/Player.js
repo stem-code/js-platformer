@@ -1,6 +1,6 @@
 class Player extends Entity {
-    constructor(x, y, width, height, name, appearance){ 
-        super(x, y, width, height, playerSpriteSheets[appearance.playerSpriteSheetIndex], appearance.color, true);
+    constructor(aabb, name, appearance){ 
+        super(aabb, "player", playerSpriteSheets[appearance.playerSpriteSheetIndex], appearance.color, true);
         console.log(this.spriteSheet);
         this.userName = name;
         this.appearance = appearance;
@@ -21,7 +21,7 @@ class Player extends Entity {
 
         function jump(){
             if (!that.jumping){
-                that.posY -= 1;
+                that.aabb.y -= 1;
                 that.movementVector[1] = -350;
                 that.jumping = true;
             }
@@ -33,27 +33,24 @@ class Player extends Entity {
             83: function() { that.movementVector[1] += 10 }, // s
             83: function() { that.movementVector[1] += 10 }, // down arrow
 
-            65: function() { that.movementVector[0] = Math.max(that.movementVector[0] - 20, -200); console.log(that.movementVector); }, // a
-            37: function() { that.movementVector[0] = Math.max(that.movementVector[0] - 20, -200); }, // left arrow
-            68: function() { that.movementVector[0] = Math.min(that.movementVector[0] + 20, 200) },  // d 
-            39: function() { that.movementVector[0] = Math.min(that.movementVector[0] + 20, 200) }, // right arrow
+            65: function() { that.movementVector[0] = Math.max(that.movementVector[0] - 5, -1000); console.log(that.movementVector); }, // a
+            37: function() { that.movementVector[0] = Math.max(that.movementVector[0] - 5, -1000); }, // left arrow
+            68: function() { that.movementVector[0] = Math.min(that.movementVector[0] + 5, 1000) },  // d 
+            39: function() { that.movementVector[0] = Math.min(that.movementVector[0] + 5, 1000) }, // right arrow
             70: function() { shoot() }, // f
             
-            17: function() { that.movementVector[1] = -500 }, // the return of super cube
+            17: function() { that.movementVector[1] += -50 }, // the return of super cube
         }
     }
 
-    draw(ctx, activePlayer){
-        var centerX = (Screen.windowWidth + activePlayer.width) / 2;
-        var centerY = (Screen.windowHeight + activePlayer.height) / 2;
-
+    draw(ctx, camera){
         /*if (this.active && !this.spectator){
             for (var pos in this.lastPositions){
                 ctx.fillStyle = "rgba(63, 81, 181, " +(0.5 / (this.lastPositions.length-pos)).toFixed(2) + ")";
-                ctx.fillRect(this.lastPositions[pos][0] - this.posX+centerX, this.lastPositions[pos][1]-this.posY+centerY, this.width, this.height);
+                ctx.fillRect(this.lastPositions[pos][0] - this.aabb.x+centerX, this.lastPositions[pos][1]-this.aabb.y+centerY, this.aabb.width, this.aabb.height);
             }
     
-            this.lastPositions.push([this.posX, this.posY+this.repurcussion]);
+            this.lastPositions.push([this.aabb.x, this.aabb.y+this.repurcussion]);
             
             if (this.repurcussionDirection == 1) {
                 this.repurcussion -= 2;
@@ -65,17 +62,15 @@ class Player extends Entity {
             if (this.lastPositions.length >= 10){ this.lastPositions.splice(0, 1); }
         }*/
         
-        super.draw(ctx, player);
+        super.draw(ctx, camera);
         
-        //console.log("x: " + this.posX + " y: " + this.poxY);
+        // TODO: REWORK SPECTATOR LOGIC
         if (!this.spectator){
             ctx.font = "20px Impact";
-            ctx.fillText(this.userName, this.posX - activePlayer.posX + centerX, this.posY - activePlayer.posY - this.width * 0.3 + centerY);
+            ctx.fillText(this.userName, this.aabb.x + camera.offsetX, this.aabb.y + camera.offsetY - this.aabb.width * 0.3);
             
-            //super.draw(ctx, activePlayer);
             ctx.font = "20px Impact";
-            ctx.fillText(this.userName, this.posX - activePlayer.posX + centerX, this.posY - activePlayer.posY - this.width * 0.3 + centerY);
-            //console.log("x: " + this.posX + " y: " + this.poxY);
+            ctx.fillText(this.userName, this.aabb.x + camera.offsetX, this.aabb.y + camera.offsetY - this.aabb.width * 0.3);
         }
     }
 
@@ -122,8 +117,18 @@ class Player extends Entity {
         }
     }
 
-    onCollision() {
-        this.jumping = false;
+    shoot() {
+        var left = false;
+        if (this.movementVector[0] < 0) {
+            left = true;
+        }
+        // create projectile
+    }
+
+    onCollision(entity) {
+        if (entity.tag = "platform") {
+            this.jumping = false;
+        }
     }
 
     handleKeyPress(pressList){

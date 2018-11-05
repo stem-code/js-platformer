@@ -8,7 +8,7 @@ class PlatformManager { // Manages Platform Object (creation, deletion, etc.)
     }
 
     addPlatform(platform){ // Add a single Platform
-        this.platforms.push(platform);
+        this.entityManager.addEntity(platform);
     }
 
     mapGenerate(map) { // generate all necessary Platforms FROM a map (server)
@@ -53,9 +53,9 @@ class PlatformManager { // Manages Platform Object (creation, deletion, etc.)
 
     update(){ } // Update function (not really any updating yet)
 
-    draw(ctx, activePlayer){
+    draw(ctx, camera){
         this.platforms.forEach(platform => {
-            platform.draw(ctx, activePlayer, Screen.getWindowDimens());
+            platform.draw(ctx, camera);
         });
     }
 }
