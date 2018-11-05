@@ -30,9 +30,9 @@ class Renderer {
         this.platformManager.draw(this.ctx, this.camera);
         
 
-        drawWalls(this.ctx, Screen.windowWidth, Screen.windowHeight, this.playerManager.activePlayer);
+        drawWalls(this.ctx, Screen.windowWidth, Screen.windowHeight, this.camera);
 
-        drawLava(this.ctx, Screen.windowWidth, Screen.windowHeight, this.playerManager.activePlayer);
+        drawLava(this.ctx, Screen.windowWidth, Screen.windowHeight, this.camera);
 
         this.diffCounter++;
     }
