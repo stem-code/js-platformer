@@ -1,6 +1,3 @@
-var playerSpriteSheets = [new Image("/res/js-platformer-slime-sprites-for-tinting.png"),
-                            new Image("/res/js-platformer-test-sprites.png")];
-
 class Renderer {
     constructor(canvasId, platformManager, playerManager, camera){        
         this.canvas = document.getElementById(canvasId);
