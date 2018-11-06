@@ -1,7 +1,7 @@
 class SpriteSheet {
-    constructor(path, widthPerSprite, heightPerSprite) {
+    constructor(sourceImage, widthPerSprite, heightPerSprite) {
+        this.sourceImage = sourceImage;
         this.image = new Image();
-        this.image.src = path;
         this.widthPerSprite = widthPerSprite;
         this.heightPerSprite = heightPerSprite;
         this.numIndices = {numX:this.image.width/widthPerSprite, numY:this.image.height/heightPerSprite};
