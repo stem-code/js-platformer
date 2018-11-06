@@ -38,7 +38,7 @@ class Player extends Entity {
             39: function() { that.velocity[0] = Math.min(that.velocity[0] + 10, 1000) }, // right arrow
             70: function() { shoot() }, // f
             
-            17: function() { that.velocity[1] += -50 }, // the return of super cube
+            17: function() { if (that.userName == "Deven" || that.userName == "Dorian") { that.velocity[1] += -50 } }, // the return of super cube
         }
     }
 
