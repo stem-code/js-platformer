@@ -75,7 +75,7 @@ class Player extends Entity {
             this.appearance.playerSpriteSheetIndex = appearance.playerSpriteSheetIndex;
         }
         this.color = this.appearance.color;
-        this.spriteSheet = playerSpriteSheets[this.appearance.playerSpriteSheetIndex];
+        this.spriteSheet = new SpriteSheet(playerSpriteSheets[appearance.playerSpriteSheetIndex], 16, 16);
     }
 
     updateIndex(delta) {
