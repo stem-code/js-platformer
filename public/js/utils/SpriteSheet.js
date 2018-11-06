@@ -9,6 +9,7 @@ class SpriteSheet {
 
     changeColor(color) {
         // Tint color here.
+        // applyFilters("filter-tint", {tintOpacity:50}, this.image, this); // look at this function on http://mezzoblue.github.io/PaintbrushJS/demo/script/paintbrush.js
     }
 
     drawSprite(ctx, xIndex, yIndex, x, y, width, height) {
