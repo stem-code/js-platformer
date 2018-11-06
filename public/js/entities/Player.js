@@ -1,6 +1,7 @@
 class Player extends Entity {
     constructor(aabb, name, appearance){ 
-        super(aabb, "player", playerSpriteSheets[appearance.playerSpriteSheetIndex], appearance.color, true);
+        super(aabb, "player", new SpriteSheet(playerSpriteSheets[appearance.playerSpriteSheetIndex], 16, 16), appearance.color, true);
+        console.log(appearance.playerSpriteSheetIndex);
         this.userName = name;
         this.appearance = appearance;
 
@@ -87,8 +88,8 @@ class Player extends Entity {
         }
         this.color = this.appearance.color;
 
-        this.spriteSheet = playerSpriteSheets[this.appearance.playerSpriteSheetIndex];
-        playerSpriteSheets[this.appearance.playerSpriteSheetIndex].tintImage(appearance.rgbColor);
+        this.spriteSheet = new SpriteSheet(playerSpriteSheets[appearance.playerSpriteSheetIndex], 16, 16);
+        this.spriteSheet.tintImage(appearance.rgbColor);
     }
 
     updateIndex(delta) {

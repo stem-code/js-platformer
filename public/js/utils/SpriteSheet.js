@@ -7,9 +7,7 @@ class SpriteSheet {
         this.originalImage.src = path;
 
         this.tinted = false;
-
-        console.log(path);
-
+      
         this.widthPerSprite = widthPerSprite;
         this.heightPerSprite = heightPerSprite;
         this.numIndices = {numX:this.image.width/widthPerSprite, numY:this.image.height/heightPerSprite};
