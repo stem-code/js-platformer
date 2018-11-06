@@ -69,8 +69,8 @@ function start() { // when the player presses the start button
         renderer.render(entityManager);
         window.requestAnimationFrame(update);
         clearTimeout(currTimeout);
-        currTimeout = setTimeout(function(){
-            location.reload();
+        currTimeout = setTimeout(function(){ 
+            location.reload(); // if inactive, reload
         }, 100); // check if user is inactive
     }
     update();
