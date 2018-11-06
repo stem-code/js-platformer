@@ -1,7 +1,6 @@
 class Player extends Entity {
     constructor(aabb, name, appearance){ 
         super(aabb, "player", new SpriteSheet(playerSpriteSheets[appearance.playerSpriteSheetIndex], 16, 16), appearance.color, true);
-        console.log(appearance.playerSpriteSheetIndex);
         this.userName = name;
         this.appearance = appearance;
 

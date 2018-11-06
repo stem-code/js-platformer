@@ -1,19 +1,16 @@
 class SpriteSheet {
-    constructor(path, widthPerSprite, heightPerSprite) {
+    constructor(originalImage, widthPerSprite, heightPerSprite) {
+        this.originalImage = originalImage;
         this.image = new Image();
-        this.image.src = path;
-
-        this.originalImage = new Image();
-        this.originalImage.src = path;
 
         this.tinted = false;
       
         this.widthPerSprite = widthPerSprite;
         this.heightPerSprite = heightPerSprite;
-        this.numIndices = {numX:this.image.width/widthPerSprite, numY:this.image.height/heightPerSprite};
+        this.numIndices = {numX:this.originalImage.width/widthPerSprite, numY:this.originalImage.height/heightPerSprite};
         
         var that = this;
-        this.image.onload = function() {
+        this.originalImage.onload = function() {
             if (!that.tinted){
                 that.tintImage([200,0,0]);
             }
@@ -26,8 +23,8 @@ class SpriteSheet {
         var tintCanvas = document.getElementById("tint-canvas");
         var tintCtx = tintCanvas.getContext("2d");
 
-        tintCanvas.width = this.image.width;
-        tintCanvas.height = this.image.height;
+        tintCanvas.width = this.originalImage.width;
+        tintCanvas.height = this.originalImage.height;
 
         tintCtx.imageSmoothingEnabled = false;
         tintCtx.drawImage(this.originalImage, 0, 0);
