@@ -125,6 +125,12 @@
                 animation-fill-mode: both;
             }
 
+            #tint-canvas {
+                position: absolute;
+                opacity: 0;
+                z-index: -3000;
+            }
+
         </style>
         <link rel="stylesheet" type="text/css" href="lib/spectrum.css"> 
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -153,6 +159,7 @@
             <button onclick="start()">Start Game</button>
         </div>
 
+        <canvas id="tint-canvas"></canvas>
         <canvas id="main-canvas"></canvas>
 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>

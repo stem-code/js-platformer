@@ -70,12 +70,25 @@ class Player extends Entity {
     }
 
     updateAppearance(appearance) {
+        function hexToRgb(hex) {
+            console.log(hex, "HEEEX");
+            var bigint = parseInt(hex, 16);
+            var r = (bigint >> 16) & 255;
+            var g = (bigint >> 8) & 255;
+            var b = bigint & 255;
+
+            console.log(r, g, b)
+            return [r, g, b];
+        }
+        
         if (this.active) {
             this.appearance.color = appearance.color;
             this.appearance.playerSpriteSheetIndex = appearance.playerSpriteSheetIndex;
         }
         this.color = this.appearance.color;
+
         this.spriteSheet = playerSpriteSheets[this.appearance.playerSpriteSheetIndex];
+        playerSpriteSheets[this.appearance.playerSpriteSheetIndex].tintImage(appearance.rgbColor);
     }
 
     updateIndex(delta) {
