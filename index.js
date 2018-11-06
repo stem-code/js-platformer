@@ -29,7 +29,7 @@ io.on("connection", function(socket){
     function join(){
         myId = idCount;
         idCount++;
-        playerList[myId] = {socket: socket, x: 0, y: 0, userName: "", lastCommunication:new Date().getTime(), lost:false};
+        playerList[myId] = {socket: socket, x: 0, y: 0, userName: "", appearance:{color:"ffffff", playerSpriteSheetIndex:0}, lastCommunication:new Date().getTime(), lost:false};
 
         if (map.length > 0 ){//&& playerList.length != 0){
             socket.emit("getMap", {map:true, mapData:map});
