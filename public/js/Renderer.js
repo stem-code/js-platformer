@@ -23,9 +23,8 @@ class Renderer {
         
         entityManager.draw(this.ctx, this.camera);
 
-        this.playerManager.draw(this.ctx, this.camera);
         this.platformManager.draw(this.ctx, this.camera);
-        
+        this.playerManager.draw(this.ctx, this.camera);
 
         drawWalls(this.ctx, Screen.windowWidth, Screen.windowHeight, this.camera);
 

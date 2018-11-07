@@ -29,19 +29,16 @@ io.on("connection", function(socket){
     function join(){
         myId = idCount;
         idCount++;
-        playerList[myId] = {socket: socket, x: 0, y: 0, userName: "", appearance:{color:"ffffff", playerSpriteSheetIndex:0}, lastCommunication:new Date().getTime(), lost:false};
-
+        playerList[myId] = {socket: socket, x: 0, y: 0, userName: "", appearance:{color:"#ff0", playerSpriteSheetIndex:0, rgbColor:[255, 0, 0]}, lastCommunication:new Date().getTime(), lost:false};
+        for (var id in playerList){
+            player = playerList[id];
+            if (id != myId){
+                socket.emit("newUser", {userId:id, initX:player.x, initY: player.y, userName:player.userName, appearance:player.appearance}); 
+                player.socket.emit("newUser", {userId:myId, initX:playerList[myId].x, initY:playerList[myId].y, userName:playerList[myId].userName, appearance:player.appearance}); // Tell each user about this guy who just joined
+            }
+        }
         if (map.length > 0 ){//&& playerList.length != 0){
             socket.emit("getMap", {map:true, mapData:map});
-    
-            for (var id in playerList){
-                player = playerList[id];
-    
-                if (id != myId){
-                    socket.emit("newUser", {userId:id, initX:player.x, initY: player.y, userName:player.userName, appearance:player.appearance}); 
-                    player.socket.emit("newUser", {userId:myId, initX:playerList[myId].x, initY:playerList[myId].y, userName:playerList[myId].userName, appearance:player.appearance}); // Tell each user about this guy who just joined
-                }
-            }
         } else {
             console.log("We don't have a map. Asking the player to generate one...");
             socket.emit("getMap", {map:false} );
