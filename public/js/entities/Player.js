@@ -5,6 +5,8 @@ class Player extends Entity {
         this.userName = name;
         this.appearance = appearance;
 
+        this.updateAppearance(appearance)
+
         this.lastPositions = [];
         this.repurcussion = 0;
         this.repurcussionDirection = 1;
@@ -75,7 +77,6 @@ class Player extends Entity {
     updateAppearance(appearance) {
         this.appearance = appearance;
         this.color = this.appearance.color;
-
         this.spriteSheet = new SpriteSheet(playerSpriteSheets[appearance.playerSpriteSheetIndex], 16, 16);
         this.spriteSheet.tintImage(appearance.rgbColor);
     }

@@ -49,6 +49,8 @@ function start() { // when the player presses the start button
     
     var lastTime;
     var deltaTime;
+
+    var currTimeout;
     var update = function(currentTime) { // renderer loop
         if (!lastTime) lastTime = currentTime;
         deltaTime = currentTime - lastTime;
@@ -66,6 +68,10 @@ function start() { // when the player presses the start button
 
         renderer.render(entityManager);
         window.requestAnimationFrame(update);
+        clearTimeout(currTimeout);
+        currTimeout = setTimeout(function(){ 
+            location.reload(); // if inactive, reload
+        }, 100); // check if user is inactive
     }
     update();
 }

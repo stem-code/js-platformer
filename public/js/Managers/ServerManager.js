@@ -64,6 +64,7 @@ class ServerManager {
             "gameInfo": function(inf){
                 lavaColor = "#FF9800";
                 lavaHeight = inf.lavaHeight;
+                that.gameManager.gameStarted = true;
             },        
             'startGame': function(){ // The game has begun
                 that.gameManager.gameStarted = true;

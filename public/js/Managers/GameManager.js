@@ -36,7 +36,7 @@ class GameManager {
             this.UI.setWinStatus(this.winStats["win"], 2);
         }
 
-        if (player.aabb.y+(player.aabb.height/2) > Screen.windowHeight-lavaHeight && this.gameStarted && !this.spectatorViewEnabled){
+        if (player.aabb.y+(player.aabb.height/2) > Screen.windowHeight-lavaHeight && !this.spectatorViewEnabled){
             //alert(player.aabb.y+(player.height/2))
             //alert(Screen.windowHeight-lavaHeight)
             this.win = false;
