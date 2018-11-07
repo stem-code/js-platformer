@@ -75,10 +75,14 @@ class Player extends Entity {
     }
 
     updateAppearance(appearance) {
+        //if (this.appearance.playerSpriteSheetIndex != appearance.playerSpriteSheetIndex) {
+            this.spriteSheet = new SpriteSheet(playerSpriteSheets[appearance.playerSpriteSheetIndex], 16, 16);
+        //}
+        //if (this.color != appearance.color) {
+            this.color = appearance.color;
+            this.spriteSheet.tintImage(appearance.rgbColor);
+        //}
         this.appearance = appearance;
-        this.color = this.appearance.color;
-        this.spriteSheet = new SpriteSheet(playerSpriteSheets[appearance.playerSpriteSheetIndex], 16, 16);
-        this.spriteSheet.tintImage(appearance.rgbColor);
     }
 
     updateIndex(delta) {

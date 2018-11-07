@@ -1,7 +1,7 @@
 class SpriteSheet {
     constructor(originalImage, widthPerSprite, heightPerSprite) {
         this.originalImage = originalImage;
-        this.image = new Image();
+        this.image = this.originalImage;
 
         this.tinted = false;
       
@@ -29,6 +29,8 @@ class SpriteSheet {
         tintCtx.imageSmoothingEnabled = false;
         tintCtx.drawImage(this.originalImage, 0, 0);
 
+        this.image = new Image();
+
         // console.log(this.image.width, this.image.height);
         var imageData = tintCtx.getImageData(0, 0, tintCanvas.width, tintCanvas.height);
         var data = imageData.data;
@@ -48,11 +50,6 @@ class SpriteSheet {
         this.image.src = tintCanvas.toDataURL('image/png');
         console.log("done.")
         this.tinted = true;
-    }
-
-    changeColor(color) {
-        // Tint color here.
-        // applyFilters("filter-tint", {tintOpacity:50}, this.image, this); // look at this function on http://mezzoblue.github.io/PaintbrushJS/demo/script/paintbrush.js
     }
 
     drawSprite(ctx, xIndex, yIndex, x, y, width, height) {
