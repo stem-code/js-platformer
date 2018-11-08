@@ -47,11 +47,12 @@ function start() { // when the player presses the start button
         serverManager.updateAppearance(playerAppearance);
     }
     
-    var lastTime;
+    var lastTime: Number;
     var deltaTime;
 
-    var currTimeout;
-    var update = function(currentTime) { // renderer loop
+    var currTimeout: any;
+
+    var update = function(currentTime: Number) { // renderer loop
         if (!lastTime) lastTime = currentTime;
         deltaTime = currentTime - lastTime;
         lastTime = currentTime;
