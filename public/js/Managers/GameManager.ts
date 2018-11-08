@@ -1,4 +1,14 @@
 class GameManager {
+    public playerManager;
+    public platformManager;
+    public UI;
+    public gameStarted;
+    public win;
+    public lose;
+    public allEntities;
+    public spectatorViewEnabled;
+    public winStats;
+
     constructor(playerManager, platformManager, UI){
         this.playerManager = playerManager;
         this.platformManager = platformManager;
@@ -36,7 +46,7 @@ class GameManager {
             this.UI.setWinStatus(this.winStats["win"], 2);
         }
 
-        if (player.aabb.y+(player.aabb.height/2) > Screen.windowHeight-lavaHeight && !this.spectatorViewEnabled){
+        if (player.aabb.y+(player.aabb.height/2) > MyScreen.windowHeight-lavaHeight && !this.spectatorViewEnabled){
             //alert(player.aabb.y+(player.height/2))
             //alert(Screen.windowHeight-lavaHeight)
             this.win = false;

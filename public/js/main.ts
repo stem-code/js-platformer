@@ -61,7 +61,7 @@ function start() { // when the player presses the start button
 
         // TODO: GET RID OF
         UI.updateFPS(deltaTime);
-        platformManager.update(deltaTime);
+        platformManager.update();
         playerManager.update(deltaTime);
         gameManager.update();
         // END GET RID OF
