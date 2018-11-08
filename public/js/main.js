@@ -71,7 +71,7 @@ function start() { // when the player presses the start button
         clearTimeout(currTimeout);
         currTimeout = setTimeout(function(){ 
             location.reload(); // if inactive, reload
-        }, 100); // check if user is inactive
+        }, 400); // check if user is inactive
     }
     update();
 }
