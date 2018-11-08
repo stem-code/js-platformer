@@ -79,6 +79,7 @@ var Collisions = function() { // Basically a static class (this has not yet been
             try {
                 entity.aabb.x = entity.aabb.x > 0 ? wallWidth-entity.aabb.width : 1;
                 entity.velocity[0] *= -1;
+                entity.onCollision({tag:"wall"});
             } catch {
             }
         }

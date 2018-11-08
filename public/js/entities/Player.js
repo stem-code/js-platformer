@@ -130,6 +130,8 @@ class Player extends Entity {
     onCollision(entity) {
         if (entity.tag = "platform") {
             this.jumping = false;
+        } else if (entity.tag = "wall") {
+            this.jumping = false;
         }
     }
 
