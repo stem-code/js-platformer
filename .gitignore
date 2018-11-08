@@ -1,5 +1,5 @@
 node_modules/
 application.js
+application.js.map
 application.min.js
 package-lock.json
-application.js.map
