@@ -5,7 +5,7 @@ window.requestAnimationFrame = window.requestAnimationFrame // Browser Compatibi
     || window.msRequestAnimationFrame // Edge, IE
     || function(f){return setTimeout(f, 1000/60);}; // Dinosaur Browsers that are surpassed by rocks
 
-var playerAppearance = {color:"#f00", playerSpriteSheetIndex:Math.floor(Math.random() * 2), rgbColor:[Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)]};
+var playerAppearance = {color:"#f00", playerSpriteSheetIndex:Math.floor(Math.random() * 1),  rgbColor: [255, 0, 0]};//rgbColor:[Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)]};
 var changeColorFunc = function(color: any){
     playerAppearance.color = color;
 }
@@ -25,7 +25,7 @@ $("#player-color").spectrum({
 });
 
 function start() { // when the player presses the start button
-    $("message-box").css("display", "none");
+    $("#message-box").css("display", "none");
 
     KeyboardManager.init();
 
