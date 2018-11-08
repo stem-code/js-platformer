@@ -21,6 +21,12 @@ class EntityManager {
         this.entities.forEach(entity => {
             entity.update(delta);
         });
+        for (var i = 0; i < this.entities.length; i++) {
+            if (this.entities[i].posY == -99999) {
+                this.entities.remove(i);
+                i--;
+            }
+        }
     }
 
     draw(ctx, camera) {
