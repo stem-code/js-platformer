@@ -1,4 +1,7 @@
 class PlatformManager { // Manages Platform Object (creation, deletion, etc.)
+    public platforms;
+    public entityManager;
+
     constructor(){
         this.platforms = [];
     }
@@ -13,7 +16,7 @@ class PlatformManager { // Manages Platform Object (creation, deletion, etc.)
 
     mapGenerate(map) { // generate all necessary Platforms FROM a map (server)
         map.forEach((platformX, idx) => {
-            var currPlat = new Platform(platformX, Screen.windowHeight-90-(idx*100), 300, 100);
+            var currPlat = new Platform(platformX, MyScreen.windowHeight-90-(idx*100), 300);
             this.platforms.push(currPlat);
             // renderer.createEntity(currPlat);
         });
@@ -40,9 +43,9 @@ class PlatformManager { // Manages Platform Object (creation, deletion, etc.)
 
             var platformX = Math.floor(Math.random()*(wallWidth-300))
 
-            var platformY = Screen.windowHeight-90-(x*100);
+            var platformY = MyScreen.windowHeight-90-(x*100);
 
-            var platform = new Platform(platformX, platformY, 300, 100); // Add the difference in x value to the last platform's position
+            var platform = new Platform(platformX, platformY, 300); // Add the difference in x value to the last platform's position
             this.platforms.push(platform);
             generatedMap.push(platformX);
             lastPlatformPosition = platformX;

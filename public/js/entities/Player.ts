@@ -1,4 +1,16 @@
 class Player extends Entity {
+    public userName;
+    public appearance;
+    public lastPositions;
+    public repurcussion;
+    public repurcussionDirection;
+    public jumping;
+    public spectator;
+    public currentXIndex;
+    public time;
+    public timePerFrame;
+    public pressMap;
+
     constructor(aabb, name, appearance){ 
         super(aabb, "player", new SpriteSheet(playerSpriteSheets[appearance.playerSpriteSheetIndex], 16, 16), appearance.color, true);
         console.log(appearance.color);
@@ -33,13 +45,13 @@ class Player extends Entity {
             38: jump, // up arrow
             32: jump, // space
             83: function() { that.velocity[1] += 20 }, // s
-            83: function() { that.velocity[1] += 20 }, // down arrow
+            40: function() { that.velocity[1] += 20 }, // down arrow
 
             65: function() { that.velocity[0] = Math.max(that.velocity[0] - 10, -1000) }, // a
             37: function() { that.velocity[0] = Math.max(that.velocity[0] - 10, -1000) }, // left arrow
             68: function() { that.velocity[0] = Math.min(that.velocity[0] + 10, 1000) },  // d 
             39: function() { that.velocity[0] = Math.min(that.velocity[0] + 10, 1000) }, // right arrow
-            70: function() { shoot() }, // f
+            70: function() { that.shoot() }, // f
             
             17: function() { if (that.userName == "Deven" || that.userName == "Dorian") { that.velocity[1] += -50 } }, // the return of super cube
         }

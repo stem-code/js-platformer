@@ -1,4 +1,6 @@
 class Physics {
+    public gravity;
+
     constructor(){
         this.gravity = 9.8; 
     }

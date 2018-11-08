@@ -1,4 +1,6 @@
 class EntityManager {
+    private entities;
+
     constructor() {
         this.entities = [];
     }
@@ -8,9 +10,9 @@ class EntityManager {
     }
 
     removeAllEntitiesWithTag(tag) {
-        this.entityManager.entities.forEach(entity => {
+        this.entities.forEach(entity => {
             if (entity.tag = tag) {
-                this.entityManager.entities.pop(entity);
+                this.entities.pop(entity);
             }
         });
     }

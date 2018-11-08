@@ -1,4 +1,9 @@
 class AABB {
+    public x;
+    public y;
+    public width;
+    public height;
+    
     constructor (x, y, width, height) {
         this.x = x;
         this.y = y;

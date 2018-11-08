@@ -1,4 +1,10 @@
 class PlayerManager {
+    public players;
+    public physics;
+    public activePlayer;
+    public userIdTranslations;
+    public spectatorView;
+
     constructor(){
         this.players = [];
         this.physics = new Physics();
@@ -42,14 +48,14 @@ class PlayerManager {
     }
 
     resetMainPlayer(){
-        this.activePlayer.aabb.x = Screen.windowWidth / 2;
+        this.activePlayer.aabb.x = MyScreen.windowWidth / 2;
         this.activePlayer.aabb.y = lavaHeight - 100;
     }
 
     update(deltaTime){
         this.players.forEach(player => {
             if (this.gameManager){
-                Collisions.checkCollisions(player, Screen.getWindowDimens(), this.gameManager.getAllEntities(), deltaTime);
+                Collisions.checkCollisions(player, MyScreen.getWindowDimens(), this.gameManager.getAllEntities(), deltaTime);
             }
             
             if (player.active && !player.spectator){

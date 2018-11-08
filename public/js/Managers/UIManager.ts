@@ -1,4 +1,10 @@
 class UIManager { // Handles all UI (game menus, you lose/win text, etc.)
+    public FPSElement;
+    public winstatusElement;
+    public countdownElement;
+    public numUsersElement;
+    public winstatusTimeout;
+
     constructor(){
         this.FPSElement = document.getElementById("fps");
         this.winstatusElement = document.getElementById("winStatus");
