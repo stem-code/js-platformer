@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "postinstall": "gulp build",
-    "uglify": "uglifyjs -o public/js/application.min.js public/js/application.js --mangle-toplevel"
+    "uglify": "uglifyjs -o public/js/application.min.js public/js/application.js --mangle-toplevel",
+    "watch": "node ./filewatcher.js"
   },
   "author": "",
   "license": "ISC",
