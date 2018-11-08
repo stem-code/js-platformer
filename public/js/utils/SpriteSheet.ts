@@ -1,4 +1,11 @@
 class SpriteSheet {
+    public originalImage;
+    public image;
+    public tinted;
+    public widthPerSprite;
+    public heightPerSprite;
+    public numIndices;
+
     constructor(originalImage, widthPerSprite, heightPerSprite) {
         this.originalImage = originalImage;
         this.image = this.originalImage;
@@ -20,7 +27,7 @@ class SpriteSheet {
     tintImage(color){
 
         console.log("TINT-----------------------------------------------", color);
-        var tintCanvas = document.getElementById("tint-canvas");
+        var tintCanvas: any = document.getElementById("tint-canvas");
         var tintCtx = tintCanvas.getContext("2d");
 
         tintCanvas.width = this.originalImage.width;

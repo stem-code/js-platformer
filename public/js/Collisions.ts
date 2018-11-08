@@ -1,5 +1,5 @@
-var Collisions = function() { // Basically a static class (this has not yet been optimized)
-    this.checkCollisions = function(entity, screenDimens, entitiesToCheck, time){
+class Collisions { // Basically a static class (this has not yet been optimized)
+    public static checkCollisions = function(entity, screenDimens, entitiesToCheck, time){
         var collisionList = [];
         time = time / 1000;
 
@@ -36,7 +36,7 @@ var Collisions = function() { // Basically a static class (this has not yet been
                     winningDelta = (entity.aabb.y+entity.aabb.height)-checkEntity.aabb.y;
                     winningActions = function(){
                         entity.aabb.y = checkEntity.aabb.y-entity.aabb.height-1;
-                        if (Math.abs(entity.velocity[1] < 12)){
+                        if (Math.abs(entity.velocity[1]) < 12){
                             entity.velocity[1] = -9.8*50*time;
                         } else {
                             entity.velocity[1] *= -0.7;
@@ -86,5 +86,3 @@ var Collisions = function() { // Basically a static class (this has not yet been
         return collisionList;
     }
 }
-
-Collisions = new Collisions(); // static workaround (var was explicitly not put in)

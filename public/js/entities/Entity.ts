@@ -1,7 +1,19 @@
 class Entity {
+    public aabb: AABB;
+    public tag: string;
+    public components: Component[];
+
+    public spriteSheet: SpriteSheet;
+    public index: any;
+    public color: string;
+    public gravityEnabled: boolean;
+    public velocity: [number, number];
+    public active: boolean;
+
     constructor(aabb, tag, spriteSheet, color, gravityEnabled){
         this.aabb = aabb
         this.tag = tag;
+        this.components = [];
 
         this.spriteSheet = spriteSheet;
         this.index = {xIndex:0, yIndex:0};
@@ -17,7 +29,7 @@ class Entity {
     }
 
     draw(ctx, camera){
-        player = player || {posX: 0, posY: 0};
+        var player = player || {posX: 0, posY: 0};
 
         if (this.spriteSheet != null) {
             this.spriteSheet.drawSprite(ctx, this.index.xIndex, this.index.yIndex, this.aabb.x + camera.offsetX, this.aabb.y + camera.offsetY, this.aabb.width, this.aabb.height);
@@ -32,4 +44,6 @@ class Entity {
 
     onCollision(entity) {
     }
+
+
 }

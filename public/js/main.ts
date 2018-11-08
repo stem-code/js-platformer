@@ -26,7 +26,7 @@ $("#player-color").spectrum({
 });
 
 function start() { // when the player presses the start button
-    document.getElementById("message-box").style = "display: none;";
+    var messageBox: any = document.getElementById("message-box").style = "display: none;";
 
     var entityManager = new EntityManager();
 
@@ -35,7 +35,7 @@ function start() { // when the player presses the start button
     var UI = new UIManager();
     var gameManager = new GameManager(playerManager, platformManager, UI);
 
-    player = new Player(playerAABB.clone().move(500, 250), document.getElementById("player-name").value, playerAppearance);
+    var player = new Player(playerAABB.clone().move(500, 250), document.getElementById("player-name").value, playerAppearance);
     var playerId = playerManager.addPlayer(player);
     playerManager.setMainPlayer(playerId); // this is the only playable player (other players are controlled through multiplayer)
 
@@ -73,5 +73,5 @@ function start() { // when the player presses the start button
             location.reload(); // if inactive, reload
         }, 100); // check if user is inactive
     }
-    update();
+    update(0);
 }
