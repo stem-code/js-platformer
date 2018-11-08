@@ -1,5 +1,4 @@
 // JS-Platformer Main
-
 window.requestAnimationFrame = window.requestAnimationFrame // Browser Compatibility (different browsers have different functions for rendering)
     || window.mozRequestAnimationFrame // Firefox (Mozilla-Based)
     || window.webkitRequestAnimationFrame // Safari, Opera, older versions of Chrome
@@ -26,7 +25,7 @@ $("#player-color").spectrum({
 });
 
 function start() { // when the player presses the start button
-    var messageBox: any = document.getElementById("message-box").style = "display: none;";
+    $("message-box").css("display", "none");
 
     KeyboardManager.init();
 

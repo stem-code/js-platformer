@@ -2,3 +2,4 @@ node_modules/
 application.js
 application.min.js
 package-lock.json
+application.js.map
