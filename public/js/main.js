@@ -6,7 +6,7 @@ window.requestAnimationFrame = window.requestAnimationFrame // Browser Compatibi
     || window.msRequestAnimationFrame // Edge, IE
     || function(f){return setTimeout(f, 1000/60);}; // Dinosaur Browsers that are surpassed by rocks
 
-var playerAppearance = {color:"#f00", playerSpriteSheetIndex:1, rgbColor:[255, 0, 0]};
+var playerAppearance = {color:"#f00", playerSpriteSheetIndex:1, rgbColor:[Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)]};
 var changeColorFunc = function(color){
     playerAppearance.color = color;
 }
