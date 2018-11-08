@@ -6,15 +6,15 @@
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "removeComments": false,
+    "removeComments": true,
     "noImplicitAny": true,
     "allowJs": true,                       /* Allow JavaScript files to be compiled. */
     "checkJs": true,
     "out" : "public/js/application.js"
     },
     "include": [
-        "public/js/*",
-        "public/js/**/*"
+        "public/ts/*",
+        "public/ts/**/*"
     ],
     "exclude": [
         "node_modules" , "typings"

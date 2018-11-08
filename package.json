@@ -6,14 +6,22 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "postinstall": "tsc"
+    "postinstall": "gulp build",
+    "uglify": "uglifyjs -o public/js/application.min.js public/js/application.js --mangle-toplevel"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "child_process": "^1.0.2",
     "express": "^4.16.4",
-    "typescript": "^3.1.6",
+    "gulp-typescript": "^5.0.0-alpha.3",
     "npm": "^6.4.1",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.1.1",
+    "typescript": "^3.1.6",
+    "uglify-js": "^3.4.9"
+  },
+  "devDependencies": {
+    "node-watch": "^0.5.8",
+    "gulp": "^3.9.1"
   }
 }
