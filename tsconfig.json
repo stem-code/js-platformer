@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+    "target": "es5",
+    "module": "amd",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "allowJs": true,                       /* Allow JavaScript files to be compiled. */
+    "checkJs": true,
+    "out" : "public/js/application.js"
+    },
+    "include": [
+        "public/ts/*",
+        "public/ts/**/*"
+    ],
+    "exclude": [
+        "node_modules" , "typings"
+    ]
+}
