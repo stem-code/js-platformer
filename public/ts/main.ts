@@ -7,14 +7,14 @@ window.requestAnimationFrame = window.requestAnimationFrame // Browser Compatibi
     || function(f){return setTimeout(f, 1000/60);}; // Dinosaur Browsers that are surpassed by rocks
 
 var playerAppearance = {color:"#f00", playerSpriteSheetIndex:Math.floor(Math.random() * 2), rgbColor:[Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)]};
-var changeColorFunc = function(color){
+var changeColorFunc = function(color: any){
     playerAppearance.color = color;
 }
 
 $("#player-color").spectrum({
     color: "#f00",
-    change: function(color) {
-        colorH = color.toHexString(); // #ff0000
+    change: function(color: any) {
+        var colorH = color.toHexString(); // #ff0000
         var rgbColor = color.toRgb();
         color = colorH;
         rgbColor = [rgbColor["r"], rgbColor["g"], rgbColor["b"]];
@@ -27,6 +27,8 @@ $("#player-color").spectrum({
 
 function start() { // when the player presses the start button
     var messageBox: any = document.getElementById("message-box").style = "display: none;";
+
+    KeyboardManager.init();
 
     var entityManager = new EntityManager();
 
@@ -47,12 +49,12 @@ function start() { // when the player presses the start button
         serverManager.updateAppearance(playerAppearance);
     }
     
-    var lastTime: Number;
+    var lastTime: number;
     var deltaTime;
 
     var currTimeout: any;
 
-    var update = function(currentTime: Number) { // renderer loop
+    var update = function(currentTime: number) { // renderer loop
         if (!lastTime) lastTime = currentTime;
         deltaTime = currentTime - lastTime;
         lastTime = currentTime;
