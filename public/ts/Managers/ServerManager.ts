@@ -1,20 +1,16 @@
 class ServerManager {
-    public platformManager;
-    public playerManager;
-    public gameManager;
-    public UI;
-    public socket;
-    public socketEvents;
+    public platformManager: PlatformManager;
+    public playerManager: PlayerManager;
+    public gameManager: GameManager;
+    public UI: UIManager;
+    public socket: any;
+    public socketEvents: any;
 
-    constructor(platformManager, playerManager, UI, gameManager){
+    constructor(platformManager: PlatformManager, playerManager: PlayerManager, UI: UIManager, gameManager: GameManager){
         this.platformManager = platformManager;
         this.playerManager = playerManager;
         this.gameManager = gameManager;
         this.UI = UI;
-
-        this.socket = io(); // set up our communication socket
-        this.socket.emit('sendUserName', playerManager.activePlayer.userName);
-        this.socket.emit('sendUserAppearance', playerManager.activePlayer.appearance);
 
         var that = this; // Event flow control workaround
 
@@ -30,7 +26,7 @@ class ServerManager {
         // }
 
         this.socketEvents = {
-            'getMap': function(mapInfo){ // A request for the map (either the server is sending over a map, or it wants us to generate one)
+            'getMap': (mapInfo: any) => { // A request for the map (either the server is sending over a map, or it wants us to generate one)
                 if (!mapInfo.map){ // server does not have map, but needs one
                     platformManager.clearPlatforms();
                     var map = platformManager.autoGenerate(); // make Platformer manager generate the platforms
@@ -42,7 +38,7 @@ class ServerManager {
                     that.UI.setNumUsers(that.playerManager.getPlayerCount());
                 }
             },
-            'newUser': function(data){ // New user joins the server
+            'newUser': (data: any) => { // New user joins the server
                 var userId = data.userId;
                 var player = new Player(playerAABB.clone().move(data.initX, data.initY), data.userName, data.appearance);
                 var playerId = that.playerManager.addPlayer(player);
@@ -50,35 +46,35 @@ class ServerManager {
         
                 that.UI.setNumUsers(that.playerManager.getPlayerCount());
             },
-            'updateUserName': function(data){
+            'updateUserName': (data: any) => {
                 var userId = data.userId;
                 that.playerManager.updateUserName(userId, data.userName);
             },
-            'updateUserAppearance': function(data){
+            'updateUserAppearance': (data:any) => {
                 var userId = data.userId;
                 that.playerManager.updateUserAppearance(userId, data.appearance);
             },
-            'updateUserPos': function(data){
+            'updateUserPos': (data:any) => {
                 var userId = data.userId;
                 that.playerManager.updatePlayerPos(userId, data.x, MyScreen.windowHeight+data.y);
             },
-            'userLeft': function(data){ // When user leaves server (or dies)
+            'userLeft': (data: any) => { // When user leaves server (or dies)
                 that.playerManager.removePlayer(data.userId);
             },
-            'countdown': function(timeRemaining){ // When server counts down before game, it emits an event whenever the timer descends
+            'countdown': (timeRemaining:any) => { // When server counts down before game, it emits an event whenever the timer descends
                 that.UI.setCountDown(timeRemaining.toFixed(0));
             },
-            "gameInfo": function(inf){
+            "gameInfo": (inf: any) => {
                 lavaColor = "#FF9800";
                 lavaHeight = inf.lavaHeight;
                 that.gameManager.gameStarted = true;
             },        
-            'startGame': function(){ // The game has begun
+            'startGame': () => { // The game has begun
                 that.gameManager.gameStarted = true;
                 that.UI.clearUI();
                 lavaColor = "#FF9800";
             },
-            'endGame': function(){ // the game has ended
+            'endGame': () => { // the game has ended
                 lavaHeight = 0;
                 lavaColor = "#4CAF50";
 
@@ -87,25 +83,36 @@ class ServerManager {
                     that.gameManager.spectatorView(false);
                     lavaColor = "#4CAF50";
                 }, 400);
+
                 that.playerManager.resetMainPlayer();
+                that.playerManager.resurrectPlayers();
                 that.platformManager.clearPlatforms();
-                that.playerManager.activePlayer.movementVector = [0, 0];                
+                
+                that.playerManager.activePlayer.velocity = [0, 0];                
                 document.getElementById("log").innerHTML = "";
             },
-            "timeout": function(){ // The server has deleted us because we either left the tab or lost our connection 😢
+            "timeout": () => { // The server has deleted us because we either left the tab or lost our connection 😢
                 location.reload (); // Reload the page
             },
-            "playerEvent":function(data){ // When something happens to another player
+            "playerEvent":(data: any) => { // When something happens to another player
                 document.getElementById("log").innerHTML = "<p class='msg-text'>💀💀💀 " + data.userName + " is now dead. 💀💀💀</p>"
             }
         }
-        
+    }
+
+    startCommunication(){
+        //@ts-ignore
+        this.socket = io(); // set up our communication socket
+        this.socket.emit('sendUserName', this.playerManager.activePlayer.userName);
+        this.socket.emit('sendUserAppearance', this.playerManager.activePlayer.appearance);
+
         for (var event in this.socketEvents){
             this.socket.on(event, this.socketEvents[event]);
         }
     }
 
-    updateAppearance(appearance){
+    updateAppearance(appearance: any){
+        // alert("UPDATE");
         this.playerManager.activePlayer.updateAppearance(appearance);
         this.socket.emit('sendUserAppearance', this.playerManager.activePlayer.appearance);
     }

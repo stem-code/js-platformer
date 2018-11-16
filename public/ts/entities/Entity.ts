@@ -9,8 +9,9 @@ class Entity {
     public gravityEnabled: boolean;
     public velocity: [number, number];
     public active: boolean;
+    public jumping: boolean;
 
-    constructor(aabb, tag, spriteSheet, color, gravityEnabled){
+    constructor(aabb: AABB, tag: string, spriteSheet: SpriteSheet, color: any, gravityEnabled: boolean){
         this.aabb = aabb
         this.tag = tag;
         this.components = [];
@@ -28,9 +29,7 @@ class Entity {
         this.active = false;
     }
 
-    draw(ctx, camera){
-        var player = player || {posX: 0, posY: 0};
-
+    draw(ctx: any, camera: Camera){
         if (this.spriteSheet != null) {
             this.spriteSheet.drawSprite(ctx, this.index.xIndex, this.index.yIndex, this.aabb.x + camera.offsetX, this.aabb.y + camera.offsetY, this.aabb.width, this.aabb.height);
         } else {
@@ -39,11 +38,13 @@ class Entity {
         }
     }
 
-    updateIndex(delta) {
+    update(...args: any[]){
+
     }
 
-    onCollision(entity) {
+    updateIndex(delta: number) {
     }
 
-
+    onCollision(entity: Entity) {
+    }
 }

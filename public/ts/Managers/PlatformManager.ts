@@ -1,6 +1,6 @@
 class PlatformManager { // Manages Platform Object (creation, deletion, etc.)
-    public platforms;
-    public entityManager;
+    public platforms: Platform[];
+    public entityManager: EntityManager;
 
     constructor(){
         this.platforms = [];
@@ -10,22 +10,19 @@ class PlatformManager { // Manages Platform Object (creation, deletion, etc.)
         this.platforms = [];
     }
 
-    addPlatform(platform){ // Add a single Platform
+    addPlatform(platform: Platform){ // Add a single Platform
         this.entityManager.addEntity(platform);
     }
 
-    mapGenerate(map) { // generate all necessary Platforms FROM a map (server)
-        map.forEach((platformX, idx) => {
+    mapGenerate(map: any) { // generate all necessary Platforms FROM a map (server)
+        map.forEach((platformX: number, idx: number) => {
             var currPlat = new Platform(platformX, MyScreen.windowHeight-90-(idx*100), 300);
             this.platforms.push(currPlat);
             // renderer.createEntity(currPlat);
         });
     }
 
-    autoGenerate(numPlatforms, platformWidth){ // Generate platforms (a map) without a server-provided map
-        numPlatforms = numPlatforms || 55; // If the numPlatforms are not passed, set it to default
-        platformWidth = platformWidth || 300;
-
+    autoGenerate(numPlatforms: number = 55, platformWidth: number = 300){ // Generate platforms (a map) without a server-provided map
         var generatedMap = []; // The generatedMap will contain the x position of each platform (since the y values are always the same)
         var lastPlatformPosition = Math.floor(Math.random()*(wallWidth/2));
 
@@ -56,7 +53,7 @@ class PlatformManager { // Manages Platform Object (creation, deletion, etc.)
 
     update(){ } // Update function (not really any updating yet)
 
-    draw(ctx, camera){
+    draw(ctx: any, camera: Camera){
         this.platforms.forEach(platform => {
             platform.draw(ctx, camera);
         });

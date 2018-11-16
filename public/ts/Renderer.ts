@@ -1,15 +1,17 @@
 class Renderer {
-    public canvas;
-    public ctx;
-    public camera;
-    public platformManager;
-    public playerManager;
-    public diffCounter;
+    public canvas: HTMLCanvasElement;
+    public ctx: CanvasRenderingContext2D;
+    public camera: Camera;
+    public platformManager: PlatformManager;
+    public playerManager: PlayerManager;
+    public diffCounter: number;
 
-    constructor(canvasId, platformManager, playerManager, camera){        
-        this.canvas = document.getElementById(canvasId);
-        this.canvas.width = MyScreen.windowWidth;
+    constructor(canvasId: string, platformManager: PlatformManager, playerManager: PlayerManager, camera: Camera){        
+        this.canvas = <HTMLCanvasElement>document.getElementById(canvasId);
+
+        this.canvas.width = MyScreen.windowWidth
         this.canvas.height = MyScreen.windowHeight;
+        
         this.ctx = this.canvas.getContext("2d");
 
         this.camera = camera;
@@ -23,7 +25,7 @@ class Renderer {
         this.ctx.fillRect(0, 0, MyScreen.windowWidth, MyScreen.windowHeight);
     }
 
-    render(entityManager){
+    render(entityManager: EntityManager){
         this.clear();
 
         this.camera.update();

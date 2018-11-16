@@ -1,6 +1,6 @@
 class Collisions { // Basically a static class (this has not yet been optimized)
-    public static checkCollisions = function(entity, screenDimens, entitiesToCheck, time){
-        var collisionList = [];
+    public static checkCollisions = function(entity: Entity, screenDimens:any, entitiesToCheck: Entity[], time: number){
+        var collisionList: any[] = [];
         time = time / 1000;
 
         if (entity.active) entitiesToCheck.forEach(checkEntity => {
@@ -79,7 +79,7 @@ class Collisions { // Basically a static class (this has not yet been optimized)
             try {
                 entity.aabb.x = entity.aabb.x > 0 ? wallWidth-entity.aabb.width : 1;
                 entity.velocity[0] *= -1;
-                entity.onCollision({tag:"wall"});
+                // entity.onCollision({tag:"wall"});
             } catch {
             }
         }

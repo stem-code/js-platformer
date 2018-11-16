@@ -1,9 +1,9 @@
 class UIManager { // Handles all UI (game menus, you lose/win text, etc.)
-    public FPSElement;
-    public winstatusElement;
-    public countdownElement;
-    public numUsersElement;
-    public winstatusTimeout;
+    public FPSElement: any;
+    public winstatusElement: any;
+    public countdownElement: any;
+    public numUsersElement: any;
+    public winstatusTimeout: any;
 
     constructor(){
         this.FPSElement = document.getElementById("fps");
@@ -14,11 +14,11 @@ class UIManager { // Handles all UI (game menus, you lose/win text, etc.)
         this.winstatusTimeout; // Javascript Timer Function for how long the winstatus remains visible
     }
 
-    updateFPS(deltaTime){
+    updateFPS(deltaTime: number){
         this.FPSElement.innerHTML = (1000/deltaTime).toFixed(0); // Calculate FPS (no decimals)
     }
 
-    setWinStatus(winStatus, fadeDelay){ // fadeDelay is how long until it disappears (seconds)
+    setWinStatus(winStatus: string, fadeDelay: number){ // fadeDelay is how long until it disappears (seconds)
         fadeDelay = fadeDelay || 2;
         this.winstatusElement.innerHTML = winStatus;
 
@@ -27,7 +27,7 @@ class UIManager { // Handles all UI (game menus, you lose/win text, etc.)
         this.winstatusTimeout = setTimeout(function(){ that.winstatusElement.innerHTML = "" }, fadeDelay*1000);
     }
 
-    setCountDown(countDownValue){
+    setCountDown(countDownValue: number){
         this.countdownElement.innerHTML = countDownValue;
     }
 
@@ -35,7 +35,7 @@ class UIManager { // Handles all UI (game menus, you lose/win text, etc.)
         this.countdownElement.innerHTML = "";
     }
 
-    setNumUsers(numUsers){
+    setNumUsers(numUsers: number){
         this.numUsersElement.innerHTML = numUsers;
     }
 

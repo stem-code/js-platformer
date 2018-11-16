@@ -1,19 +1,19 @@
 class GameManager {
-    public playerManager;
-    public platformManager;
-    public UI;
-    public gameStarted;
-    public win;
-    public lose;
-    public allEntities;
-    public spectatorViewEnabled;
-    public winStats;
+    public playerManager: PlayerManager;
+    public platformManager: PlatformManager;
+    public UI: UIManager;
+    public gameStarted: boolean;
+    public win: boolean;
+    public lose: boolean;
+    public allEntities: Entity[];
+    public spectatorViewEnabled: boolean;
+    public winStats: {[key: string]: string};
 
-    constructor(playerManager, platformManager, UI){
+    constructor(playerManager: PlayerManager, platformManager: PlatformManager, UI: UIManager){
         this.playerManager = playerManager;
         this.platformManager = platformManager;
 
-        this.playerManager.gameManager = this;
+        this.playerManager.setGameManager(this);
 
         this.UI = UI;
         this.gameStarted = false;
@@ -56,11 +56,11 @@ class GameManager {
         }
     }
 
-    getAllEntities(){ // Get all of the Entities in the Game
-        return this.playerManager.players.concat(this.platformManager.platforms);
+    getAllEntities(): Entity[]{ // Get all of the Entities in the Game
+        return this.platformManager.platforms.concat(this.playerManager.players);
     }
 
-    spectatorView(toggle){
+    spectatorView(toggle: boolean){
         if (toggle){
             this.spectatorViewEnabled = true;
             this.playerManager.setSpectatorStatus(true);

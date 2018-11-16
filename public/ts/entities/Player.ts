@@ -1,17 +1,18 @@
 class Player extends Entity {
-    public userName;
-    public appearance;
-    public lastPositions;
-    public repurcussion;
-    public repurcussionDirection;
-    public jumping;
-    public spectator;
-    public currentXIndex;
-    public time;
-    public timePerFrame;
-    public pressMap;
+    public userName: string;
+    public appearance: any;
+    public lastPositions: any[];
+    public repurcussion: any;
+    public repurcussionDirection: any;
+    public jumping: boolean;
+    public spectator: boolean;
+    public currentXIndex: number;
+    public time: number;
+    public timePerFrame: number;
+    public pressMap: { [key:number]: any; }
+    public dead: boolean = false;
 
-    constructor(aabb, name, appearance){ 
+    constructor(aabb: AABB, name: string, appearance: any){ 
         super(aabb, "player", new SpriteSheet(playerSpriteSheets[appearance.playerSpriteSheetIndex], 16, 16), appearance.color, true);
         console.log(appearance.color);
         this.userName = name;
@@ -32,7 +33,7 @@ class Player extends Entity {
 
         var that = this;
 
-        function jump(){
+        var jump = () => {
             if (!that.jumping){
                 that.aabb.y -= 1;
                 that.velocity[1] = -350;
@@ -59,7 +60,7 @@ class Player extends Entity {
         this.updateAppearance(this.appearance);
     }
 
-    draw(ctx, camera){
+    draw(ctx: any, camera: Camera){
         /*if (this.active && !this.spectator){
             for (var pos in this.lastPositions){
                 ctx.fillStyle = "rgba(63, 81, 181, " +(0.5 / (this.lastPositions.length-pos)).toFixed(2) + ")";
@@ -86,7 +87,8 @@ class Player extends Entity {
         }
     }
 
-    updateAppearance(appearance) {
+    updateAppearance(appearance: any) {
+        // alert("updating appearance");
         //if (this.appearance.playerSpriteSheetIndex != appearance.playerSpriteSheetIndex) {
             this.spriteSheet = new SpriteSheet(playerSpriteSheets[appearance.playerSpriteSheetIndex], 16, 16);
         //}
@@ -97,7 +99,7 @@ class Player extends Entity {
         this.appearance = appearance;
     }
 
-    updateIndex(delta) {
+    updateIndex(delta: number) {
         if (Math.abs(this.velocity[1]) < 150) {
             this.index.yIndex = 0;
             if (delta > 0) {
@@ -139,7 +141,7 @@ class Player extends Entity {
         // create projectile
     }
 
-    onCollision(entity) {
+    onCollision(entity: Entity) {
         if (entity.tag = "platform") {
             this.jumping = false;
         } else if (entity.tag = "wall") {
@@ -147,7 +149,7 @@ class Player extends Entity {
         }
     }
 
-    handleKeyPress(pressList){
+    handleKeyPress(pressList: number[]){
         pressList.forEach(key => {
             if (this.pressMap[key]) this.pressMap[key]();
         });

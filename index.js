@@ -4,8 +4,20 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+function requireHTTPS(req, res, next) {
+    // The 'x-forwarded-proto' check is for Heroku
+    if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV == "production") {
+        return res.redirect('https://' + req.get('host') + req.url);
+    }
+    next();
+  }
+
+app.use(requireHTTPS);
 app.set('port', process.env.PORT || 8080);
 app.use("/", express.static(path.join(__dirname, 'public')));
+
+// if (process.env.NODE_ENV === 'production' || true) {
+// }
 
 var playerList = {};
 
