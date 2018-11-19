@@ -85,9 +85,9 @@ function start() { // when the player presses the start button
         renderer.render(entityManager);
         window.requestAnimationFrame(update);
         clearTimeout(currTimeout);
-        // currTimeout = setTimeout(function(){ 
-        //     location.reload(); // if inactive, reload
-        // }, 400); // check if user is inactive 
+        currTimeout = setTimeout(function(){ 
+            location.reload(); // if inactive, reload
+        }, 400); // check if user is inactive 
     }
     update(0);
 }
