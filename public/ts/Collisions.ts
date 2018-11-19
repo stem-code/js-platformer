@@ -4,7 +4,7 @@ class Collisions { // Basically a static class (this has not yet been optimized)
         time = time / 1000;
 
         if (entity.active) entitiesToCheck.forEach(checkEntity => {
-            if (entity == checkEntity) { return []; } // Prevent entity from colliding with itself.
+            if (entity == checkEntity || !checkEntity) { return []; } // Prevent entity from colliding with itself. Prevent checking removed entities
             // AABB collision check.
             if (entity.aabb.x < checkEntity.aabb.x + checkEntity.aabb.width && entity.aabb.x + entity.aabb.width > checkEntity.aabb.x
                 && entity.aabb.y < checkEntity.aabb.y + checkEntity.aabb.height && entity.aabb.y + entity.aabb.height > checkEntity.aabb.y) {

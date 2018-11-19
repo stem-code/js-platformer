@@ -1,9 +1,9 @@
 class Camera {
-    public entityToFollow;
-    public offsetX;
-    public offsetY;
+    public entityToFollow: Entity;
+    public offsetX: number;
+    public offsetY: number;
 
-    constructor(entityToFollow) {
+    constructor(entityToFollow: Entity) {
         this.entityToFollow = entityToFollow;
         this.update();
     }

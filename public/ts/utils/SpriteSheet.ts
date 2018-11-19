@@ -16,15 +16,15 @@ class SpriteSheet {
         this.heightPerSprite = heightPerSprite;
         this.numIndices = {numX:this.originalImage.width/widthPerSprite, numY:this.originalImage.height/heightPerSprite};
         
-        var that = this;
-        this.originalImage.onload = function() {
-            if (!that.tinted){
-                that.tintImage([200,0,0]);
-            }
-        }
+        // var that = this;
+        // this.originalImage.onload = function() {
+        //     if (!that.tinted){
+        //         that.tintImage([200,0,0]);
+        //     }
+        // }
     }
 
-    tintImage(color){
+    tintImage(color: any){
 
         console.log("TINT-----------------------------------------------", color);
         var tintCanvas: any = document.getElementById("tint-canvas");
@@ -59,7 +59,7 @@ class SpriteSheet {
         this.tinted = true;
     }
 
-    drawSprite(ctx, xIndex, yIndex, x, y, width, height) {
+    drawSprite(ctx: CanvasRenderingContext2D, xIndex: number, yIndex: number, x: number, y: number, width: number, height: number) {
         ctx.imageSmoothingEnabled = false;
         ctx.drawImage(this.image, xIndex * this.widthPerSprite, yIndex * this.heightPerSprite, this.widthPerSprite, this.heightPerSprite, x, y, width, height);
     }

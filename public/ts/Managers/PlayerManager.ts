@@ -35,6 +35,11 @@ class PlayerManager {
         this.players.forEach(player => {
             if (player != this.activePlayer) player.dead = false;
         });
+
+        this.activePlayer.spectator = false;
+        this.spectatorView = false;
+
+        this.camera.entityToFollow = this.activePlayer;
     }
 
     grantUserId(playerId: number, userId:number ){ // Translate remote server ids to local player IDs
@@ -50,6 +55,15 @@ class PlayerManager {
 
         this.players[this.userIdTranslations[userId]].aabb.x = newX;
         this.players[this.userIdTranslations[userId]].aabb.y = newY;
+    }
+
+    updatePlayerIndex(userId: number, index: any){
+        if (!this.players[this.userIdTranslations[userId]]){
+            return 0;
+        }
+
+        this.players[this.userIdTranslations[userId]].setSpriteIndex(index);
+        // console.log("update", JSON.stringify(this.players[this.userIdTranslations[userId]].index));
     }
 
     updateUserName(userId: number, userName: string) { this.players[this.userIdTranslations[userId]].userName = userName; }
@@ -73,7 +87,7 @@ class PlayerManager {
 
     resetMainPlayer(){
         this.activePlayer.aabb.x = MyScreen.windowWidth / 2;
-        this.activePlayer.aabb.y = lavaHeight - 100;
+        this.activePlayer.aabb.y = lavaHeight - Math.floor(Math.random()*300) - this.activePlayer.aabb.height;
     }
 
     setGameManager(gameManager: GameManager){
@@ -82,15 +96,14 @@ class PlayerManager {
 
     update(deltaTime: number){
         this.players.forEach ((player: Player) => {
-            if (!player) { console.log("There is no player"); return 0; }
+            if (!player) { return 0; }
             Collisions.checkCollisions(player, MyScreen.getWindowDimens(), this.gameManager.getAllEntities(), deltaTime);
             
             if (player.active && !player.spectator) {
                 this.physics.applyPhysics(player, deltaTime);
                 player.handleKeyPress(KeyboardManager.keys); // only the active player responds to keyboard events
+                player.updateIndex(deltaTime);
             }
-
-            player.updateIndex(deltaTime);
         });
     }
 
@@ -99,12 +112,8 @@ class PlayerManager {
             if (!player) { return 0; }
             player.draw(ctx, camera);
 
-            if (player.spectator && this.players.length > 0){
-                // camera.entityToFollow = this.players[this.players.length-1];
-                this.players.forEach((player) => {
-                    if (!player.dead) this.camera.entityToFollow = player;
-                });
-            } else if (player.active) {
+            if (player.active && !this.spectatorView) {
+                // console.log("Following myself");
                 camera.entityToFollow = player;
             }
         });
@@ -115,8 +124,21 @@ class PlayerManager {
     setSpectatorStatus(toggle: boolean){
         if (toggle){ // spectator mode needs to be enabled
             this.activePlayer.spectator = true;
+
+            console.log("Spectator Mode Activated");
+            this.spectatorView = true;
+
+            this.players.forEach((player) => {
+                if (player && !player.dead) this.camera.entityToFollow = player;
+            });
         } else {
             this.activePlayer.spectator = false;
+            this.spectatorView = false;
+
+            this.camera.entityToFollow = this.activePlayer;
+            console.log("Spectator Mode Deactivated");
         }
+
+        
     }
 }

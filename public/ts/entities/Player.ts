@@ -12,8 +12,9 @@ class Player extends Entity {
     public pressMap: { [key:number]: any; }
     public dead: boolean = false;
 
-    constructor(aabb: AABB, name: string, appearance: any){ 
+    constructor(aabb: AABB, name: string, appearance: any){
         super(aabb, "player", new SpriteSheet(playerSpriteSheets[appearance.playerSpriteSheetIndex], 16, 16), appearance.color, true);
+        // alert(name);
         console.log(appearance.color);
         this.userName = name;
         this.appearance = appearance;
@@ -81,6 +82,8 @@ class Player extends Entity {
         
         if (!this.spectator){
             super.draw(ctx, camera);
+            // if (this.userName == "A")
+            //     console.log(this.userName, this.index.xIndex);
             ctx.font = "20px Impact";
             ctx.fillStyle = this.color;
             ctx.fillText(this.userName, this.aabb.x + camera.offsetX - this.aabb.width * this.userName.length * 0.05, this.aabb.y + camera.offsetY - this.aabb.width * 0.3);
@@ -100,6 +103,8 @@ class Player extends Entity {
     }
 
     updateIndex(delta: number) {
+        if (this.userName == "A" && !this.active)
+            console.log("Editing username A");
         if (Math.abs(this.velocity[1]) < 150) {
             this.index.yIndex = 0;
             if (delta > 0) {
@@ -131,6 +136,18 @@ class Player extends Entity {
         if (this.velocity[0] < 0) {
             this.index.yIndex++;
         }
+    }
+
+    setSpriteIndex(index: any){
+        // console.log("Setting Index to: " + JSON.stringify(index));
+        this.index.yIndex = index.yIndex;
+        this.index.xIndex = index.xIndex;
+
+        console.log(JSON.stringify(this.index));
+
+        // console.log(this.index.xIndex);
+        // console.log(this.index.yIndex);
+        // console.log(this.userName);
     }
 
     shoot() {

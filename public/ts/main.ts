@@ -41,7 +41,7 @@ function start() { // when the player presses the start button
 
     KeyboardManager.init();
 
-    var player = new Player(playerAABB.clone().move(500, 250), $("#player-name").html(), playerAppearance);
+    var player = new Player(playerAABB.clone().move(500, 250), $("#player-name").val(), playerAppearance);
     var entityManager = new EntityManager();
     var camera = new Camera(player);
     var platformManager = new PlatformManager();
@@ -55,7 +55,7 @@ function start() { // when the player presses the start button
 
     var serverManager = new ServerManager(platformManager, playerManager, UI, gameManager); // Handle all socket server communications (creation of remote platforms, players, etc.)
     serverManager.startCommunication();
-    var renderer = new Renderer("main-canvas", platformManager, playerManager, new Camera(player));
+    var renderer = new Renderer("main-canvas", platformManager, playerManager, camera);
 
     serverManager.updateAppearance(playerAppearance);
     changeColorFunc = function(playerAppearance){

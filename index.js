@@ -41,7 +41,7 @@ io.on("connection", function(socket){
     function join(){
         myId = idCount;
         idCount++;
-        playerList[myId] = {socket: socket, x: 0, y: 0, userName: "", appearance:{color:"#ff0", playerSpriteSheetIndex:0, rgbColor:[255, 0, 0]}, lastCommunication:new Date().getTime(), lost:false};
+        playerList[myId] = {socket: socket, x: 0, y: 0, userName: "", appearance:{color:"#ff0", playerSpriteSheetIndex:0, rgbColor:[255, 0, 0]}, index:{xIndex:0, yIndex:0}, lost:false};
         for (var id in playerList){
             player = playerList[id];
             if (id != myId){
@@ -134,16 +134,22 @@ io.on("connection", function(socket){
         socket.emit("getMap", {map:false} );
         
     });
-    socket.on('updatePos', function(newPos){
-        if (newPos.fake){
+    socket.on('updatePos', function(playerData){
+        var newPos = playerData.pos;
+        var playerSpriteIndex = playerData.index;    
+
+        if (playerData.fake){
             socket.emit("gameInfo", currentGame);
             return 0;
         }
+
         if (!playerList[myId]) return false;   
         playerList[myId].x = newPos.x;
         playerList[myId].y = newPos.y;
 
-        playerList[myId].lastCommunication = new Date().getTime();
+        playerList[myId].index = playerSpriteIndex;
+
+        // playerList[myId].lastCommunication = new Date().getTime();
 
         if (currentGame.started){
             currentGame.lavaHeight = (((new Date().getTime()-currentGame.startTime)/100) * lavaRate);
@@ -160,17 +166,8 @@ io.on("connection", function(socket){
 
         for (var id in playerList){
             var player = playerList[id];
-
-            if (new Date().getTime()-player.lastCommunication > 1500){ // if it's been more than 1.5s since last communication
-                // delete playerList[id]; // Remove the user
-                // player.socket.emit("timeout");
-                // io.sockets.emit('userLeft', { userId: myId }); // Tell everyone that the user is now gone
-                // continue;
-            }
-
             if (id != myId){
-                // console.log("We are sending data of user " + myId + " to user " + id);
-                player.socket.emit('updateUserPos', {userId: myId, x:newPos.x, y:newPos.y});
+                player.socket.emit('updateUserPos', {userId: myId, x:newPos.x, y:newPos.y, index: playerSpriteIndex});
             }
         }
     });
