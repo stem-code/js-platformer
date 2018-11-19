@@ -22,6 +22,7 @@ class PlayerManager {
     }
 
     playerDeath(userId: number){ // another player has died
+        // alert("PLAYER DEATH");
         this.players[this.userIdTranslations[userId]].dead = true;
         if (this.spectatorView && this.camera.entityToFollow == this.players[this.userIdTranslations[userId]]){ // check if we are spectating the dead player
             

@@ -85,7 +85,7 @@ io.on("connection", function(socket){
 });
 
     socket.on("lost", function(){
-        io.sockets.emit("playerEvent", {userName:playerList[myId].userName});
+        io.sockets.emit("playerEvent", {userName:playerList[myId].userName, userId: myId});
         playerList[myId].lost = true;
 
         var allLost = true;

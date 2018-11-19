@@ -97,6 +97,7 @@ class ServerManager {
             },
             "playerEvent":(data: any) => { // When something happens to another player
                 document.getElementById("log").innerHTML = "<p class='msg-text'>💀💀💀 " + data.userName + " is now dead. 💀💀💀</p>"
+                this.playerManager.playerDeath(data.userId);
             }
         }
     }
