@@ -19,7 +19,7 @@ class Player extends Entity {
         this.userName = name;
         this.appearance = appearance;
 
-        this.updateAppearance(appearance)
+        this.updateAppearance(appearance);
 
         this.lastPositions = [];
         this.repurcussion = 0;
