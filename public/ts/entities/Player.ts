@@ -49,10 +49,10 @@ class Player extends Entity {
             83: function() { that.velocity[1] += 20 }, // s
             40: function() { that.velocity[1] += 20 }, // down arrow
 
-            65: function() { that.velocity[0] = Math.max(that.velocity[0] - 10, -10000) }, // a
-            37: function() { that.velocity[0] = Math.max(that.velocity[0] - 10, -10000) }, // left arrow
-            68: function() { that.velocity[0] = Math.min(that.velocity[0] + 10, 10000) },  // d 
-            39: function() { that.velocity[0] = Math.min(that.velocity[0] + 10, 10000) }, // right arrow
+            65: function() { that.velocity[0] = Math.max(that.velocity[0] - 10, -1000) }, // a
+            37: function() { that.velocity[0] = Math.max(that.velocity[0] - 10, -1000) }, // left arrow
+            68: function() { that.velocity[0] = Math.min(that.velocity[0] + 10, 1000) },  // d 
+            39: function() { that.velocity[0] = Math.min(that.velocity[0] + 10, 1000) }, // right arrow
             70: function() { that.shoot() }, // f
             
             17: function() { if (that.userName == "Deven" || that.userName == "Dorian") { that.velocity[1] += -50 } }, // the return of super cube
