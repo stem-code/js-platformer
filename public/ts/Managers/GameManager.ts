@@ -39,18 +39,23 @@ class GameManager {
     update(){
         var player = this.playerManager.activePlayer;
 
-        if (player.aabb.y < -5000){
-            this.win = true;
-            this.lose = false;
+        try {
+            // console.log(player.aabb.y, this.platformManager.platforms[this.platformManager.platforms.length-1].aabb.y);
 
-            this.UI.setWinStatus(this.winStats["win"], 2);
-        }
+        
+            if (player.aabb.y < this.platformManager.platforms[this.platformManager.platforms.length-1].aabb.y){
+                this.win = true;
+                this.lose = false;
+
+                this.UI.setWinStatus(this.winStats["win"], 2);
+            }
+        } catch(e){ }
 
         if (player.aabb.y+(player.aabb.height/2) > MyScreen.windowHeight-lavaHeight && !this.spectatorViewEnabled){
             //alert(player.aabb.y+(player.height/2))
             //alert(Screen.windowHeight-lavaHeight)
             this.win = false;
-            this.lose = true;
+            this.lose = true; 
 
             this.UI.setWinStatus(this.winStats["lose"], 2);
         }

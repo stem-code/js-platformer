@@ -1,6 +1,7 @@
 class PlatformManager { // Manages Platform Object (creation, deletion, etc.)
     public platforms: Platform[];
     public entityManager: EntityManager;
+    public platformCount: number = 55;
 
     constructor(){
         this.platforms = [];
@@ -23,6 +24,7 @@ class PlatformManager { // Manages Platform Object (creation, deletion, etc.)
     }
 
     autoGenerate(numPlatforms: number = 55, platformWidth: number = 300){ // Generate platforms (a map) without a server-provided map
+        this.platformCount = numPlatforms;
         var generatedMap = []; // The generatedMap will contain the x position of each platform (since the y values are always the same)
         var lastPlatformPosition = Math.floor(Math.random()*(wallWidth/2));
 
