@@ -26,17 +26,10 @@ class ServerManager {
         // }
 
         this.socketEvents = {
-            'getMap': (mapInfo: any) => { // A request for the map (either the server is sending over a map, or it wants us to generate one)
-                if (!mapInfo.map){ // server does not have map, but needs one
-                    platformManager.clearPlatforms();
-                    var map = platformManager.autoGenerate(); // make Platformer manager generate the platforms
-                    that.socket.emit("setMap", map); // send the newly-created map to the server
-                    that.UI.setNumUsers(that.playerManager.getPlayerCount()); // update the user count
-                } else {
-                    platformManager.clearPlatforms();
-                    platformManager.mapGenerate(mapInfo.mapData); // Make the PlatformManager generate the platforms on-screen based on server data
-                    that.UI.setNumUsers(that.playerManager.getPlayerCount());
-                }
+            'map': (mapInfo: any) => { // A request for the map (either the server is sending over a map, or it wants us to generate one)
+                platformManager.clearPlatforms();
+                platformManager.mapGenerate(mapInfo.mapData); // Make the PlatformManager generate the platforms on-screen based on server data
+                that.UI.setNumUsers(that.playerManager.getPlayerCount());
             },
             'newUser': (data: any) => { // New user joins the server
                 var userId = data.userId;
@@ -98,6 +91,12 @@ class ServerManager {
             "playerEvent":(data: any) => { // When something happens to another player
                 document.getElementById("log").innerHTML = "<p class='msg-text'>💀💀💀 " + data.userName + " is now dead. 💀💀💀</p>"
                 this.playerManager.playerDeath(data.userId);
+            },
+            "connect": () => {
+                $("#disconnect-screen-container").hide();
+            },
+            "disconnect": () => {
+                $("#disconnect-screen-container").show();
             }
         }
     }
@@ -125,9 +124,10 @@ class ServerManager {
 
         if (!this.gameManager.spectatorViewEnabled){
             this.socket.emit('updatePos', {pos: mainPos, index:this.playerManager.activePlayer.index});
-        } else {
-            this.socket.emit('updatePos', {fake:true});
-        }
+        } 
+        // else {
+        //     this.socket.emit('updatePos', {fake:true});
+        // }
 
         if (this.gameManager.win){
             this.socket.emit("win");

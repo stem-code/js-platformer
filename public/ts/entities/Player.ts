@@ -82,8 +82,6 @@ class Player extends Entity {
         
         if (!this.spectator){
             super.draw(ctx, camera);
-            // if (this.userName == "A")
-            //     console.log(this.userName, this.index.xIndex);
             ctx.font = "20px Impact";
             ctx.fillStyle = this.color;
             ctx.fillText(this.userName, this.aabb.x + camera.offsetX - this.aabb.width * this.userName.length * 0.05, this.aabb.y + camera.offsetY - this.aabb.width * 0.3);
@@ -91,14 +89,9 @@ class Player extends Entity {
     }
 
     updateAppearance(appearance: any) {
-        // alert("updating appearance");
-        //if (this.appearance.playerSpriteSheetIndex != appearance.playerSpriteSheetIndex) {
-            this.spriteSheet = new SpriteSheet(playerSpriteSheets[appearance.playerSpriteSheetIndex], 16, 16);
-        //}
-        //if (this.color != appearance.color) {
-            this.color = appearance.color;
-            this.spriteSheet.tintImage(appearance.rgbColor);
-        //}
+        this.spriteSheet = new SpriteSheet(playerSpriteSheets[appearance.playerSpriteSheetIndex], 16, 16);
+        this.color = appearance.color;
+        this.spriteSheet.tintImage(appearance.rgbColor);
         this.appearance = appearance;
     }
 

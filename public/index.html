@@ -136,6 +136,40 @@
                 z-index: -3000;
             }
 
+            #disconnect-screen-container {
+                position: absolute;
+                z-index: 150000;
+                background-color: #eee;
+                width: 100vw;
+                height: 100vh;
+                text-align: center;
+                font-family: "Roboto", "Segoe UI", sans-serif;
+                color: #444;
+                display: none;
+            }
+
+            #disconnect-screen {
+                position: absolute;
+                top: 50%;
+                transform: translate(0px, -50%);
+                width: 100%;
+            }
+
+            #disconnect-screen h1 {
+                font-size: 3em;
+                margin: 10px 0px;
+            }
+
+            #disconnect-screen h4 {
+                margin: 10px 0px;
+                font-size: 1.7em;
+            }
+
+            #disconnect-screen h5 {
+                margin: 10px 0px;
+                font-size: 1.1em;
+            }
+
         </style>
         <link rel="stylesheet" type="text/css" href="lib/spectrum.css"> 
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -146,6 +180,17 @@
             <p>FPS: <span id="fps">?</span></p>
             <p>FPS Cap: 60 || 30</p>
             <input type='text' id="player-color" />
+        </div>
+
+        <div id="disconnect-screen-container">
+            <div id="disconnect-screen">
+                <svg style="width:80px;height:80px" viewBox="0 0 24 24">
+                    <path fill="#444" d="M1,5.27L5,9.27V15A2,2 0 0,0 7,17H11V19H10A1,1 0 0,0 9,20H2V22H9A1,1 0 0,0 10,23H14A1,1 0 0,0 15,22H17.73L19.73,24L21,22.72L2.28,4L1,5.27M15,20A1,1 0 0,0 14,19H13V17.27L15.73,20H15M17.69,16.87L5.13,4.31C5.41,3.55 6.14,3 7,3H17A2,2 0 0,1 19,5V15C19,15.86 18.45,16.59 17.69,16.87M22,20V21.18L20.82,20H22Z" />
+                </svg>
+                <h1>Connection Lost!</h1>
+                <h4>Could not connect to game server.</h4>
+                <h5>We'll try to reconnect automatically...</h5>
+            </div>
         </div>
 
         <h1 id="countDown"></h1>

@@ -15,3 +15,6 @@ var platformBSpriteSheet = new Image();
 platformBSpriteSheet.src = "/res/platform-b-sprite.png";
 
 var platformSprites = [platformASpriteSheet, platformBSpriteSheet];
+
+var flagSprites = new Image();
+flagSprites.src = "/res/flag-sprites.png";
