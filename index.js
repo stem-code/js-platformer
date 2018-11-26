@@ -88,6 +88,10 @@ io.on("connection", function(socket){
             startTime: 0,
             started: false
         }
+        
+        for (var id in playerList){
+            playerList[id].lost = false;
+        }
 
         map = generateMap();
         loopCounter = 0;
@@ -121,7 +125,7 @@ io.on("connection", function(socket){
             if (!player.lost){ allLost = false; }
         } // check if everyone has lost
 
-        if (allLost){
+        if (allLost) {
             reset();
         }
     });
