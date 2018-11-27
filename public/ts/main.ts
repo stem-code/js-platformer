@@ -39,6 +39,16 @@ $("#player-color").spectrum({
 function start() { // when the player presses the start button
     $("#message-box").css("display", "none");
 
+    //@ts-ignore
+    grecaptcha.ready(function() {
+        //@ts-ignore
+        grecaptcha.execute('6Lf1Pn0UAAAAAGFiorj6bkweMsRe2TRdF-a7KJh3', {action: 'action_name'})
+        .then(function(token: string) {
+        alert(token);
+        // Verify the token on the server.
+        });
+    });
+
     KeyboardManager.init();
 
     var player = new Player(playerAABB.clone().move(500, 250), $("#player-name").val(), playerAppearance);
