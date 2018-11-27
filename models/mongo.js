@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
+// const assert = require('assert');
 
 let DBConnectionStr = process.env.DB_CONNECTION_STR;
 let DBName = process.env.DB_NAME;

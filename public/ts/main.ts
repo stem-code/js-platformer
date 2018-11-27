@@ -49,6 +49,8 @@ function start() { // when the player presses the start button
         });
     });
 
+    $(".grecaptcha-badge").css({"opacity": "0"});
+
     KeyboardManager.init();
 
     var player = new Player(playerAABB.clone().move(500, 250), $("#player-name").val(), playerAppearance);
