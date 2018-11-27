@@ -13,7 +13,7 @@ exports.ready = function(cb){
 
 if (DBConnectionStr && DBName){
     // Create a new MongoClient
-    const client = new MongoClient(url);
+    const client = new MongoClient(DBConnectionStr);
 
     // Use connect method to connect to the Server
     client.connect(function(err) {
