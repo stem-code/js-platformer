@@ -44,7 +44,7 @@ function start() { // when the player presses the start button
         //@ts-ignore
         grecaptcha.execute('6Lf1Pn0UAAAAAGFiorj6bkweMsRe2TRdF-a7KJh3', {action: 'action_name'})
         .then(function(token: string) {
-        alert(token);
+        // alert(token);
         // Verify the token on the server.
         });
     });
