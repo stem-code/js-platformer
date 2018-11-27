@@ -13,11 +13,14 @@ exports.ready = function(cb){
 
 if (DBConnectionStr && DBName){
     // Create a new MongoClient
-    const client = new MongoClient(DBConnectionStr);
+    const client = new MongoClient(DBConnectionStr, {useNewUrlParser: true});
 
     // Use connect method to connect to the Server
     client.connect(function(err) {
-        assert.equal(null, err);
+        if (err){
+            console.log(err);
+            return 0;
+        }
         console.log("Connected successfully to MongoDB!");
         exports.db = client.db(DBName);
 
