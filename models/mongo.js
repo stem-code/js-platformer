@@ -24,8 +24,10 @@ if (DBConnectionStr && DBName){
         console.log("Connected successfully to MongoDB!");
         let db = client.db(DBName);
 
-        db.collection("users").find({}, function(err, result){
+        db.collection("users").find({}).toArray(function(err, result) {
+            if (err) throw err;
             console.log(result);
+            // db.close();
         });
         exports.db = db;
 
