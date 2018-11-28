@@ -23,12 +23,6 @@ if (DBConnectionStr && DBName){
         }
         console.log("Connected successfully to MongoDB!");
         let db = client.db(DBName);
-
-        db.collection("users").find({}).toArray(function(err, result) {
-            if (err) throw err;
-            console.log(result);
-            // db.close();
-        });
         exports.db = db;
 
         exports.isReady = true;
@@ -44,3 +38,9 @@ if (DBConnectionStr && DBName){
     console.log("   - This is normal when running in localhost | connection strings are not stored in Github for security reasons.");
 }
 
+
+process.on('SIGINT', function () {
+    console.log('Got SIGINT exit.');
+    if (exports.db) exports.db.close(); // exit DB cleanly
+    console.log("MongoDB has been shut down.");
+});

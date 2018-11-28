@@ -174,10 +174,16 @@
                 opacity: 0.8;
             }
 
+            #endgame-box {
+                display: none;
+                position: absolute;
+            }
         </style>
         <link rel="stylesheet" type="text/css" href="lib/spectrum.css"> 
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <script src='https://www.google.com/recaptcha/api.js?render=6Lf1Pn0UAAAAAGFiorj6bkweMsRe2TRdF-a7KJh3'></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-client_id" content="924571599288-a8jgnkghenkmcpjkh5hhn3sbetmra0k3.apps.googleusercontent.com">
     </head>
     <body>
         <div id="info-bar">
@@ -205,6 +211,13 @@
             <!-- <p>💀💀💀 Bob is now dead. 💀💀💀</p> -->
         </div>
 
+        <div id="endgame-box">
+            <h1>The game has ended!</h1>
+            <h3><span id="winner"></span> has won!</h3>
+            <div id="scoresheet-container"></div>
+            <button>Continue</button>
+        </div>
+
         <div id="message-box">
             <h1>Physics Project! (JS Version)</h1>
             <h3>by: Deven and Dorian</h3>
@@ -213,6 +226,7 @@
             <!-- <h3>Github <a href="https://github.com/stem-code/js-platformer">Repo</a></h3> -->
             <!-- <h3>This server is currently dead, please use <a href="http://physics-project-1.herokuapp.com/">server 2</a></h3> -->
             <input maxlength="12" type="text" id="player-name" placeholder="Player Name (optional)"/> <br/>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
             <button onclick="start()">Start Game</button>
             <p style="display: none">STEM School Highlands Ranch Game</p>
         </div>
@@ -225,6 +239,15 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
         <script src="lib/spectrum.js"></script>
 
-        <script src="js/application.min.js" async></script>        
+        <script src="js/application.min.js" async></script>
+        <script>
+            function onSignIn(googleUser) {
+                var profile = googleUser.getBasicProfile();
+                console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+                console.log('Name: ' + profile.getName());
+                console.log('Image URL: ' + profile.getImageUrl());
+                console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            }
+        </script>    
     </body>
 </html>
