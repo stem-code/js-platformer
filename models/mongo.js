@@ -22,7 +22,12 @@ if (DBConnectionStr && DBName){
             return 0;
         }
         console.log("Connected successfully to MongoDB!");
-        exports.db = client.db(DBName);
+        let db = client.db(DBName);
+
+        db.find({}, function(err, result){
+            console.log(result);
+        });
+        exports.db = db;
 
         exports.isReady = true;
         readyList.forEach(function(cb){ // loop through waiting callbacks
