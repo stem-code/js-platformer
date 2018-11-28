@@ -1,4 +1,4 @@
-class Entity {
+class NewEntity {
     private aabb: AABB;
     private tag: string;
     private componentsDict: any;
@@ -7,7 +7,7 @@ class Entity {
         this.aabb = aabb
         this.tag = tag;
         this.componentsDict = {}
-        EntityManager.addEntity(this);
+        NewEntityManager.addEntity(this);
     }
 
     update(delta: number) {
@@ -31,7 +31,8 @@ class Entity {
     public addComponents(components: Component[]) {
         components.forEach(component => {
             component.setEntity(this);
-            this.componentsDict[component.constructor.name] = component;
+            let c:any = component.constructor;
+            this.componentsDict[c.name] = component;
         });
         return this;
     }

@@ -1,10 +1,10 @@
 abstract class Component {
-    private entity: Entity;
+    private entity: NewEntity;
 
     public abstract update(delta: number): void;
     public draw(ctx: any, camera: Camera) {}
-    public onCollision(collidingEntity: Entity) {}
+    public onCollision(collidingEntity: NewEntity) {}
 
-    setEntity(entity: Entity) {this.entity = entity;}
+    setEntity(entity: NewEntity) {this.entity = entity;}
     public getEntity() {return this.entity;}
 }
