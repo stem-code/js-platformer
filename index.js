@@ -110,6 +110,13 @@ io.on("connection", function(socket){
 
     socket.on("sendUserName", function(userName) { // When the client sends his username to the server for processing
         socket.broadcast.emit('updateUserName', {userId: myId, userName:userName});
+        playerList[myId].userName = userName;
+        for (let key in playerList){
+            var currPlayer = playerList[key];
+            if (key != myId){
+                socket.emit("updateUserName", {userId: key, userName:currPlayer.userName});
+            }
+        }
     });
 
     socket.on("sendUserAppearance", function(appearance) {
