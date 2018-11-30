@@ -13,4 +13,7 @@ exports.verify = async function(token) {
   const userid = payload['sub'];
   // If request specified a G Suite domain:
   //const domain = payload['hd'];
+  console.log("USERID  = " + userid);
+  console.log("PAYLOAD = " + payload);
+  console.log("TICKET  = " + ticket);
 }
