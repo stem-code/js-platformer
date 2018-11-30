@@ -1,5 +1,6 @@
 var path = require("path");
-var express = require("express");
+var express = require("express"),
+    bodyParser = require("body-parser");
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -17,6 +18,21 @@ function requireHTTPS(req, res, next) {
 app.use(requireHTTPS);
 app.set('port', process.env.PORT || 8080);
 app.use("/", express.static(path.join(__dirname, 'public')));
+
+// support parsing of application/json type post data
+app.use(bodyParser.json());
+//support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post("/authenticate", function(req, res, next){
+    console.log("We got: ", req.body.token);
+    // userModel.findUserByUsername(req.body.username).then(function(){
+
+    // }).error(function(){
+
+    // });
+});
+
 
 var playerList = {};
 

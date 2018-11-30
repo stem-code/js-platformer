@@ -11,7 +11,7 @@ var defaultUserTemplate = {
 }
 
 module.exports = {
-    createUser: function(username, password){
+    createUser: function(username, password, cb){
         let userDoc = {
             username: username,
             password: password,
@@ -19,15 +19,26 @@ module.exports = {
         }
 
         if (mongo.isReady){
-            mongo.db.insertOne(userDoc, function(err){
-                if (err) throw err;
+            mongo.db.insertOne(userDoc, function(err) {
+                if (!err) {
+                    cb({success:true});
+                } else {
+                    cb({success:false, err:err});
+                }
             });
+        } else {
+            cb({success:false, err:"DB is still initializing"});
         }
     },
     findUserByUsername: function(username){
-        db.collection("users").find({username:username}, (err, document) => {
-            if (err) throw err;
-            console.log(document);
+        return new Promise(function(resolve, reject){
+            mongo.db.collection("users").findOne({username:username}, (err, doc) => {
+                if (err){
+                    console.log("Error When Calling findUserByUsername: ", err);
+                }
+    
+                resolve({doc:doc, success: !err, err:(err ? undefined : err)});
+            });
         });
     },
     authenticateUser: function(){

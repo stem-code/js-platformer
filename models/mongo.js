@@ -43,4 +43,5 @@ process.on('SIGINT', function () {
     console.log('Got SIGINT exit.');
     if (exports.db) exports.db.close(); // exit DB cleanly
     console.log("MongoDB has been shut down.");
+    process.abort();
 });
