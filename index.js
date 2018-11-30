@@ -4,6 +4,7 @@ var express = require("express"),
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var auth = require("./auth");
 
 var userModel = require("./models/users");
 
@@ -26,11 +27,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/authenticate", function(req, res, next){
     console.log("We got: ", req.body.token);
-    // userModel.findUserByUsername(req.body.username).then(function(){
-
-    // }).error(function(){
-
-    // });
+    auth.verify(req.body.token).catch(console.error);
+    res.send("OK");
 });
 
 
