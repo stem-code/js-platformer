@@ -35,10 +35,10 @@ app.post("/authenticate", function(req, res, next){
         }
     
         console.log("THE USER ID IS: ", JSON.stringify(userInfo));
-        userModel.findUserById(userInfo.userId).then(function(doc){
-            if (doc){ // the user exists
+        userModel.findUserById(userInfo.userId).then(function(response){
+            if (response.doc){ // the user exists
                 console.log("The user already exists");
-                console.log(JSON.stringify(doc));
+                console.log(JSON.stringify(response.doc));
             } else { // the user does not exist
                 userModel.createUser(userInfo.userId, userInfo.payload.email, userInfo.payload["given_name"], userInfo.payload["picture"], function(inf){
                     if (inf.success){
