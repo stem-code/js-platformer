@@ -44,7 +44,7 @@ app.post("/authenticate", function(req, res, next){
                 }
             });
         }
-    }).error(function(){
+    }).catch(function(){
         res.json({success:false, err:"Database Error"})
     });
 
