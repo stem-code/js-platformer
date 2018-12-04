@@ -34,6 +34,7 @@ module.exports = {
         }
     },
     findUserById: function(userId){
+        console.log("looking for: ", userId);
         return new Promise(function(resolve, reject){
             mongo.db.collection(collection).find({userId:userId}).toArray((err, doc) => {
                 if (err){
