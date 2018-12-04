@@ -38,9 +38,10 @@ module.exports = {
             mongo.db.collection(collection).findOne({userId:userId}, (err, doc) => {
                 if (err){
                     console.log("Error When Calling findUserById: ", err);
+                    reject();
+                } else {
+                    resolve({doc:doc, success: !err, err:(err ? undefined : err)});
                 }
-    
-                resolve({doc:doc, success: !err, err:(err ? undefined : err)});
             });
         });
     },
