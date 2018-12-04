@@ -15,12 +15,12 @@ exports.verify = async function(token) {
         console.log("Authentication failed");
         return 0;
     }
-    
+
     const payload = ticket.getPayload();
     const userid = payload['sub'];
     // If request specified a G Suite domain:
     //const domain = payload['hd'];
     console.log("USERID  = " + userid);
     console.log("PAYLOAD = " + JSON.stringify(payload));
-    console.log("TICKET  = " + JSON.stringify(ticket));
+    return {userId:userId, payload:payload};
 }

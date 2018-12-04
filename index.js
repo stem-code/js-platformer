@@ -27,7 +27,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/authenticate", function(req, res, next){
     console.log("We got: ", req.body.token);
-    auth.verify(req.body.token).catch(console.error);
+    var userInfo = auth.verify(req.body.token).catch(console.error);
+    if (!userInfo){
+        res.json({success:false, err:"Authentication Error"});
+    }
+
+    userModel.findUserById(userInfo.userId).then(function(doc){
+        if (doc){ // the user exists
+            
+        } else { // the user does not exist
+            userModel.createUser(userInfo.userId, userInfo.payload.email, userInfo.payload["given_name"], userInfo.payload["picture"], function(inf){
+                if (inf.success){
+                    res.json({success: true});
+                } else {
+                    res.json({success: false});
+                }
+            });
+        }
+    }).error(function(){
+        res.json({success:false, err:"Database Error"})
+    });
+
     res.send("OK");
 });
 

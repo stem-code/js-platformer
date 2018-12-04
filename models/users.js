@@ -10,16 +10,19 @@ var defaultUserTemplate = {
 
 }
 
+var collection = "users";
+
 module.exports = {
-    createUser: function(username, password, cb){
+    createUser: function(userId, email, firstname, profilePic, cb){
         let userDoc = {
-            username: username,
-            password: password,
-            score: 0
+            userId: userId,
+            email: email,
+            firstname: firstname,
+            profilePicUrl: profilePic
         }
 
         if (mongo.isReady){
-            mongo.db.insertOne(userDoc, function(err) {
+            mongo.db.collection(collection).insertOne(userDoc, function(err) {
                 if (!err) {
                     cb({success:true});
                 } else {
@@ -30,11 +33,11 @@ module.exports = {
             cb({success:false, err:"DB is still initializing"});
         }
     },
-    findUserByUsername: function(username){
+    findUserById: function(userId){
         return new Promise(function(resolve, reject){
-            mongo.db.collection("users").findOne({username:username}, (err, doc) => {
+            mongo.db.collection(collection).findOne({userId:userId}, (err, doc) => {
                 if (err){
-                    console.log("Error When Calling findUserByUsername: ", err);
+                    console.log("Error When Calling findUserById: ", err);
                 }
     
                 resolve({doc:doc, success: !err, err:(err ? undefined : err)});
