@@ -30,7 +30,7 @@ if (DBConnectionStr && DBName){
             cb(db);
         });
 
-        client.close();
+        // client.close();
     });
 } else {
     console.log("Running without DB...");
