@@ -35,12 +35,12 @@ module.exports = {
     },
     findUserById: function(userId){
         return new Promise(function(resolve, reject){
-            mongo.db.collection(collection).findOne({userId:userId}, (err, doc) => {
+            mongo.db.collection(collection).find({userId:userId}).toArray((err, doc) => {
                 if (err){
                     console.log("Error When Calling findUserById: ", err);
                     reject();
                 } else {
-                    resolve({doc:doc, success: !err, err:(err ? undefined : err)});
+                    resolve({doc:doc[0], success: !err, err:(err ? undefined : err)});
                 }
             });
         });
