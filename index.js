@@ -27,29 +27,31 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/authenticate", function(req, res, next){
     console.log("We got: ", req.body.token);
-    var userInfo = auth.verify(req.body.token).catch(console.error);
-    if (!userInfo){
-        res.json({success:false, err:"Authentication Error"});
-        return 0;
-    }
 
-    console.log("THE USER ID IS: ", JSON.stringify(userInfo));
-    userModel.findUserById(userInfo.userId).then(function(doc){
-        if (doc){ // the user exists
-            console.log("The user already exists");
-            console.log(JSON.stringify(doc));
-        } else { // the user does not exist
-            userModel.createUser(userInfo.userId, userInfo.payload.email, userInfo.payload["given_name"], userInfo.payload["picture"], function(inf){
-                if (inf.success){
-                    res.json({success: true});
-                } else {
-                    res.json({success: false});
-                }
-            });
+    var userInfo = auth.verify(req.body.token, function(userInfo){
+        if (!userInfo){
+            res.json({success:false, err:"Authentication Error"});
+            return 0;
         }
-    }).catch(function(){
-        res.json({success:false, err:"Database Error"})
-    });
+    
+        console.log("THE USER ID IS: ", JSON.stringify(userInfo));
+        userModel.findUserById(userInfo.userId).then(function(doc){
+            if (doc){ // the user exists
+                console.log("The user already exists");
+                console.log(JSON.stringify(doc));
+            } else { // the user does not exist
+                userModel.createUser(userInfo.userId, userInfo.payload.email, userInfo.payload["given_name"], userInfo.payload["picture"], function(inf){
+                    if (inf.success){
+                        res.json({success: true});
+                    } else {
+                        res.json({success: false});
+                    }
+                });
+            }
+        }).catch(function(){
+            res.json({success:false, err:"Database Error"})
+        });
+    }).catch(console.error);
 
     res.send("OK");
 });

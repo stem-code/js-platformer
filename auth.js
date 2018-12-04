@@ -2,7 +2,7 @@ const {OAuth2Client} = require('google-auth-library');
 const CLIENT_ID = "924571599288-a8jgnkghenkmcpjkh5hhn3sbetmra0k3.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
 
-exports.verify = async function(token) {
+exports.verify = async function(token, cb) {
     var ticket;
     try {
         ticket = await client.verifyIdToken({
@@ -22,5 +22,5 @@ exports.verify = async function(token) {
     //const domain = payload['hd'];
     console.log("USERID  = " + userid);
     console.log("PAYLOAD = " + JSON.stringify(payload));
-    return {userId:userid, payload:payload};
+    cb({userId:userid, payload:payload});
 }
