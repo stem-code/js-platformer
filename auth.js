@@ -22,5 +22,5 @@ exports.verify = async function(token) {
     //const domain = payload['hd'];
     console.log("USERID  = " + userid);
     console.log("PAYLOAD = " + JSON.stringify(payload));
-    return {userId:userId, payload:payload};
+    return {userId:userid, payload:payload};
 }
