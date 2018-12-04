@@ -30,8 +30,10 @@ app.post("/authenticate", function(req, res, next){
     var userInfo = auth.verify(req.body.token).catch(console.error);
     if (!userInfo){
         res.json({success:false, err:"Authentication Error"});
+        return 0;
     }
 
+    console.log("THE USER ID IS: ", JSON.stringify(userInfo));
     userModel.findUserById(userInfo.userId).then(function(doc){
         if (doc){ // the user exists
             console.log("The user already exists");
