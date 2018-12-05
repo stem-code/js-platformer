@@ -25,12 +25,12 @@ function generateBackgroundMosaic(){
     for (var x=0; x<Math.ceil(canvasWidth/50); x++){
         grid.push([]);
         for (var y=0; y<Math.ceil(canvasHeight/50); y++) {
-            var randomRed = Math.floor(Math.random()*200);
+            var randomGreen = Math.floor(Math.random()*200);
 
             var randomAlpha = (Math.floor(Math.random()*50)+50)/100;
             var distanceFromCenter = Math.max(Math.abs(x-Math.ceil(canvasWidth/100))/Math.ceil(canvasWidth/100), Math.abs(y-Math.ceil(canvasHeight/100))/Math.ceil(canvasHeight/100)); // bigger numbers mean closer to the edge
             randomAlpha = Math.max(randomAlpha - (distanceFromCenter)/2, 0.1);
-            grid[x].push([randomRed, randomAlpha]);
+            grid[x].push([randomGreen, randomAlpha]);
         }
     }
 
@@ -38,14 +38,14 @@ function generateBackgroundMosaic(){
     function render(){
         for (var x=0; x<Math.ceil(canvasWidth/50); x++){
             for (var y=0; y<Math.ceil(canvasHeight/50); y++) {
-                var randomRed = grid[x][y][0];
+                var randomGreen = grid[x][y][0];
                 var randomAlpha = grid[x][y][1];
-                var randomOther = Math.max(randomRed-0.2*frame, 0);
+                var randomOther = Math.max(randomGreen-0.3*frame, 0);
                 if (frame >= 375){
                     return 0;
                 }
 
-                var fillColor = "rgba("+randomRed+", "+randomOther+", "+randomOther+", " + randomAlpha + ")";
+                var fillColor = "rgba("+randomOther+", "+randomGreen+", "+randomOther+", " + randomAlpha + ")";
                 ctx.fillStyle = fillColor;
                 ctx.fillRect(x*50, y*50, 50, 50);
             }
