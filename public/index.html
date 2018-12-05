@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>JS Physics Demo</title>
+        <title>Blob Quest</title>
         <style>
             @keyframes appear {
                 0% { top: 35%; opacity: 0; }
@@ -13,6 +13,11 @@
                 95% {opacity: 1;}
                 99% {opacity: 0;}
                 100% { opacity: 0; display: none;}
+            }
+
+            @keyframes backgroundAppear {
+                0% { background-color: rgba(0, 0, 0, 0.2); }
+                100% { background-color: rgba(0, 0, 0, 0.8); }
             }
 
             /* @font-face{
@@ -43,10 +48,10 @@
             }
 
             #message-box {
-                width: 500px;
-                border-radius: 3px;
-                box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
-                background-color: rgb(238,238,238);
+                position: relative;
+                width: 440px;
+                border-radius: 5px;
+                background-color: rgba(0, 0, 0, 0.7);
                 text-align: center;
                 font-family: "Roboto", "Helvetica", "Arial", sans-serif;
                 position: absolute;
@@ -54,35 +59,58 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 padding: 30px;
-                animation-name: appear;
-                animation-duration: 1s;
+                animation-name: backgroundAppear;
+                animation-duration: 3s;
+                color: #fefefe;
+            }
 
+            #message-box canvas {
+                position: absolute;
+                top: 0px;
+                left: 0px;
             }
 
             #message-box button {
-                padding: 10px 17px;
+                padding: 5px 7px;
                 font-size: 1.4em;
-                border-radius: 7px;
-                background-color: white;
+                background-color: transparent;
                 box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
-                border: 1px solid #2196F3;
+                border: none;
+                border-bottom: 2px solid #fefefe;
                 outline: none;
                 cursor: pointer;
                 transition: background-color 0.3s;
+                color: #fefefe;
             }
 
             #message-box button:hover {
-                background-color: #2196F3;
+                background-color: rgb(200, 70, 70);
+                color: #222;
+            }
+
+            #message-box .horizontal-divider {
+                width: 90%;
+                height: 2px;
+                background-color: #efefef;
+                margin: 20px 5% 7px; 
             }
 
             #player-name {
                 font-size: 1.2em;
                 padding: 5px 5px;
-                border-radius: 7px;
-                border: 1px solid #2196F3;
-                margin: 20px 0px;
+                border: none;
+                color: #fefefe;
+                border-bottom: 2px solid #fefefe;
+                margin: 0px 0px 10px;
                 outline: none;
+                background-color: transparent;
             }
+
+            #player-name::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                color: rgba(255, 255, 255, 0.9);
+                opacity: 1; /* Firefox */
+            }
+
 
             #info-bar {
                 position: absolute;
@@ -178,6 +206,10 @@
                 display: none;
                 position: absolute;
             }
+            
+            .abcRioButton {
+                margin: auto;
+            }
         </style>
         <link rel="stylesheet" type="text/css" href="lib/spectrum.css"> 
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -219,11 +251,12 @@
         </div>
 
         <div id="message-box">
-            <h1>Physics Project! (JS Version)</h1>
-            <h3>by: Deven and Dorian</h3>
+            <h1>Blob Quest</h1>
+            <!-- <h3>by: Deven and Dorian</h3> -->
             <h3>Sign in with Google</h3>
             <h5>This keeps your score</h5>
             <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <div class="horizontal-divider"></div>
             <h3>Sign in anonymously</h3>
             <h5>Your score will not be kept.</h5>
             <input maxlength="12" type="text" id="player-name" placeholder="Player Name (optional)"/> <br/>
@@ -231,6 +264,7 @@
             <p style="display: none">STEM School Highlands Ranch Game</p>
         </div>
 
+        <canvas id="background-generate"></canvas>
         <canvas id="tint-canvas"></canvas>
         <canvas id="main-canvas"></canvas>
 
@@ -240,20 +274,6 @@
         <script src="lib/spectrum.js"></script>
 
         <script src="js/application.min.js" async></script>
-        <script>
-            function onSignIn(googleUser) {
-                var profile = googleUser.getBasicProfile();
-                console.log('Welcome ' + profile.getName());
-                var id_token = googleUser.getAuthResponse().id_token;
-
-                $.post("/authenticate",
-                {
-                    token: id_token
-                },
-                function(data, status){
-                    alert("Data: " + data + "\nStatus: " + status);
-                });
-            }
-        </script>    
+        <script src="js/title.js"></script>    
     </body>
 </html>

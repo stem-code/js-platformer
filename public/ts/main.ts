@@ -38,6 +38,7 @@ $("#player-color").spectrum({
 
 function start() { // when the player presses the start button
     $("#message-box").css("display", "none");
+    $("#background-generate").hide();
 
     //@ts-ignore
     grecaptcha.ready(function() {

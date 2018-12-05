@@ -1,6 +1,7 @@
 var path = require("path");
 var express = require("express"),
-    bodyParser = require("body-parser");
+    bodyParser = require("body-parser"),
+    session = require('express-session');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -18,12 +19,16 @@ function requireHTTPS(req, res, next) {
 
 app.use(requireHTTPS);
 app.set('port', process.env.PORT || 8080);
-app.use("/", express.static(path.join(__dirname, 'public')));
 
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 //support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({
+    name: 'server-session-cookie-id',
+    secret: 'DracoDormiensNunquamTitillandus!'
+}));
 
 app.post("/authenticate", function(req, res, next){
     console.log("We got: ", req.body.token);
@@ -48,6 +53,8 @@ app.post("/authenticate", function(req, res, next){
                     }
                 });
             }
+
+            req.session.userId = userInfo.userId;
         }).catch(function(){
             res.json({success:false, err:"Database Error"})
         });
@@ -56,6 +63,7 @@ app.post("/authenticate", function(req, res, next){
     res.send("OK");
 });
 
+app.use("/", express.static(path.join(__dirname, 'public')));
 
 var playerList = {};
 
