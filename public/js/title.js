@@ -12,7 +12,8 @@ function onSignIn(googleUser) {
     });
 }
 
-function generateBackgroundMosaic(){
+function generateBackgroundMosaic(tileSize){
+    tileSize = Math.ceil(tileSize);
     var ctx = $("#background-generate")[0].getContext("2d");
     var canvasWidth = $(window).width();
     var canvasHeight =  $(window).height();
@@ -22,9 +23,9 @@ function generateBackgroundMosaic(){
 
     grid = [];
 
-    for (var x=0; x<Math.ceil(canvasWidth/50); x++){
+    for (var x=0; x<Math.ceil(canvasWidth/tileSize); x++){
         grid.push([]);
-        for (var y=0; y<Math.ceil(canvasHeight/50); y++) {
+        for (var y=0; y<Math.ceil(canvasHeight/tileSize); y++) {
             var randomGreen = Math.floor(Math.random()*200);
 
             var randomAlpha = (Math.floor(Math.random()*50)+50)/100;
@@ -56,8 +57,8 @@ function generateBackgroundMosaic(){
             frame = 0;
         }
 
-        for (var x=0; x<Math.ceil(canvasWidth/50); x++){
-            for (var y=0; y<Math.ceil(canvasHeight/50); y++) {
+        for (var x=0; x<Math.ceil(canvasWidth/tileSize); x++){
+            for (var y=0; y<Math.ceil(canvasHeight/tileSize); y++) {
                 var randomGreen = grid[x][y][0];
                 var randomAlpha = grid[x][y][1];
                 if (direction > 0){
@@ -77,7 +78,7 @@ function generateBackgroundMosaic(){
                 }
 
                 ctx.fillStyle = fillColor;
-                ctx.fillRect(x*50, y*50, 50, 50);
+                ctx.fillRect(x*tileSize, y*tileSize, tileSize, tileSize);
             }
         }
         frame++;
@@ -86,4 +87,4 @@ function generateBackgroundMosaic(){
     render();
 }
 
-generateBackgroundMosaic();
+generateBackgroundMosaic(10);
