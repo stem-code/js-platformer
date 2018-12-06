@@ -73,11 +73,13 @@
 
             #message-box button {
                 padding: 5px 7px;
-                font-size: 1.4em;
+                font-size: 1.3em;
+                padding: 5px 10px;
+                margin: 15px 0px;
                 background-color: transparent;
                 box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
-                border: none;
-                border-bottom: 2px solid #fefefe;
+                border: 1px solid #fefefe;
+                border-radius: 3px;
                 outline: none;
                 cursor: pointer;
                 transition: background-color 0.3s;
@@ -85,15 +87,30 @@
             }
 
             #message-box button:hover {
-                background-color: rgb(200, 70, 70);
+                background-color: #eeeeee;
                 color: #222;
+            } 
+            
+            #message-box h1 {
+                font-size: 2.5em;
+                margin: 10px 0px;                
+            }
+
+            #message-box h5 {
+                margin: 5px 0px 15px;
+            }
+
+            #message-box h2 {
+                margin: 15px 0px 10px;
+                font-weight: 200;
             }
 
             #message-box .horizontal-divider {
                 width: 90%;
-                height: 2px;
-                background-color: #efefef;
-                margin: 20px 5% 7px; 
+                height: 3px;
+                background-color: rgba(255, 255, 255, 0.6);
+                margin: 20px 5% 7px;
+                border-radius: 2px;
             }
 
             #player-name {
@@ -105,11 +122,18 @@
                 margin: 0px 0px 10px;
                 outline: none;
                 background-color: transparent;
+                border-radius: 5px 5px 0px 0px;
+                transition: background-color 0.3s;
+                padding: 5px;
             }
 
             #player-name::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-                color: rgba(255, 255, 255, 0.9);
+                color: rgba(255, 255, 255, 0.7);
                 opacity: 1; /* Firefox */
+            }
+
+            #player-name:focus {
+                background-color: rgba(130, 170, 130, 0.2);
             }
 
 
@@ -209,7 +233,7 @@
             }
             
             .abcRioButton {
-                margin: auto;
+                margin: 20px auto;
             }
         </style>
         <link rel="stylesheet" type="text/css" href="lib/spectrum.css"> 
@@ -254,12 +278,12 @@
         <div id="message-box">
             <h1>Blob Quest</h1>
             <!-- <h3>by: Deven and Dorian</h3> -->
-            <h3>Sign in with Google</h3>
-            <h5>This keeps your score</h5>
+            <h2>Sign In With Google</h2>
+            <h5>This saves your score.</h5>
             <div class="g-signin2" data-onsuccess="onSignIn"></div>
             <div class="horizontal-divider"></div>
-            <h3>Sign in anonymously</h3>
-            <h5>Your score will not be kept.</h5>
+            <h2>Anonymous Mode</h2>
+            <h5>Your score will not be saved.</h5>
             <input maxlength="12" type="text" id="player-name" placeholder="Player Name (optional)"/> <br/>
             <button onclick="start()">Start Game</button>
             <p style="display: none">STEM School Highlands Ranch Game</p>
