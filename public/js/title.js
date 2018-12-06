@@ -35,17 +35,47 @@ function generateBackgroundMosaic(){
     }
 
     var frame = 0;
+    var randomColor = 0;
+    var direction = 1;
+
+    var normalCycle = 600; // Reflects how deep colors should be (higher values = more color)
+    var totalFrames = 300;
+
     function render(){
+        if (frame == Math.floor(totalFrames/2)){
+            direction *= -1;
+        }
+
+        if (frame >= totalFrames){
+            if (randomColor < 2){
+                randomColor++;
+            } else {
+                randomColor = 0;
+            }
+            direction = 1;
+            frame = 0;
+        }
+
         for (var x=0; x<Math.ceil(canvasWidth/50); x++){
             for (var y=0; y<Math.ceil(canvasHeight/50); y++) {
                 var randomGreen = grid[x][y][0];
                 var randomAlpha = grid[x][y][1];
-                var randomOther = Math.max(randomGreen-0.3*frame, 0);
-                if (frame >= 375){
-                    return 0;
+                if (direction > 0){
+                    var randomOther = Math.max(randomGreen-0.3*(normalCycle/totalFrames)*frame, 0);
+                } else {
+                    var randomOther = Math.max(randomGreen-0.3*(normalCycle/totalFrames)*(totalFrames - frame), 0);
                 }
 
-                var fillColor = "rgba("+randomOther+", "+randomGreen+", "+randomOther+", " + randomAlpha + ")";
+                randomOther = Math.min(randomOther, 255); // Maximum value of 255 for colors
+
+                if (randomColor == 0){
+                    var fillColor = "rgba("+randomGreen+", "+randomOther+", "+randomOther+", " + randomAlpha + ")";
+                } else if (randomColor == 1){
+                    var fillColor = "rgba("+randomOther+", "+randomGreen+", "+randomOther+", " + randomAlpha + ")";
+                } else {
+                    var fillColor = "rgba("+randomOther+", "+randomOther+", "+randomGreen+", " + randomAlpha + ")";
+                }
+
                 ctx.fillStyle = fillColor;
                 ctx.fillRect(x*50, y*50, 50, 50);
             }
