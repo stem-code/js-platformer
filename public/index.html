@@ -319,15 +319,17 @@
             <div id="message-box-wrapper">
                 <h1>Blob Quest</h1>
                 <p>A Javascript Physics Game.</p>
-                <input maxlength="12" type="text" id="player-name" placeholder="Player Name (optional)"/> <br/>
-                <button onclick="start()">
-                    <div class="expand-text">
-                        <span>Start Game</span>
-                    </div>
-                    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                        <path fill="#fefefe" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
-                    </svg>
-                </button>
+                <form>
+                    <input maxlength="12" type="text" id="player-name" placeholder="Player Name (optional)" autofocus/>
+                    <button onclick="start()" type="submit" formaction="javascript:start();">
+                        <div class="expand-text">
+                            <span>Start Game</span>
+                        </div>
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="#fefefe" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+                        </svg>
+                    </button>
+                </form>
             </div>
         </div>
 
