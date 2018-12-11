@@ -5,6 +5,7 @@
 //@ts-ignore
 var $ = jQuery;
 
+
 window.requestAnimationFrame = window.requestAnimationFrame // Browser Compatibility (different browsers have different functions for rendering)
     // @ts-ignore
     || window.mozRequestAnimationFrame // Firefox (Mozilla-Based)
@@ -59,7 +60,7 @@ function start() { // when the player presses the start button
     var camera = new Camera(player);
     var platformManager = new PlatformManager();
 
-    var playerManager = new PlayerManager(camera);
+    var playerManager = new PlayerManager();
     var playerId = playerManager.addPlayer(player);
     playerManager.setMainPlayer(playerId); // this is the only playable player (other players are controlled through multiplayer)
 
@@ -67,7 +68,7 @@ function start() { // when the player presses the start button
     var gameManager = new GameManager(playerManager, platformManager, UI);
 
     var serverManager = new ServerManager(platformManager, playerManager, UI, gameManager); // Handle all socket server communications (creation of remote platforms, players, etc.)
-    serverManager.startCommunication();
+    // serverManager.startCommunication();
     var renderer = new Renderer("main-canvas", platformManager, playerManager, camera);
 
     serverManager.updateAppearance(playerAppearance);
@@ -85,7 +86,7 @@ function start() { // when the player presses the start button
         deltaTime = currentTime - lastTime;
         lastTime = currentTime;
 
-        entityManager.update(deltaTime);
+        // entityManager.update(deltaTime);
         serverManager.update(); // ServerManager also updates (to send current status)
 
         // TODO: GET RID OF

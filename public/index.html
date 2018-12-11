@@ -2,10 +2,11 @@
 <html>
     <head>
         <title>Blob Quest</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <style>
             @keyframes appear {
-                0% { top: 35%; opacity: 0; }
-                100% { top: 50%; opacity: 1;}
+                0% { transform: translate(-50%, -300%); border-radius: 2px; opacity: 0; }
+                100% { transform: translate(-50%, -50%);  border-radius: 10px; opacity: 1;}
             }
 
             @keyframes textFade {
@@ -15,15 +16,10 @@
                 100% { opacity: 0; display: none;}
             }
 
-            @keyframes backgroundAppear {
-                0% { background-color: rgba(0, 0, 0, 0.2); }
-                100% { background-color: rgba(0, 0, 0, 0.7); }
+            @keyframes textExpand {
+                0% { width: 5px; }
+                100% { width: 100px; }
             }
-
-            /* @font-face{
-                font-family: "game-font";
-                src: url("/fonts/ARCADECLASSIC.woff");
-            } */
 
             body, html {
                 width: 100%;
@@ -31,7 +27,7 @@
                 padding: 0;
                 margin: 0;
                 overflow: hidden;
-                background-color: #222222;
+                background-color: #393939;
             }
 
             * {
@@ -48,21 +44,26 @@
             }
 
             #message-box {
+                border-radius: 7px;
                 position: relative;
-                width: 440px;
-                border-radius: 5px;
-                background-color: rgba(0, 0, 0, 0.7);
-                text-align: center;
+                background-color: #efefef;
                 font-family: "Roboto", "Helvetica", "Arial", sans-serif;
                 position: absolute;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                padding: 30px;
-                animation-name: backgroundAppear;
-                animation-duration: 3s;
+                padding: 10px 30px 33px;
+                will-change: transform;
+                animation-name: appear;
+                animation-delay: 0.2s;
+                animation-duration: 0.3s;
                 animation-fill-mode: both;
-                color: #fefefe;
+                animation-timing-function: ease-in-out;
+                color: #232323;
+            }
+
+            #message-box #message-box-wrapper {
+                width: 260px;
             }
 
             #message-box canvas {
@@ -72,28 +73,67 @@
             }
 
             #message-box button {
-                padding: 5px 7px;
-                font-size: 1.3em;
-                padding: 5px 10px;
-                margin: 15px 0px;
-                background-color: transparent;
-                box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
-                border: 1px solid #fefefe;
-                border-radius: 3px;
+                padding: 10px 10px;
+                position: absolute;
+                z-index: 300;
+                right: -10px;
+                bottom: -10px;
+                box-shadow: 1px 2px 17px rgba(0, 0, 0, 0.6);
                 outline: none;
                 cursor: pointer;
-                transition: background-color 0.3s;
-                color: #fefefe;
+                transition: background-color 0.3s, width 0.3s, border-radius 0.2s, opacity 0.4s;
+                color: #232323;
+                background-color: #4CAF50;
+                border-radius: 50%;
+                border: none;
+                width: 50px;
+                height: 50px;
+                float: right;
             }
 
             #message-box button:hover {
-                background-color: #eeeeee;
+                background-color: #81C784;
                 color: #222;
-            } 
+                border-radius: 5px;
+                width: 150px;
+            }
+
+            #message-box button .expand-text {         
+                display: none;
+                width: 5px;
+                font-size: 1.3em;
+                opacity: 0;
+                float: left;
+                color: #fefefe;
+                padding: 3px 4px 0px 0px;
+                overflow: hidden;
+            }
+
+            #message-box button:hover > .expand-text {
+                display: flex;
+                opacity: 1;
+                animation-name: textExpand;
+                animation-delay: 0.18s;
+                animation-duration: 0.2s;
+                animation-fill-mode: both;
+            }
+
+            #message-box button .expand-text span {
+                width: 100px;
+                min-width: 100px;
+                font-family: "Roboto", sans-serif;
+            }
+
+            #message-box button svg {
+                position: relative;
+                right: 0px;
+            }
             
             #message-box h1 {
-                font-size: 2.5em;
-                margin: 10px 0px;                
+                font-size: 1.9em;
+                margin: 10px 0px;
+                color: #404040;
+                font-weight: 300;        
             }
 
             #message-box h5 {
@@ -117,8 +157,8 @@
                 font-size: 1.2em;
                 padding: 5px 5px;
                 border: none;
-                color: #fefefe;
-                border-bottom: 2px solid #fefefe;
+                color: #404040;
+                border-bottom: 2px solid #404040;
                 margin: 0px 0px 10px;
                 outline: none;
                 background-color: transparent;
@@ -128,7 +168,7 @@
             }
 
             #player-name::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-                color: rgba(255, 255, 255, 0.7);
+                color: rgba(0, 0, 0, 0.7);
                 opacity: 1; /* Firefox */
             }
 
@@ -276,17 +316,19 @@
         </div>
 
         <div id="message-box">
-            <h1>Blob Quest</h1>
-            <!-- <h3>by: Deven and Dorian</h3> -->
-            <h2>Sign In With Google</h2>
-            <h5>This saves your score.</h5>
-            <div class="g-signin2" data-onsuccess="onSignIn"></div>
-            <div class="horizontal-divider"></div>
-            <h2>Anonymous Mode</h2>
-            <h5>Your score will not be saved.</h5>
-            <input maxlength="12" type="text" id="player-name" placeholder="Player Name (optional)"/> <br/>
-            <button onclick="start()">Start Game</button>
-            <p style="display: none">STEM School Highlands Ranch Game</p>
+            <div id="message-box-wrapper">
+                <h1>Blob Quest</h1>
+                <p>A Javascript Physics Game.</p>
+                <input maxlength="12" type="text" id="player-name" placeholder="Player Name (optional)"/> <br/>
+                <button onclick="start()">
+                    <div class="expand-text">
+                        <span>Start Game</span>
+                    </div>
+                    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path fill="#fefefe" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <canvas id="background-generate"></canvas>
@@ -299,6 +341,6 @@
         <script src="lib/spectrum.js"></script>
 
         <script src="js/application.min.js" async></script>
-        <script src="js/title.js"></script>    
+        <!-- <script src="js/title.js"></script>     --> <!-- This is an optional background, we really don't need it -->
     </body>
 </html>
