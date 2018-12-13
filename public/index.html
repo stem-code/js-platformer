@@ -66,12 +66,6 @@
                 width: 260px;
             }
 
-            #message-box canvas {
-                position: absolute;
-                top: 0px;
-                left: 0px;
-            }
-
             #message-box button {
                 padding: 10px 10px;
                 position: absolute;
@@ -229,6 +223,13 @@
                 z-index: -3000;
             }
 
+            #main-canvas {
+                position: absolute;
+                top: 0px;
+                left: 0px;  
+                z-index: 2000;
+            }
+
             #disconnect-screen-container {
                 position: absolute;
                 z-index: 150000;
@@ -278,9 +279,9 @@
         </style>
         <link rel="stylesheet" type="text/css" href="lib/spectrum.css"> 
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <script src='https://www.google.com/recaptcha/api.js?render=6Lf1Pn0UAAAAAGFiorj6bkweMsRe2TRdF-a7KJh3'></script>
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-        <meta name="google-signin-client_id" content="924571599288-a8jgnkghenkmcpjkh5hhn3sbetmra0k3.apps.googleusercontent.com">
+        <!-- <script src='https://www.google.com/recaptcha/api.js?render=6Lf1Pn0UAAAAAGFiorj6bkweMsRe2TRdF-a7KJh3'></script> -->
+        <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+        <!-- <meta name="google-signin-client_id" content="924571599288-a8jgnkghenkmcpjkh5hhn3sbetmra0k3.apps.googleusercontent.com"> -->
     </head>
     <body>
         <div id="info-bar">

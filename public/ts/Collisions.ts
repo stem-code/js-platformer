@@ -1,10 +1,10 @@
 class Collisions { // Basically a static class (this has not yet been optimized)
-    public static checkCollisions = function(entity: Entity, screenDimens:any, entitiesToCheck: Entity[], time: number){
+    public static checkCollisions = function(entity: any, screenDimens: any, entitiesToCheck: any[], time: any){
         var collisionList: any[] = [];
         time = time / 1000;
 
         if (entity.active) entitiesToCheck.forEach(checkEntity => {
-            if (entity == checkEntity || !checkEntity) { return []; } // Prevent entity from colliding with itself. Prevent checking removed entities
+            if (entity == checkEntity) { return []; } // Prevent entity from colliding with itself.
             // AABB collision check.
             if (entity.aabb.x < checkEntity.aabb.x + checkEntity.aabb.width && entity.aabb.x + entity.aabb.width > checkEntity.aabb.x
                 && entity.aabb.y < checkEntity.aabb.y + checkEntity.aabb.height && entity.aabb.y + entity.aabb.height > checkEntity.aabb.y) {
@@ -79,7 +79,7 @@ class Collisions { // Basically a static class (this has not yet been optimized)
             try {
                 entity.aabb.x = entity.aabb.x > 0 ? wallWidth-entity.aabb.width : 1;
                 entity.velocity[0] *= -1;
-                // entity.onCollision({tag:"wall"});
+                entity.onCollision({tag:"wall"});
             } catch {
             }
         }

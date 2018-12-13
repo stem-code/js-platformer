@@ -14,7 +14,8 @@
     },
     "include": [
         "public/ts/*",
-        "public/ts/**/*"
+        "public/ts/**/*",
+        "public/ts/**/**/*"
     ],
     "exclude": [
         "node_modules" , "typings"

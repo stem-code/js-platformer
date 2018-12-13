@@ -1,79 +1,53 @@
 // JS-Platformer Main
-// import * as $ from "../lib/jquery.min"; // Jquery
-// import { io } from "../lib/socket.io";
-
-//@ts-ignore
-var $ = jQuery;
-
 
 window.requestAnimationFrame = window.requestAnimationFrame // Browser Compatibility (different browsers have different functions for rendering)
-    // @ts-ignore
     || window.mozRequestAnimationFrame // Firefox (Mozilla-Based)
     || window.webkitRequestAnimationFrame // Safari, Opera, older versions of Chrome
-    // @ts-ignore
     || window.msRequestAnimationFrame // Edge, IE
     || function(f){return setTimeout(f, 1000/60);}; // Dinosaur Browsers that are surpassed by rocks
 
-// var playerRgbColor = [Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)];
-var playerAppearance = {color:"#f00", playerSpriteSheetIndex:Math.floor(Math.random() * 1), rgbColor:[Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)]};
-playerAppearance.color = "rgb("+playerAppearance.rgbColor[0]+", " + playerAppearance.rgbColor[1]+", "+playerAppearance.rgbColor[2]+")";
-
-var changeColorFunc = function(playerAppearance: any){
-    playerAppearance.color = playerAppearance.color;
+var playerAppearance = {color:"#f00", spriteSheet:Math.floor(Math.random() * 2), rgbColor:[Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)]};
+var changeColorFunc = function(color: any){
+    playerAppearance.color = color;
 }
 
 $("#player-color").spectrum({
-    color: "rgb("+playerAppearance.rgbColor[0]+", " + playerAppearance.rgbColor[1]+", "+playerAppearance.rgbColor[2]+")",
+    color: "#f00",
     change: function(color: any) {
         var colorH = color.toHexString(); // #ff0000
         var rgbColor = color.toRgb();
-
-        color = "rgb(" + rgbColor["r"]+", " + rgbColor["g"]+ ", " + rgbColor["b"] + ")";
+        color = colorH;
         rgbColor = [rgbColor["r"], rgbColor["g"], rgbColor["b"]];
 
         playerAppearance.color = color;
-        playerAppearance.rgbColor = rgbColor; // Rgb color array
+        playerAppearance.rgbColor = rgbColor;
         changeColorFunc(playerAppearance);
     }
 });
 
 function start() { // when the player presses the start button
-    $("#message-box").css("display", "none");
-    $("#background-generate").hide();
-
-    //@ts-ignore
-    grecaptcha.ready(function() {
-        //@ts-ignore
-        grecaptcha.execute('6Lf1Pn0UAAAAAGFiorj6bkweMsRe2TRdF-a7KJh3', {action: 'action_name'})
-        .then(function(token: string) {
-        // alert(token);
-        // Verify the token on the server.
-        });
-    });
-
-    $(".grecaptcha-badge").css({"opacity": "0"});
+    var messageBox: any = document.getElementById("message-box").style = "display: none;";
 
     KeyboardManager.init();
+    PhysicsComponent.gravityVector = [0, 98];
 
-    var player = new Player(playerAABB.clone().move(500, 250), $("#player-name").val(), playerAppearance);
     var entityManager = new EntityManager();
-    var camera = new Camera(player);
+
     var platformManager = new PlatformManager();
-
     var playerManager = new PlayerManager();
-    var playerId = playerManager.addPlayer(player);
-    playerManager.setMainPlayer(playerId); // this is the only playable player (other players are controlled through multiplayer)
-
     var UI = new UIManager();
-    var gameManager = new GameManager(playerManager, platformManager, UI);
+    //var gameManager = new GameManager(playerManager, platformManager, UI);
 
-    var serverManager = new ServerManager(platformManager, playerManager, UI, gameManager); // Handle all socket server communications (creation of remote platforms, players, etc.)
-    // serverManager.startCommunication();
-    var renderer = new Renderer("main-canvas", platformManager, playerManager, camera);
+    var player = new Player(playerAABB.clone().move(500, 250), document.getElementById("player-name").value, playerAppearance);
+    //var playerId = playerManager.addPlayer(player);
+    //playerManager.setMainPlayer(playerId); // this is the only playable player (other players are controlled through multiplayer)
 
-    serverManager.updateAppearance(playerAppearance);
+    //var serverManager = new ServerManager(platformManager, playerManager, UI, gameManager); // Handle all socket server communications (creation of remote platforms, players, etc.)
+    var renderer = new Renderer("main-canvas", platformManager, playerManager, new Camera(player));
+
+    //serverManager.updateAppearance(playerAppearance);
     changeColorFunc = function(playerAppearance){
-        serverManager.updateAppearance(playerAppearance);
+        //serverManager.updateAppearance(playerAppearance);
     }
     
     var lastTime: number;
@@ -83,25 +57,25 @@ function start() { // when the player presses the start button
 
     var update = function(currentTime: number) { // renderer loop
         if (!lastTime) lastTime = currentTime;
-        deltaTime = currentTime - lastTime;
+        deltaTime = (currentTime - lastTime)/1000;
+        UI.updateFPS(currentTime - lastTime);
         lastTime = currentTime;
 
-        // entityManager.update(deltaTime);
-        serverManager.update(); // ServerManager also updates (to send current status)
+        EntityManager.update(deltaTime);
+        //serverManager.update(); // ServerManager also updates (to send current status)
 
         // TODO: GET RID OF
-        UI.updateFPS(deltaTime);
-        platformManager.update();
-        playerManager.update(deltaTime);
-        gameManager.update();
+        //platformManager.update();
+        //playerManager.update(deltaTime);
+        //gameManager.update();
         // END GET RID OF
 
-        renderer.render(entityManager);
+        renderer.render();
         window.requestAnimationFrame(update);
         clearTimeout(currTimeout);
         currTimeout = setTimeout(function(){ 
             location.reload(); // if inactive, reload
-        }, 400); // check if user is inactive 
+        }, 400); // check if user is inactive
     }
     update(0);
 }

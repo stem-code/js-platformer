@@ -32,8 +32,10 @@ class PlayerControlComponent extends Component {
     public update(delta: number) {
         if (this.physicsComponent == null) {
             this.physicsComponent = this.getEntity().getComponent<PhysicsComponent>("PhysicsComponent");
+            console.log(this.physicsComponent);
         }
         KeyboardManager.keys.forEach(key => {
+            console.log(key);
             if (this.pressMap[key]) this.pressMap[key]();
         });
 

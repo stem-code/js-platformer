@@ -30,9 +30,9 @@ class Entity {
 
     public addComponents(components: Component[]) {
         components.forEach(component => {
+            console.log(component.constructor.name);
             component.setEntity(this);
-            let c:any = component.constructor;
-            this.componentsDict[c.name] = component;
+            this.componentsDict[component.constructor.name] = component;
         });
         return this;
     }
