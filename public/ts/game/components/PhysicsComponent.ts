@@ -10,8 +10,6 @@ class PhysicsComponent extends Component {
     }
 
     public update(delta: number) {
-        console.log(delta);
-        // console.log(this.getEntity().getAABB().x, this.getEntity().getAABB().y);
         if (!delta) { delta = 0; }
 
         if (this.gravityEnabled) {

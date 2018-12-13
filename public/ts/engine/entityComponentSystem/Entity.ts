@@ -30,7 +30,6 @@ class Entity {
 
     public addComponents(components: Component[]) {
         components.forEach(component => {
-            console.log(component.constructor.name);
             component.setEntity(this);
             this.componentsDict[component.constructor.name] = component;
         });

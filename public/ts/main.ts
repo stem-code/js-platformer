@@ -6,7 +6,7 @@ window.requestAnimationFrame = window.requestAnimationFrame // Browser Compatibi
     || window.msRequestAnimationFrame // Edge, IE
     || function(f){return setTimeout(f, 1000/60);}; // Dinosaur Browsers that are surpassed by rocks
 
-var playerAppearance = {color:"#f00", spriteSheet:Math.floor(Math.random() * 2), rgbColor:[Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)]};
+var playerAppearance = {color:"#f00", spriteSheet:0, rgbColor:[Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)]};
 var changeColorFunc = function(color: any){
     playerAppearance.color = color;
 }
@@ -29,7 +29,7 @@ function start() { // when the player presses the start button
     var messageBox: any = document.getElementById("message-box").style = "display: none;";
 
     KeyboardManager.init();
-    PhysicsComponent.gravityVector = [0, 98];
+    PhysicsComponent.gravityVector = [0, 200];
 
     var entityManager = new EntityManager();
 
@@ -39,6 +39,7 @@ function start() { // when the player presses the start button
     //var gameManager = new GameManager(playerManager, platformManager, UI);
 
     var player = new Player(playerAABB.clone().move(500, 250), document.getElementById("player-name").value, playerAppearance);
+    var platform = new Platform(new AABB(-300, 300, 3000, 3));
     //var playerId = playerManager.addPlayer(player);
     //playerManager.setMainPlayer(playerId); // this is the only playable player (other players are controlled through multiplayer)
 

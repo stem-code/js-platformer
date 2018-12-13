@@ -6,12 +6,15 @@ class PlayerControlComponent extends Component {
     constructor() {
         super();
         var that = this;
+
         function jump(){
-            if (!that.jumping){
+            if (!that.jumping){ // check if already has jumped
                 that.physicsComponent.velocity[1] = -350;
-                that.jumping = true;
+                that.physicsComponent.gravityEnabled = true;
+                that.jumping = true; // we are now jumping
             }
         }
+
         this.pressMap = { // Player controls
             87: jump, // w
             38: jump, // up arrow
@@ -30,23 +33,25 @@ class PlayerControlComponent extends Component {
     }
 
     public update(delta: number) {
-        if (this.physicsComponent == null) {
+
+        if (this.physicsComponent == null) { // get the Physics Component if it is not yet present.
             this.physicsComponent = this.getEntity().getComponent<PhysicsComponent>("PhysicsComponent");
-            console.log(this.physicsComponent);
         }
+
         KeyboardManager.keys.forEach(key => {
-            console.log(key);
             if (this.pressMap[key]) this.pressMap[key]();
         });
 
-        if (this.pressMap.length == 0){
-            this.physicsComponent.velocity[0] *= 0.95;
+        if (this.pressMap.length == 0){ // If nothing is pressed
+            this.physicsComponent.velocity[0] *= 0.95; // slowly slow down the player
         }
     }
 
     public onCollision(collidingEntity: Entity) {
         if (collidingEntity.getTag() == "Platform") {
             this.jumping = false;
+            this.physicsComponent.gravityEnabled = false;
+            this.physicsComponent.velocity[1] = 0;
         }
     }
 }
