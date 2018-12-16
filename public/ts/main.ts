@@ -39,7 +39,8 @@ function start() { // when the player presses the start button
     //var gameManager = new GameManager(playerManager, platformManager, UI);
 
     var player = new Player(playerAABB.clone().move(500, 250), document.getElementById("player-name").value, playerAppearance);
-    var platform = new Platform(new AABB(-300, 300, 3000, 3));
+    var platform = new Platform(new AABB(260, 300, 300, 10));
+    var platform = new Platform(new AABB(200, 400, 300, 10));
     //var playerId = playerManager.addPlayer(player);
     //playerManager.setMainPlayer(playerId); // this is the only playable player (other players are controlled through multiplayer)
 

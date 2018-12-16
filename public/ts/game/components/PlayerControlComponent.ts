@@ -2,6 +2,7 @@ class PlayerControlComponent extends Component {
     private pressMap: any;
     private physicsComponent: PhysicsComponent;
     private jumping: boolean;
+    private lastDelta: number;
 
     constructor() {
         super();
@@ -33,7 +34,7 @@ class PlayerControlComponent extends Component {
     }
 
     public update(delta: number) {
-
+        this.lastDelta = delta;
         if (this.physicsComponent == null) { // get the Physics Component if it is not yet present.
             this.physicsComponent = this.getEntity().getComponent<PhysicsComponent>("PhysicsComponent");
         }
@@ -47,11 +48,28 @@ class PlayerControlComponent extends Component {
         }
     }
 
-    public onCollision(collidingEntity: Entity) {
+    public onCollision(collidingEntity: Entity, collisionAxis: string, collisionSide: number) {
         if (collidingEntity.getTag() == "Platform") {
-            this.jumping = false;
-            this.physicsComponent.gravityEnabled = false;
-            this.physicsComponent.velocity[1] = 0;
+            if (collisionAxis == 'x'){ // behavior when hitting on left or right.
+                this.jumping = false; // Allow for wall jumping
+                this.getEntity().getAABB().x -= this.physicsComponent.velocity[0]*this.lastDelta;
+                this.physicsComponent.velocity[0] *= -1;
+            } else if (collisionAxis == 'y' && Math.abs(this.physicsComponent.velocity[1]) > 10) {
+                this.getEntity().getAABB().y -= this.physicsComponent.velocity[1]*this.lastDelta;
+                this.physicsComponent.velocity[1] *= -0.5;
+            } if (collisionAxis == 'y'){
+                this.physicsComponent.gravityNormalize(); // Add a normal (so that we don't sink)
+            }
+
+            if (collisionSide == 3){ // Only if hitting on sides.
+                this.jumping = false;
+            }
+
+            if (Math.abs(this.physicsComponent.velocity[0]) < 10){
+                this.physicsComponent.velocity[0] = 0;
+            } if (Math.abs(this.physicsComponent.velocity[1]) < 10){
+                this.physicsComponent.velocity[1] = 0;
+            }
         }
     }
 }

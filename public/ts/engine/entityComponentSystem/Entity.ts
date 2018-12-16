@@ -22,9 +22,9 @@ class Entity {
         }
     }
 
-    onCollision(entity: Entity) {
+    onCollision(entity: Entity, collisionAxis: string, collisionSide: number) {
         for (let key in this.componentsDict) {
-            this.componentsDict[key].onCollision(entity);
+            this.componentsDict[key].onCollision(entity, collisionAxis, collisionSide);
         }
     }
 
